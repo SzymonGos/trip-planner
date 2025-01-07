@@ -1,0 +1,14 @@
+{
+  "name": "keystone",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "keystone dev && postinstall",
+    "start": "keystone start",
+    "postinstall": "prisma generate"
+  },
+  "dependencies": {
+    "@keystone-6/core": "^6.3.1",
+    "dotenv": "^16.4.7"
+  }
+}

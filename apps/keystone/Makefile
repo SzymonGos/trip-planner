@@ -1,7 +1,8 @@
 start: db-start
+	npm run dev
 
 stop: db-stop
-
+	
 restart: stop start
 
 db-start:
