@@ -46,3 +46,7 @@ next-env.d.ts
 node_modules
 .keystone
 keystone.db
+
+
+.nx/cache
+.nx/workspace-data
