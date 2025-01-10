@@ -1,4 +1,4 @@
-# holiday-planner-ai repo
+# trip-planner repo
 
 ### Run below commands from main directory
 
