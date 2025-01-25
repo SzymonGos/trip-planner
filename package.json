@@ -1,10 +1,11 @@
 {
-  "name": "holiday-planner",
-  "description": "holiday-planner monorepo",
+  "name": "trip-planner",
+  "description": "trip-planner monorepo",
   "version": "0.1.0",
   "private": true,
   "workspaces": [
-    "apps/*"
+    "apps/*",
+    "modules/*"
   ],
   "scripts": {
     "dev": "nx run-many --target=serve --projects=web,keystone --parallel"
@@ -12,13 +13,14 @@
   "devDependencies": {
     "@nx/eslint": "20.3.1",
     "eslint": "~8.57.0",
-    "nx": "20.3.1"
+    "graphql": "^16.10.0",
+    "nx": "20.3.1",
+    "typescript": "^5.7.3"
   },
   "nx": {},
-  "dependencies": {},
   "resolutions": {
     "react": "18.3.1",
-    "react-dom": "18.3.1"   
+    "react-dom": "18.3.1"
   },
   "overrides": {
     "react": "18.3.1",
