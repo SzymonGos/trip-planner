@@ -1,5 +1,5 @@
 {
-  "name": "web",  
+  "name": "web",
   "sourceRoot": "apps/web",
   "projectType": "application",
   "targets": {
