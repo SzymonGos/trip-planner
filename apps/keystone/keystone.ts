@@ -1,7 +1,7 @@
-import { config } from "@keystone-6/core";
-import { User } from "./src/schemas/User";
-import { CORS_ORIGIN, DATABASE_URL } from "./config";
-import { exec } from "child_process";
+import { config } from '@keystone-6/core';
+import { User } from './src/schemas/User';
+import { CORS_ORIGIN, DATABASE_URL } from './config';
+import { exec } from 'child_process';
 
 export default config({
   server: {
@@ -11,15 +11,13 @@ export default config({
     },
   },
   db: {
-    provider: "mysql",
+    provider: 'mysql',
     url: DATABASE_URL,
-    onConnect: async (keystone) => {
-      // eslint-disable-next-line no-console
-      console.log("--- Generate graphql types");
+    onConnect: async () => {
+      console.log('--- Generate graphql types');
 
-      exec("nx graphqlTypes:generate tp-graphql-types", () => {
-        // eslint-disable-next-line no-console
-        console.log("--- Generate graphql types is completed");
+      exec('nx graphqlTypes:generate tp-graphql-types', () => {
+        console.log('--- Generate graphql types is completed');
       });
     },
   },

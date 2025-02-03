@@ -1,17 +1,13 @@
-"use client";
+'use client';
 
-import { HttpLink } from "@apollo/client";
-import {
-  ApolloNextAppProvider,
-  ApolloClient,
-  InMemoryCache,
-} from "@apollo/experimental-nextjs-app-support";
-import { GRAPHQL_API_URL } from "../config";
+import { HttpLink } from '@apollo/client';
+import { ApolloNextAppProvider, ApolloClient, InMemoryCache } from '@apollo/experimental-nextjs-app-support';
+import { GRAPHQL_API_URL } from '../config';
 
 const client = () => {
   const httpLink = new HttpLink({
     uri: GRAPHQL_API_URL,
-    fetchOptions: { cache: "no-store" },
+    fetchOptions: { cache: 'no-store' },
   });
 
   return new ApolloClient({
@@ -21,9 +17,5 @@ const client = () => {
 };
 
 export function ApolloWrapper({ children }: React.PropsWithChildren) {
-  return (
-    <ApolloNextAppProvider makeClient={client}>
-      {children}
-    </ApolloNextAppProvider>
-  );
+  return <ApolloNextAppProvider makeClient={client}>{children}</ApolloNextAppProvider>;
 }

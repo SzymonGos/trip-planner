@@ -9,7 +9,7 @@ services:
       - MARIADB_USER=myuser
       - MARIADB_PASSWORD=mypassword
     ports:
-      - "3306:3306"
+      - '3306:3306'
     volumes:
       - mariadb-data:/var/lib/mysql
 
@@ -18,7 +18,7 @@ services:
     restart: always
     image: adminer:latest
     ports:
-      - "3001:8080"
+      - '3001:8080'
     depends_on:
       - mariadb
     environment:
