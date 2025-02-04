@@ -1,4 +1,4 @@
-# trip-planner repo
+# trip-planner monorepo
 
 ### Run below commands from main directory
 
