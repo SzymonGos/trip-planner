@@ -35,6 +35,13 @@ export default [
     },
     rules: {
       'arrow-body-style': ['error', 'as-needed'],
+      'react/function-component-definition': [
+        'error',
+        {
+          namedComponents: 'arrow-function',
+          unnamedComponents: 'arrow-function',
+        },
+      ],
     },
   }),
 ];
