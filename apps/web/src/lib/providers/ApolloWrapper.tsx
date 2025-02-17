@@ -16,6 +16,6 @@ const client = () => {
   });
 };
 
-export function ApolloWrapper({ children }: React.PropsWithChildren) {
-  return <ApolloNextAppProvider makeClient={client}>{children}</ApolloNextAppProvider>;
-}
+export const ApolloWrapper = ({ children }: React.PropsWithChildren) => (
+  <ApolloNextAppProvider makeClient={client}>{children}</ApolloNextAppProvider>
+);
