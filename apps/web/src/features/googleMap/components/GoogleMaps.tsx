@@ -4,13 +4,7 @@ import React, { useCallback, useMemo, useState } from 'react';
 import { GoogleMap, useJsApiLoader, DirectionsRenderer, DirectionsService } from '@react-google-maps/api';
 import { GOOGLE_MAPS_API_KEY } from '@/lib/config';
 import { TLocationCoordsProps, useUserGeolocation } from '@/hooks/useGeolocation';
-
-type TDirectionsFormValueProps = {
-  origin: google.maps.LatLngLiteral | string;
-  destination: google.maps.LatLngLiteral | string;
-  travelMode: google.maps.TravelMode;
-  waypoints?: google.maps.DirectionsWaypoint[];
-};
+import { useGoogleMaps } from '@/lib/contexts/GoogleMapsContext';
 
 const mapContainerStyle = {
   height: '100%',
@@ -23,13 +17,8 @@ const defaultCenter: TLocationCoordsProps = {
 };
 
 export const GoogleMaps = () => {
+  const { directionsFormValue, setDirectionsFormValue } = useGoogleMaps();
   const [response, setResponse] = useState<google.maps.DirectionsResult | null>(null);
-  const [directionsFormValue, setDirectionsFormValue] = useState<TDirectionsFormValueProps>({
-    origin: '',
-    destination: '',
-    waypoints: [],
-    travelMode: 'DRIVING' as google.maps.TravelMode,
-  });
 
   const { location } = useUserGeolocation();
   const { isLoaded } = useJsApiLoader({
@@ -38,22 +27,20 @@ export const GoogleMaps = () => {
 
   const onMapClick = useCallback(
     (e: google.maps.MapMouseEvent) => {
-      console.log('Map clicked', e.latLng.lat(), e.latLng.lng());
-
       if (directionsFormValue?.origin === '') {
-        setDirectionsFormValue((prev) => ({
-          ...prev,
+        setDirectionsFormValue({
+          ...directionsFormValue,
           origin: `${e.latLng.lat()}, ${e.latLng.lng()}`,
-        }));
+        });
       } else if (directionsFormValue?.destination === '') {
-        setDirectionsFormValue((prev) => ({
-          ...prev,
+        setDirectionsFormValue({
+          ...directionsFormValue,
           destination: `${e.latLng.lat()}, ${e.latLng.lng()}`,
-        }));
+        });
       }
       return;
     },
-    [directionsFormValue],
+    [directionsFormValue, setDirectionsFormValue],
   );
 
   const center = useMemo(() => (location?.lat && location?.lng ? location : defaultCenter), [location]);
@@ -62,9 +49,9 @@ export const GoogleMaps = () => {
     () => ({
       destination: directionsFormValue.destination,
       origin: directionsFormValue.origin,
-      travelMode: directionsFormValue.travelMode,
+      travelMode: 'DRIVING' as google.maps.TravelMode,
     }),
-    [directionsFormValue.origin, directionsFormValue.destination, directionsFormValue.travelMode],
+    [directionsFormValue.origin, directionsFormValue.destination],
   );
 
   const directionsCallback = useCallback(
@@ -90,12 +77,24 @@ export const GoogleMaps = () => {
   }
 
   return (
-    <GoogleMap zoom={12} mapContainerStyle={mapContainerStyle} center={center} onClick={onMapClick}>
+    <GoogleMap zoom={10} mapContainerStyle={mapContainerStyle} center={center} onClick={onMapClick}>
       {directionsFormValue.origin !== '' && directionsFormValue.destination !== '' && (
         <DirectionsService options={directionsServiceOptions} callback={directionsCallback} />
       )}
 
-      {directionsResult.directions && <DirectionsRenderer directions={directionsResult.directions} />}
+      {directionsResult.directions && (
+        <DirectionsRenderer
+          directions={directionsResult.directions}
+          options={{
+            polylineOptions: {
+              strokeColor: 'red',
+              strokeOpacity: 0.5,
+              strokeWeight: 6,
+              clickable: true,
+            },
+          }}
+        />
+      )}
     </GoogleMap>
   );
 };

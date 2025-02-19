@@ -13,7 +13,9 @@ export const useUserGeolocation = () => {
 
   const getUserLocation = async () => {
     try {
-      const response = await fetch(IPAPI_URL);
+      const response = await fetch(IPAPI_URL, {
+        cache: 'force-cache',
+      });
       const data = await response.json();
       setLocation({ lat: data.latitude, lng: data.longitude });
     } catch (e) {
@@ -23,7 +25,7 @@ export const useUserGeolocation = () => {
 
   useEffect(() => {
     getUserLocation();
-  }, []);
+  }, [location]);
 
   return { location };
 };
