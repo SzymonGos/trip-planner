@@ -1,31 +1,34 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { CreateTripForm } from './CreateTripForm';
+import { useGoogleMaps } from '@/lib/contexts/GoogleMapsContext';
+import { TDirectionsFormValueProps } from '@/lib/contexts/constants';
 
-export type FormValues = {
+export type TFormValuesProps = {
   title: string;
-  startRoute: string;
-  endRoute: string;
+  drirections: TDirectionsFormValueProps;
 };
 
 export const CreateTripFormContainer = () => {
-  const defaultValues = {
-    title: '',
-    startRoute: '',
-    endRoute: '',
-  };
-
-  const useFormReturn = useForm<FormValues>({
-    defaultValues,
+  const { directionsFormValue } = useGoogleMaps();
+  const useFormReturn = useForm<TFormValuesProps>({
+    defaultValues: {
+      title: '',
+      drirections: directionsFormValue,
+    },
   });
 
-  const handleOnSubmit: SubmitHandler<FormValues> = (data) => {
+  const handleOnSubmit: SubmitHandler<TFormValuesProps> = (data) => {
     console.log('form data', data);
   };
 
   const handleSubmitCallback = useFormReturn.handleSubmit(handleOnSubmit);
+
+  useEffect(() => {
+    useFormReturn.setValue('drirections', directionsFormValue);
+  }, [directionsFormValue, useFormReturn]);
 
   return <CreateTripForm onSubmit={handleSubmitCallback} useForm={useFormReturn} />;
 };
