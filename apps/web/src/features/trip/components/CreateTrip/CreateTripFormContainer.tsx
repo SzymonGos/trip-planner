@@ -3,20 +3,20 @@
 import React, { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { CreateTripForm } from './CreateTripForm';
-import { useGoogleMaps } from '@/lib/contexts/GoogleMapsContext';
+import { useGoogleMapsDirections } from '@/lib/contexts/DirectionsContext';
 import { TDirectionsFormValueProps } from '@/lib/contexts/constants';
 
 export type TFormValuesProps = {
   title: string;
-  drirections: TDirectionsFormValueProps;
+  directions: TDirectionsFormValueProps;
 };
 
 export const CreateTripFormContainer = () => {
-  const { directionsFormValue } = useGoogleMaps();
+  const { directionsFormValue } = useGoogleMapsDirections();
   const useFormReturn = useForm<TFormValuesProps>({
     defaultValues: {
       title: '',
-      drirections: directionsFormValue,
+      directions: directionsFormValue,
     },
   });
 
@@ -27,7 +27,7 @@ export const CreateTripFormContainer = () => {
   const handleSubmitCallback = useFormReturn.handleSubmit(handleOnSubmit);
 
   useEffect(() => {
-    useFormReturn.setValue('drirections', directionsFormValue);
+    useFormReturn.setValue('directions', directionsFormValue);
   }, [directionsFormValue, useFormReturn]);
 
   return <CreateTripForm onSubmit={handleSubmitCallback} useForm={useFormReturn} />;
