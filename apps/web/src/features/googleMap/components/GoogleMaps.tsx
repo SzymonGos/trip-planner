@@ -27,20 +27,21 @@ export const GoogleMaps = () => {
 
   const onMapClick = useCallback(
     (e: google.maps.MapMouseEvent) => {
-      if (directionsFormValue?.origin === '') {
-        setDirectionsFormValue({
-          ...directionsFormValue,
-          origin: `${e.latLng.lat()}, ${e.latLng.lng()}`,
-        });
-      } else if (directionsFormValue?.destination === '') {
-        setDirectionsFormValue({
-          ...directionsFormValue,
-          destination: `${e.latLng.lat()}, ${e.latLng.lng()}`,
-        });
-      }
-      return;
+      if (!e.latLng) return;
+
+      const latLngString = `${e.latLng.lat()}, ${e.latLng.lng()}`;
+
+      setDirectionsFormValue((prev: TDirectionsFormValueProps) => {
+        if (!prev.origin) {
+          return { ...prev, origin: latLngString };
+        } else if (!prev.destination) {
+          return { ...prev, destination: latLngString };
+        } else {
+          return { origin: latLngString, destination: '' };
+        }
+      });
     },
-    [directionsFormValue, setDirectionsFormValue],
+    [setDirectionsFormValue],
   );
 
   const center = useMemo(() => (location?.lat && location?.lng ? location : defaultCenter), [location]);
