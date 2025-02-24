@@ -4,7 +4,7 @@ import React, { useCallback, useMemo, useState } from 'react';
 import { GoogleMap, useJsApiLoader, DirectionsRenderer, DirectionsService } from '@react-google-maps/api';
 import { GOOGLE_MAPS_API_KEY } from '@/lib/config';
 import { TLocationCoordsProps, useUserGeolocation } from '@/hooks/useGeolocation';
-import { useGoogleMaps } from '@/lib/contexts/GoogleMapsContext';
+import { useGoogleMapsDirections } from '@/lib/contexts/DirectionsContext';
 
 const mapContainerStyle = {
   height: '100%',
@@ -17,7 +17,7 @@ const defaultCenter: TLocationCoordsProps = {
 };
 
 export const GoogleMaps = () => {
-  const { directionsFormValue, setDirectionsFormValue } = useGoogleMaps();
+  const { directionsFormValue, setDirectionsFormValue } = useGoogleMapsDirections();
   const [response, setResponse] = useState<google.maps.DirectionsResult | null>(null);
 
   const { location } = useUserGeolocation();
@@ -27,20 +27,21 @@ export const GoogleMaps = () => {
 
   const onMapClick = useCallback(
     (e: google.maps.MapMouseEvent) => {
-      if (directionsFormValue?.origin === '') {
-        setDirectionsFormValue({
-          ...directionsFormValue,
-          origin: `${e.latLng.lat()}, ${e.latLng.lng()}`,
-        });
-      } else if (directionsFormValue?.destination === '') {
-        setDirectionsFormValue({
-          ...directionsFormValue,
-          destination: `${e.latLng.lat()}, ${e.latLng.lng()}`,
-        });
-      }
-      return;
+      if (!e.latLng) return;
+
+      const latLngString = `${e.latLng.lat()}, ${e.latLng.lng()}`;
+
+      setDirectionsFormValue((prev: TDirectionsFormValueProps) => {
+        if (!prev.origin) {
+          return { ...prev, origin: latLngString };
+        } else if (!prev.destination) {
+          return { ...prev, destination: latLngString };
+        } else {
+          return { origin: latLngString, destination: '' };
+        }
+      });
     },
-    [directionsFormValue, setDirectionsFormValue],
+    [setDirectionsFormValue],
   );
 
   const center = useMemo(() => (location?.lat && location?.lng ? location : defaultCenter), [location]);

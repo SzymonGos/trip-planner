@@ -3,14 +3,14 @@
 import { createContext, useContext, useMemo, useState } from 'react';
 import { TDirectionsFormValueProps } from './constants';
 
-type TGoogleMapsContextProps = {
+type TDirectionsContextProps = {
   directionsFormValue: TDirectionsFormValueProps;
   setDirectionsFormValue: (value: TDirectionsFormValueProps) => void;
 };
 
-const GoogleMapsContext = createContext<TGoogleMapsContextProps>({} as TGoogleMapsContextProps);
+const DirectionsContext = createContext<TDirectionsContextProps>({} as TDirectionsContextProps);
 
-export const GoogleMapsProvider = ({ children }) => {
+export const DirectionsProvider = ({ children }) => {
   const [directionsFormValue, setDirectionsFormValue] = useState<TDirectionsFormValueProps>({
     origin: '',
     destination: '',
@@ -19,7 +19,7 @@ export const GoogleMapsProvider = ({ children }) => {
 
   const contextValue = useMemo(() => ({ directionsFormValue, setDirectionsFormValue }), [directionsFormValue]);
 
-  return <GoogleMapsContext.Provider value={contextValue}>{children}</GoogleMapsContext.Provider>;
+  return <DirectionsContext.Provider value={contextValue}>{children}</DirectionsContext.Provider>;
 };
 
-export const useGoogleMaps = () => useContext(GoogleMapsContext);
+export const useGoogleMapsDirections = () => useContext(DirectionsContext);

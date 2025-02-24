@@ -1,6 +1,6 @@
 import React, { FC, ReactNode } from 'react';
 import { ApolloWrapper } from './ApolloWrapper';
-import { GoogleMapsProvider } from '../contexts/GoogleMapsContext';
+import { DirectionsProvider } from '../contexts/DirectionsContext';
 
 type TProvidersProps = {
   children: ReactNode;
@@ -9,7 +9,7 @@ type TProvidersProps = {
 export const Providers: FC<TProvidersProps> = ({ children }) => (
   <>
     <ApolloWrapper>
-      <GoogleMapsProvider>{children}</GoogleMapsProvider>
+      <DirectionsProvider>{children}</DirectionsProvider>
     </ApolloWrapper>
   </>
 );
