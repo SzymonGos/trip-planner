@@ -7,27 +7,27 @@ import { UseFormReturn } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
 import { InputField } from './InputField';
 import { Autocomplete } from '@react-google-maps/api';
-import { TDirectionsFormValueProps } from '@/lib/contexts/constants';
+import { TDirectionsValueProps } from '@/lib/contexts/constants';
 
 type TCreateTripFormProps = {
   onSubmit: () => void;
   useForm: UseFormReturn<TFormValuesProps>;
-  setDirectionsFormValue: (value: TFormValuesProps) => void;
+  setDirectionsValue: (value: TFormValuesProps) => void;
 };
 
-export const CreateTripForm: FC<TCreateTripFormProps> = ({ onSubmit, useForm, setDirectionsFormValue }) => {
+export const CreateTripForm: FC<TCreateTripFormProps> = ({ onSubmit, useForm, setDirectionsValue }) => {
   const [originAutocomplete, setOriginAutocomplete] = useState<google.maps.places.Autocomplete | null>(null);
   const [destinationAutocomplete, setDestinationAutocomplete] = useState<google.maps.places.Autocomplete | null>(null);
 
   const handlePlaceSelect = (
     autocompleteInstance: google.maps.places.Autocomplete | null,
-    fieldName: TDirectionsFormValueProps,
+    fieldName: TDirectionsValueProps,
   ) => {
     const place = autocompleteInstance.getPlace();
     if (!place) return;
     if (place && place.formatted_address) {
       useForm.setValue(fieldName, place.formatted_address);
-      setDirectionsFormValue((prev: TDirectionsFormValueProps) => ({
+      setDirectionsValue((prev: TDirectionsValueProps) => ({
         ...prev,
         [fieldName]: place.formatted_address,
       }));

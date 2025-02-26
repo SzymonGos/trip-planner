@@ -4,21 +4,20 @@ import React, { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { CreateTripForm } from './CreateTripForm';
 import { useGoogleMapsDirections } from '@/lib/contexts/DirectionsContext';
-import { TDirectionsFormValueProps } from '@/lib/contexts/constants';
+import { TDirectionsValueProps } from '@/lib/contexts/constants';
 
 export type TFormValuesProps = {
   title: string;
-  origin: TDirectionsFormValueProps['origin'];
-  destination: TDirectionsFormValueProps['destination'];
-  directions: TDirectionsFormValueProps;
+  origin: TDirectionsValueProps['origin'];
+  destination: TDirectionsValueProps['destination'];
 };
 
 export const CreateTripFormContainer = () => {
-  const { directionsFormValue, setDirectionsFormValue } = useGoogleMapsDirections();
+  const { directionsValue, setDirectionsValue } = useGoogleMapsDirections();
   const defaultValues = {
     title: '',
-    origin: directionsFormValue.origin,
-    destination: directionsFormValue.destination,
+    origin: directionsValue.origin,
+    destination: directionsValue.destination,
   };
   const useFormReturn = useForm<TFormValuesProps>({
     defaultValues,
@@ -31,15 +30,11 @@ export const CreateTripFormContainer = () => {
   const handleSubmitCallback = useFormReturn.handleSubmit(handleOnSubmit);
 
   useEffect(() => {
-    useFormReturn.setValue('origin', directionsFormValue.origin);
-    useFormReturn.setValue('destination', directionsFormValue.destination);
-  }, [directionsFormValue, useFormReturn]);
+    useFormReturn.setValue('origin', directionsValue.origin);
+    useFormReturn.setValue('destination', directionsValue.destination);
+  }, [directionsValue, useFormReturn]);
 
   return (
-    <CreateTripForm
-      onSubmit={handleSubmitCallback}
-      useForm={useFormReturn}
-      setDirectionsFormValue={setDirectionsFormValue}
-    />
+    <CreateTripForm onSubmit={handleSubmitCallback} useForm={useFormReturn} setDirectionsValue={setDirectionsValue} />
   );
 };

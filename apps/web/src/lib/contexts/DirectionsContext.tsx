@@ -1,23 +1,23 @@
 'use client';
 
 import { createContext, useContext, useMemo, useState } from 'react';
-import { TDirectionsFormValueProps } from './constants';
+import { TDirectionsValueProps } from './constants';
 
 type TDirectionsContextProps = {
-  directionsFormValue: TDirectionsFormValueProps;
-  setDirectionsFormValue: (value: TDirectionsFormValueProps) => void;
+  directionsValue: TDirectionsValueProps;
+  setDirectionsValue: (value: TDirectionsValueProps) => void;
 };
 
 const DirectionsContext = createContext<TDirectionsContextProps>({} as TDirectionsContextProps);
 
 export const DirectionsProvider = ({ children }) => {
-  const [directionsFormValue, setDirectionsFormValue] = useState<TDirectionsFormValueProps>({
+  const [directionsValue, setDirectionsValue] = useState<TDirectionsValueProps>({
     origin: '',
     destination: '',
     waypoints: [],
   });
 
-  const contextValue = useMemo(() => ({ directionsFormValue, setDirectionsFormValue }), [directionsFormValue]);
+  const contextValue = useMemo(() => ({ directionsValue, setDirectionsValue }), [directionsValue]);
 
   return <DirectionsContext.Provider value={contextValue}>{children}</DirectionsContext.Provider>;
 };
