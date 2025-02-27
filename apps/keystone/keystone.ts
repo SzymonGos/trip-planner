@@ -1,7 +1,7 @@
 import { config } from '@keystone-6/core';
-import { User } from './src/schemas/User';
 import { CORS_ORIGIN, DATABASE_URL } from './config';
 import { exec } from 'child_process';
+import { lists } from './index';
 
 export default config({
   server: {
@@ -21,7 +21,5 @@ export default config({
       });
     },
   },
-  lists: {
-    User,
-  },
+  lists,
 });
