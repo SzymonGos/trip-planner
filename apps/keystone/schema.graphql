@@ -83,6 +83,8 @@ input UserCreateInput {
 type Trip {
   id: ID!
   title: String
+  origin: String
+  destination: String
 }
 
 input TripWhereUniqueInput {
@@ -95,15 +97,21 @@ input TripWhereInput {
   NOT: [TripWhereInput!]
   id: IDFilter
   title: StringFilter
+  origin: StringFilter
+  destination: StringFilter
 }
 
 input TripOrderByInput {
   id: OrderDirection
   title: OrderDirection
+  origin: OrderDirection
+  destination: OrderDirection
 }
 
 input TripUpdateInput {
   title: String
+  origin: String
+  destination: String
 }
 
 input TripUpdateArgs {
@@ -113,6 +121,8 @@ input TripUpdateArgs {
 
 input TripCreateInput {
   title: String
+  origin: String
+  destination: String
 }
 
 """

@@ -17,6 +17,8 @@ model User {
 }
 
 model Trip {
-  id    String @id @default(cuid())
-  title String @default("")
+  id          String @id @default(cuid())
+  title       String @default("")
+  origin      String @default("")
+  destination String @default("")
 }
