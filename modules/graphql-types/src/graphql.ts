@@ -181,12 +181,28 @@ export type KeystoneMeta = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  createTrip?: Maybe<Trip>;
+  createTrips?: Maybe<Array<Maybe<Trip>>>;
   createUser?: Maybe<User>;
   createUsers?: Maybe<Array<Maybe<User>>>;
+  deleteTrip?: Maybe<Trip>;
+  deleteTrips?: Maybe<Array<Maybe<Trip>>>;
   deleteUser?: Maybe<User>;
   deleteUsers?: Maybe<Array<Maybe<User>>>;
+  updateTrip?: Maybe<Trip>;
+  updateTrips?: Maybe<Array<Maybe<Trip>>>;
   updateUser?: Maybe<User>;
   updateUsers?: Maybe<Array<Maybe<User>>>;
+};
+
+
+export type MutationCreateTripArgs = {
+  data: TripCreateInput;
+};
+
+
+export type MutationCreateTripsArgs = {
+  data: Array<TripCreateInput>;
 };
 
 
@@ -200,6 +216,16 @@ export type MutationCreateUsersArgs = {
 };
 
 
+export type MutationDeleteTripArgs = {
+  where: TripWhereUniqueInput;
+};
+
+
+export type MutationDeleteTripsArgs = {
+  where: Array<TripWhereUniqueInput>;
+};
+
+
 export type MutationDeleteUserArgs = {
   where: UserWhereUniqueInput;
 };
@@ -207,6 +233,17 @@ export type MutationDeleteUserArgs = {
 
 export type MutationDeleteUsersArgs = {
   where: Array<UserWhereUniqueInput>;
+};
+
+
+export type MutationUpdateTripArgs = {
+  data: TripUpdateInput;
+  where: TripWhereUniqueInput;
+};
+
+
+export type MutationUpdateTripsArgs = {
+  data: Array<TripUpdateArgs>;
 };
 
 
@@ -242,9 +279,31 @@ export enum OrderDirection {
 export type Query = {
   __typename?: 'Query';
   keystone: KeystoneMeta;
+  trip?: Maybe<Trip>;
+  trips?: Maybe<Array<Trip>>;
+  tripsCount?: Maybe<Scalars['Int']['output']>;
   user?: Maybe<User>;
   users?: Maybe<Array<User>>;
   usersCount?: Maybe<Scalars['Int']['output']>;
+};
+
+
+export type QueryTripArgs = {
+  where: TripWhereUniqueInput;
+};
+
+
+export type QueryTripsArgs = {
+  cursor?: InputMaybe<TripWhereUniqueInput>;
+  orderBy?: Array<TripOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: TripWhereInput;
+};
+
+
+export type QueryTripsCountArgs = {
+  where?: TripWhereInput;
 };
 
 
@@ -283,6 +342,52 @@ export type StringFilter = {
   not?: InputMaybe<NestedStringFilter>;
   notIn?: InputMaybe<Array<Scalars['String']['input']>>;
   startsWith?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Trip = {
+  __typename?: 'Trip';
+  destination?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  origin?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+};
+
+export type TripCreateInput = {
+  destination?: InputMaybe<Scalars['String']['input']>;
+  origin?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type TripOrderByInput = {
+  destination?: InputMaybe<OrderDirection>;
+  id?: InputMaybe<OrderDirection>;
+  origin?: InputMaybe<OrderDirection>;
+  title?: InputMaybe<OrderDirection>;
+};
+
+export type TripUpdateArgs = {
+  data: TripUpdateInput;
+  where: TripWhereUniqueInput;
+};
+
+export type TripUpdateInput = {
+  destination?: InputMaybe<Scalars['String']['input']>;
+  origin?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type TripWhereInput = {
+  AND?: InputMaybe<Array<TripWhereInput>>;
+  NOT?: InputMaybe<Array<TripWhereInput>>;
+  OR?: InputMaybe<Array<TripWhereInput>>;
+  destination?: InputMaybe<StringFilter>;
+  id?: InputMaybe<IdFilter>;
+  origin?: InputMaybe<StringFilter>;
+  title?: InputMaybe<StringFilter>;
+};
+
+export type TripWhereUniqueInput = {
+  id?: InputMaybe<Scalars['ID']['input']>;
 };
 
 export type User = {
