@@ -48,9 +48,7 @@ export const CreateTripFormContainer = () => {
     console.log('form data', data);
     createTripMutation({
       variables: {
-        data: {
-          title: data.title,
-        },
+        data,
       },
     });
   };
