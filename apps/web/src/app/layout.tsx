@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { Providers } from '@/lib/providers/providers';
 import { Navbar } from '@/components/Navbar/Navbar';
+import { ClerkProvider } from '@clerk/nextjs';
 
 export const metadata: Metadata = {
   title: 'Trip Planner',
@@ -9,14 +10,16 @@ export const metadata: Metadata = {
 };
 
 const RootLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <html lang="en">
-    <body>
-      <Providers>
-        <Navbar />
-        {children}
-      </Providers>
-    </body>
-  </html>
+  <ClerkProvider>
+    <html lang="en">
+      <body>
+        <Providers>
+          <Navbar />
+          {children}
+        </Providers>
+      </body>
+    </html>
+  </ClerkProvider>
 );
 
 export default RootLayout;
