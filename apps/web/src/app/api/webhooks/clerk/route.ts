@@ -2,6 +2,9 @@ import { Webhook } from 'svix';
 import { headers } from 'next/headers';
 import { WebhookEvent } from '@clerk/nextjs/server';
 import { CLERK_WEBHOOK_SECRET } from '@/lib/config';
+import { PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient();
 
 export async function POST(req: Request) {
   const wh = new Webhook(CLERK_WEBHOOK_SECRET);
@@ -35,16 +38,17 @@ export async function POST(req: Request) {
     });
   }
 
-  // Do something with payload
-  // For this guide, log payload to console
-  const { id } = evt.data;
   const eventType = evt.type;
-  console.log(`Received webhook with ID ${id} and event type of ${eventType}`);
-  console.log('Webhook payload:', body);
 
-  if (evt.type === 'user.created') {
-    console.log('user', evt.data);
+  if (eventType === 'user.created') {
+    await prisma.user.create({
+      data: {
+        clerkId: evt.data.id,
+        email: evt.data.email_addresses[0].email_address,
+        username: evt.data.username,
+      },
+    });
   }
 
-  return new Response('Webhook received', { status: 200 });
+  return new Response('', { status: 200 });
 }
