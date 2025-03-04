@@ -2,7 +2,7 @@ import { ViewTrip } from '@/features/trip/components/ViewTrip/ViewTrip';
 import { getTripQuery } from '@/features/trip/server/db/getTripQuery';
 import { getClient } from '@/lib/apolloClient';
 
-const Trip = async ({ params }: { params: { id: string } }) => {
+const TripPage = async ({ params }: { params: { id: string } }) => {
   const client = getClient();
   const { data } = await client.query({
     query: getTripQuery,
@@ -19,4 +19,4 @@ const Trip = async ({ params }: { params: { id: string } }) => {
   );
 };
 
-export default Trip;
+export default TripPage;

@@ -392,17 +392,23 @@ export type TripWhereUniqueInput = {
 
 export type User = {
   __typename?: 'User';
+  clerkId?: Maybe<Scalars['String']['output']>;
+  email?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
-  name?: Maybe<Scalars['String']['output']>;
+  username?: Maybe<Scalars['String']['output']>;
 };
 
 export type UserCreateInput = {
-  name?: InputMaybe<Scalars['String']['input']>;
+  clerkId?: InputMaybe<Scalars['String']['input']>;
+  email?: InputMaybe<Scalars['String']['input']>;
+  username?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type UserOrderByInput = {
+  clerkId?: InputMaybe<OrderDirection>;
+  email?: InputMaybe<OrderDirection>;
   id?: InputMaybe<OrderDirection>;
-  name?: InputMaybe<OrderDirection>;
+  username?: InputMaybe<OrderDirection>;
 };
 
 export type UserUpdateArgs = {
@@ -411,17 +417,22 @@ export type UserUpdateArgs = {
 };
 
 export type UserUpdateInput = {
-  name?: InputMaybe<Scalars['String']['input']>;
+  clerkId?: InputMaybe<Scalars['String']['input']>;
+  email?: InputMaybe<Scalars['String']['input']>;
+  username?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type UserWhereInput = {
   AND?: InputMaybe<Array<UserWhereInput>>;
   NOT?: InputMaybe<Array<UserWhereInput>>;
   OR?: InputMaybe<Array<UserWhereInput>>;
+  clerkId?: InputMaybe<StringFilter>;
+  email?: InputMaybe<StringFilter>;
   id?: InputMaybe<IdFilter>;
-  name?: InputMaybe<StringFilter>;
+  username?: InputMaybe<StringFilter>;
 };
 
 export type UserWhereUniqueInput = {
+  clerkId?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['ID']['input']>;
 };
