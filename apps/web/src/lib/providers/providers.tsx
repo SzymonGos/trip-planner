@@ -1,6 +1,7 @@
 import React, { FC, ReactNode } from 'react';
 import { ApolloWrapper } from './ApolloWrapper';
 import { DirectionsProvider } from '../contexts/DirectionsContext';
+import { ClerkProvider } from '@clerk/nextjs';
 
 type TProvidersProps = {
   children: ReactNode;
@@ -8,8 +9,10 @@ type TProvidersProps = {
 
 export const Providers: FC<TProvidersProps> = ({ children }) => (
   <>
-    <ApolloWrapper>
-      <DirectionsProvider>{children}</DirectionsProvider>
-    </ApolloWrapper>
+    <ClerkProvider>
+      <ApolloWrapper>
+        <DirectionsProvider>{children}</DirectionsProvider>
+      </ApolloWrapper>
+    </ClerkProvider>
   </>
 );
