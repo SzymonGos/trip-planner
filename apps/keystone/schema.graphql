@@ -3,11 +3,14 @@
 
 type User {
   id: ID!
-  name: String
+  clerkId: String
+  username: String
+  email: String
 }
 
 input UserWhereUniqueInput {
   id: ID
+  clerkId: String
 }
 
 input UserWhereInput {
@@ -15,7 +18,9 @@ input UserWhereInput {
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]
   id: IDFilter
-  name: StringFilter
+  clerkId: StringFilter
+  username: StringFilter
+  email: StringFilter
 }
 
 input IDFilter {
@@ -59,7 +64,9 @@ input NestedStringFilter {
 
 input UserOrderByInput {
   id: OrderDirection
-  name: OrderDirection
+  clerkId: OrderDirection
+  username: OrderDirection
+  email: OrderDirection
 }
 
 enum OrderDirection {
@@ -68,7 +75,9 @@ enum OrderDirection {
 }
 
 input UserUpdateInput {
-  name: String
+  clerkId: String
+  username: String
+  email: String
 }
 
 input UserUpdateArgs {
@@ -77,7 +86,9 @@ input UserUpdateArgs {
 }
 
 input UserCreateInput {
-  name: String
+  clerkId: String
+  username: String
+  email: String
 }
 
 type Trip {
