@@ -1,11 +1,11 @@
 'use client';
 
 import React, { useCallback, useMemo, useRef, useState } from 'react';
-import { GoogleMap, useJsApiLoader, DirectionsRenderer, DirectionsService } from '@react-google-maps/api';
-import { GOOGLE_MAPS_API_KEY } from '@/lib/config';
+import { GoogleMap, DirectionsRenderer, DirectionsService } from '@react-google-maps/api';
 import { TLocationCoordsProps, useUserGeolocation } from '@/hooks/useGeolocation';
 import { useGoogleMapsDirections } from '@/lib/contexts/DirectionsContext';
 import { TDirectionsValueProps } from '@/lib/contexts/constants';
+import { useGoogleMapLoader } from '../hooks/useGoogleMapLoader';
 
 const mapContainerStyle = {
   height: '100%',
@@ -22,10 +22,8 @@ export const GoogleMaps = () => {
   const [response, setResponse] = useState<google.maps.DirectionsResult | null>(null);
   const directionsRendererRef = useRef<google.maps.DirectionsRenderer | null>(null);
 
+  const { isLoaded } = useGoogleMapLoader();
   const { location } = useUserGeolocation();
-  const { isLoaded } = useJsApiLoader({
-    googleMapsApiKey: GOOGLE_MAPS_API_KEY,
-  });
 
   const onMapClick = useCallback(
     (e: google.maps.MapMouseEvent) => {
@@ -102,9 +100,7 @@ export const GoogleMaps = () => {
     [response],
   );
 
-  if (!isLoaded) {
-    return <div>Loading maps</div>;
-  }
+  if (!isLoaded) return <div>Loading...</div>;
 
   return (
     <GoogleMap zoom={10} mapContainerStyle={mapContainerStyle} center={center} onClick={onMapClick}>

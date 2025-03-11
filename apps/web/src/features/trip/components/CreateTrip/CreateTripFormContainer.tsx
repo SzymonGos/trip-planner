@@ -7,6 +7,7 @@ import { useGoogleMapsDirections } from '@/lib/contexts/DirectionsContext';
 import { TDirectionsValueProps } from '@/lib/contexts/constants';
 import { useMutation } from '@apollo/client';
 import { createTripMutationQuery } from '../../server/actions/createTripMutationQuery';
+import { useGoogleMapLoader } from '@/features/googleMap/hooks/useGoogleMapLoader';
 
 export type TFormValuesProps = {
   title: string;
@@ -20,6 +21,8 @@ export const CreateTripFormContainer = () => {
   const [originAutocomplete, setOriginAutocomplete] = useState<TAutocompleteProps>(null);
   const [destinationAutocomplete, setDestinationAutocomplete] = useState<TAutocompleteProps>(null);
   const { directionsValue, setDirectionsValue } = useGoogleMapsDirections();
+
+  const { isLoaded } = useGoogleMapLoader();
 
   const [createTripMutation] = useMutation(createTripMutationQuery);
 
@@ -59,6 +62,8 @@ export const CreateTripFormContainer = () => {
     useFormReturn.setValue('origin', directionsValue.origin);
     useFormReturn.setValue('destination', directionsValue.destination);
   }, [directionsValue, useFormReturn]);
+
+  if (!isLoaded) return <div>Form Loading...</div>;
 
   return (
     <CreateTripForm
