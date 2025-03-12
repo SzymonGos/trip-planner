@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Control } from 'react-hook-form';
 import { TFormValuesProps } from './CreateTripFormContainer';
@@ -21,6 +21,7 @@ export const InputField: FC<TInputFieldProps> = ({ control, name, label, placeho
         <FormControl>
           <Input placeholder={placeholder} {...field} />
         </FormControl>
+        <FormMessage />
       </FormItem>
     )}
   />
