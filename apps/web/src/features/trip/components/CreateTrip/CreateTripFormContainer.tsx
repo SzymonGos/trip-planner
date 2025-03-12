@@ -7,11 +7,15 @@ import { useGoogleMapsDirections } from '@/lib/contexts/DirectionsContext';
 import { TDirectionsValueProps } from '@/lib/contexts/constants';
 import { useMutation } from '@apollo/client';
 import { createTripMutationQuery } from '../../server/actions/createTripMutationQuery';
+import { useGoogleMapLoader } from '@/features/googleMap/hooks/useGoogleMapLoader';
+import { useAuthenticatedUser } from '@/features/user/hooks/useAuthenticatedUser';
+import { User as TUser } from 'tp-graphql-types';
 
 export type TFormValuesProps = {
   title: string;
   origin: TDirectionsValueProps['origin'];
   destination: TDirectionsValueProps['destination'];
+  creator?: Pick<TUser, 'id'>;
 };
 
 export type TAutocompleteProps = google.maps.places.Autocomplete | null;
@@ -20,6 +24,8 @@ export const CreateTripFormContainer = () => {
   const [originAutocomplete, setOriginAutocomplete] = useState<TAutocompleteProps>(null);
   const [destinationAutocomplete, setDestinationAutocomplete] = useState<TAutocompleteProps>(null);
   const { directionsValue, setDirectionsValue } = useGoogleMapsDirections();
+  const { isLoaded } = useGoogleMapLoader();
+  const { authUserId } = useAuthenticatedUser();
 
   const [createTripMutation] = useMutation(createTripMutationQuery);
 
@@ -45,10 +51,18 @@ export const CreateTripFormContainer = () => {
   };
 
   const handleOnSubmit: SubmitHandler<TFormValuesProps> = (data) => {
-    console.log('form data', data);
     createTripMutation({
       variables: {
-        data,
+        data: {
+          title: data.title,
+          origin: data.origin,
+          destination: data.destination,
+          creator: {
+            connect: {
+              id: authUserId,
+            },
+          },
+        },
       },
     });
   };
@@ -59,6 +73,8 @@ export const CreateTripFormContainer = () => {
     useFormReturn.setValue('origin', directionsValue.origin);
     useFormReturn.setValue('destination', directionsValue.destination);
   }, [directionsValue, useFormReturn]);
+
+  if (!isLoaded) return <div>Form Loading...</div>;
 
   return (
     <CreateTripForm

@@ -346,6 +346,7 @@ export type StringFilter = {
 
 export type Trip = {
   __typename?: 'Trip';
+  creator?: Maybe<User>;
   destination?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   origin?: Maybe<Scalars['String']['output']>;
@@ -353,6 +354,7 @@ export type Trip = {
 };
 
 export type TripCreateInput = {
+  creator?: InputMaybe<UserRelateToOneForCreateInput>;
   destination?: InputMaybe<Scalars['String']['input']>;
   origin?: InputMaybe<Scalars['String']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
@@ -371,6 +373,7 @@ export type TripUpdateArgs = {
 };
 
 export type TripUpdateInput = {
+  creator?: InputMaybe<UserRelateToOneForUpdateInput>;
   destination?: InputMaybe<Scalars['String']['input']>;
   origin?: InputMaybe<Scalars['String']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
@@ -380,6 +383,7 @@ export type TripWhereInput = {
   AND?: InputMaybe<Array<TripWhereInput>>;
   NOT?: InputMaybe<Array<TripWhereInput>>;
   OR?: InputMaybe<Array<TripWhereInput>>;
+  creator?: InputMaybe<UserWhereInput>;
   destination?: InputMaybe<StringFilter>;
   id?: InputMaybe<IdFilter>;
   origin?: InputMaybe<StringFilter>;
@@ -409,6 +413,17 @@ export type UserOrderByInput = {
   email?: InputMaybe<OrderDirection>;
   id?: InputMaybe<OrderDirection>;
   username?: InputMaybe<OrderDirection>;
+};
+
+export type UserRelateToOneForCreateInput = {
+  connect?: InputMaybe<UserWhereUniqueInput>;
+  create?: InputMaybe<UserCreateInput>;
+};
+
+export type UserRelateToOneForUpdateInput = {
+  connect?: InputMaybe<UserWhereUniqueInput>;
+  create?: InputMaybe<UserCreateInput>;
+  disconnect?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type UserUpdateArgs = {

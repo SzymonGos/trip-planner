@@ -96,6 +96,7 @@ type Trip {
   title: String
   origin: String
   destination: String
+  creator: User
 }
 
 input TripWhereUniqueInput {
@@ -110,6 +111,7 @@ input TripWhereInput {
   title: StringFilter
   origin: StringFilter
   destination: StringFilter
+  creator: UserWhereInput
 }
 
 input TripOrderByInput {
@@ -123,6 +125,13 @@ input TripUpdateInput {
   title: String
   origin: String
   destination: String
+  creator: UserRelateToOneForUpdateInput
+}
+
+input UserRelateToOneForUpdateInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
+  disconnect: Boolean
 }
 
 input TripUpdateArgs {
@@ -134,6 +143,12 @@ input TripCreateInput {
   title: String
   origin: String
   destination: String
+  creator: UserRelateToOneForCreateInput
+}
+
+input UserRelateToOneForCreateInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
 }
 
 """
