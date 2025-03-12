@@ -10,13 +10,16 @@ import { createTripMutationQuery } from '../../server/actions/createTripMutation
 import { useGoogleMapLoader } from '@/features/googleMap/hooks/useGoogleMapLoader';
 import { useAuthenticatedUser } from '@/features/user/hooks/useAuthenticatedUser';
 import { User as TUser } from 'tp-graphql-types';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { tripSchema } from '../../helpers/formValidations';
 
 export type TFormValuesProps = {
   title: string;
   origin: TDirectionsValueProps['origin'];
   destination: TDirectionsValueProps['destination'];
   creator?: Pick<TUser, 'id'>;
-};
+} & z.infer<typeof tripSchema>;
 
 export type TAutocompleteProps = google.maps.places.Autocomplete | null;
 
@@ -31,10 +34,11 @@ export const CreateTripFormContainer = () => {
 
   const defaultValues = {
     title: '',
-    origin: directionsValue.origin,
-    destination: directionsValue.destination,
+    origin: directionsValue?.origin || '',
+    destination: directionsValue?.destination || '',
   };
   const useFormReturn = useForm<TFormValuesProps>({
+    resolver: zodResolver(tripSchema),
     defaultValues,
   });
 
@@ -70,8 +74,8 @@ export const CreateTripFormContainer = () => {
   const handleSubmitCallback = useFormReturn.handleSubmit(handleOnSubmit);
 
   useEffect(() => {
-    useFormReturn.setValue('origin', directionsValue.origin);
-    useFormReturn.setValue('destination', directionsValue.destination);
+    useFormReturn.setValue('origin', directionsValue?.origin);
+    useFormReturn.setValue('destination', directionsValue?.destination);
   }, [directionsValue, useFormReturn]);
 
   if (!isLoaded) return <div>Form Loading...</div>;
