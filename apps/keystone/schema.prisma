@@ -12,15 +12,20 @@ generator client {
 }
 
 model User {
-  id       String @id @default(cuid())
-  clerkId  String @unique @default("")
-  username String @default("")
-  email    String @default("")
+  id                String @id @default(cuid())
+  clerkId           String @unique @default("")
+  username          String @default("")
+  email             String @default("")
+  from_Trip_creator Trip[] @relation("Trip_creator")
 }
 
 model Trip {
-  id          String @id @default(cuid())
-  title       String @default("")
-  origin      String @default("")
-  destination String @default("")
+  id          String  @id @default(cuid())
+  title       String  @default("")
+  origin      String  @default("")
+  destination String  @default("")
+  creator     User?   @relation("Trip_creator", fields: [creatorId], references: [id])
+  creatorId   String? @map("creator")
+
+  @@index([creatorId])
 }
