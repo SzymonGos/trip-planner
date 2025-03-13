@@ -29,11 +29,15 @@ export const UserMenu: FC<TUserMenuProps> = ({ userName, clerkId }) => {
           <Button variant="ghost">{userName}</Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-48">
-          <DropdownMenuItem>
-            <Link href={`/user/${data?.user?.id}`}>My Account</Link>
+          <DropdownMenuItem asChild>
+            <Link href={`/user/${data?.user?.id}`} className="cursor-pointer">
+              My Account
+            </Link>
           </DropdownMenuItem>
           <DropdownMenuItem>
-            <SignOutButton signOutOptions={{ sessionId }} />
+            <SignOutButton signOutOptions={{ sessionId }}>
+              <span className="w-full cursor-pointer">Sign out</span>
+            </SignOutButton>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
