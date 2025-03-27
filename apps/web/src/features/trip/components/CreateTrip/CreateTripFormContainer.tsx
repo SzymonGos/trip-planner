@@ -11,7 +11,8 @@ import { useGoogleMapLoader } from '@/features/googleMap/hooks/useGoogleMapLoade
 import { useAuthenticatedUser } from '@/features/user/hooks/useAuthenticatedUser';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { tripSchema } from '../../helpers/formValidations';
+import { tripSchema } from '../../helpers/formValidation';
+import { getTripsQuery } from '../../server/db/getTripsQuery';
 
 export type TFormValuesProps = {
   title: string;
@@ -66,6 +67,7 @@ export const CreateTripFormContainer = () => {
           },
         },
       },
+      refetchQueries: [{ query: getTripsQuery }],
     });
     useFormReturn.reset();
   };
@@ -73,8 +75,8 @@ export const CreateTripFormContainer = () => {
   const handleSubmitCallback = useFormReturn.handleSubmit(handleOnSubmit);
 
   useEffect(() => {
-    useFormReturn.setValue('origin', directionsValue?.origin);
-    useFormReturn.setValue('destination', directionsValue?.destination);
+    useFormReturn.setValue('origin', directionsValue?.origin as string);
+    useFormReturn.setValue('destination', directionsValue?.destination as string);
   }, [directionsValue, useFormReturn]);
 
   if (!isLoaded) return <div>Form Loading...</div>;
