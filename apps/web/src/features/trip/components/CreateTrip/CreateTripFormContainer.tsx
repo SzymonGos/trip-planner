@@ -9,16 +9,15 @@ import { useMutation } from '@apollo/client';
 import { createTripMutationQuery } from '../../server/actions/createTripMutationQuery';
 import { useGoogleMapLoader } from '@/features/googleMap/hooks/useGoogleMapLoader';
 import { useAuthenticatedUser } from '@/features/user/hooks/useAuthenticatedUser';
-import { User as TUser } from 'tp-graphql-types';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { tripSchema } from '../../helpers/formValidations';
+import { tripSchema } from '../../helpers/formValidation';
+import { getTripsQuery } from '../../server/db/getTripsQuery';
 
 export type TFormValuesProps = {
   title: string;
   origin: TDirectionsValueProps['origin'];
   destination: TDirectionsValueProps['destination'];
-  creator?: Pick<TUser, 'id'>;
 } & z.infer<typeof tripSchema>;
 
 export type TAutocompleteProps = google.maps.places.Autocomplete | null;
@@ -68,14 +67,16 @@ export const CreateTripFormContainer = () => {
           },
         },
       },
+      refetchQueries: [{ query: getTripsQuery }],
     });
+    useFormReturn.reset();
   };
 
   const handleSubmitCallback = useFormReturn.handleSubmit(handleOnSubmit);
 
   useEffect(() => {
-    useFormReturn.setValue('origin', directionsValue?.origin);
-    useFormReturn.setValue('destination', directionsValue?.destination);
+    useFormReturn.setValue('origin', directionsValue?.origin as string);
+    useFormReturn.setValue('destination', directionsValue?.destination as string);
   }, [directionsValue, useFormReturn]);
 
   if (!isLoaded) return <div>Form Loading...</div>;
