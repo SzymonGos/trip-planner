@@ -1,10 +1,9 @@
 'use client';
 
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { GoogleMap, DirectionsRenderer, DirectionsService } from '@react-google-maps/api';
 import { TLocationCoordsProps, useUserGeolocation } from '@/hooks/useGeolocation';
 import { useGoogleMapsDirections } from '@/lib/contexts/DirectionsContext';
-import { TDirectionsValueProps } from '@/lib/contexts/constants';
 import { useGoogleMapLoader } from '../hooks/useGoogleMapLoader';
 
 const mapContainerStyle = {
@@ -18,10 +17,8 @@ const defaultCenter: TLocationCoordsProps = {
 };
 
 export const GoogleMaps = () => {
-  const { directionsValue, setDirectionsValue } = useGoogleMapsDirections();
-  const [response, setResponse] = useState<google.maps.DirectionsResult | null>(null);
-  const directionsRendererRef = useRef<google.maps.DirectionsRenderer | null>(null);
-
+  const { directionsValue, setDirectionsValue, directionsResult, setDirectionsResult, directionsRendererRef } =
+    useGoogleMapsDirections();
   const { isLoaded } = useGoogleMapLoader();
   const { location } = useUserGeolocation();
 
@@ -30,27 +27,38 @@ export const GoogleMaps = () => {
       if (!e.latLng) return;
 
       const geocoder = new google.maps.Geocoder();
-
-      try {
-        geocoder.geocode({ location: e.latLng }, (results, status) => {
-          if (status === 'OK' && results && results.length > 0) {
-            const address = results[0].formatted_address;
-            setDirectionsValue((prev: TDirectionsValueProps) => {
-              if (!prev.origin) {
-                return { ...prev, origin: address };
-              } else if (!prev.destination) {
-                return { ...prev, destination: address };
-              } else {
-                return { origin: address, destination: '' };
-              }
-            });
+      geocoder.geocode({ location: e.latLng }, (results, status) => {
+        if (status === 'OK' && results && results.length > 0) {
+          const address = results[0].formatted_address;
+          if (!directionsValue.origin) {
+            setDirectionsValue({ ...directionsValue, origin: address });
+          } else if (!directionsValue.destination) {
+            setDirectionsValue({ ...directionsValue, destination: address });
+          } else {
+            setDirectionsValue({ origin: address, destination: '', waypoints: [] });
           }
-        });
-      } catch (error) {
-        console.error('Error geocoding:', error);
+        }
+      });
+    },
+    [directionsValue, setDirectionsValue],
+  );
+
+  const directionsCallback = useCallback(
+    (result: google.maps.DirectionsResult | null, status: google.maps.DirectionsStatus) => {
+      if (status === 'OK' && result !== null) {
+        setDirectionsResult(result);
+      } else {
+        console.error('Directions request failed:', status);
       }
     },
-    [setDirectionsValue],
+    [setDirectionsResult],
+  );
+
+  const onDirectionsLoad = useCallback(
+    (directionsRenderer: google.maps.DirectionsRenderer) => {
+      directionsRendererRef.current = directionsRenderer;
+    },
+    [directionsRendererRef],
   );
 
   const center = useMemo(() => (location?.lat && location?.lng ? location : defaultCenter), [location]);
@@ -64,63 +72,25 @@ export const GoogleMaps = () => {
     [directionsValue.origin, directionsValue.destination],
   );
 
-  const directionsCallback = useCallback(
-    (result: google.maps.DirectionsResult | null, status: google.maps.DirectionsStatus) => {
-      if (status === 'OK' && result !== null) {
-        setResponse(result);
-      } else {
-        console.error('Directions request failed:', status);
-      }
-    },
-    [],
-  );
-
-  const onDirectionsLoad = useCallback((directionsRenderer: google.maps.DirectionsRenderer) => {
-    directionsRendererRef.current = directionsRenderer;
-  }, []);
-
-  const handleDirectionsChanged = useCallback(() => {
-    if (!directionsRendererRef.current) return;
-    const directions = directionsRendererRef.current.getDirections();
-
-    if (directions && directions.routes.length > 0 && directions.routes[0].legs.length > 0) {
-      const leg = directions.routes[0].legs[0];
-      setDirectionsValue((prev: TDirectionsValueProps) => ({
-        ...prev,
-        origin: leg.start_address,
-        destination: leg.end_address,
-      }));
-    }
-  }, [setDirectionsValue]);
-
-  const directionsResult = useMemo(
-    () => ({
-      directions: response,
-    }),
-    [response],
-  );
-
   if (!isLoaded) return <div>Loading...</div>;
 
   return (
     <GoogleMap zoom={10} mapContainerStyle={mapContainerStyle} center={center} onClick={onMapClick}>
-      {directionsValue.origin !== '' && directionsValue.destination !== '' && (
+      {directionsValue.origin && directionsValue.destination && (
         <DirectionsService options={directionsServiceOptions} callback={directionsCallback} />
       )}
-      {directionsResult.directions && (
+      {directionsResult && (
         <DirectionsRenderer
-          directions={directionsResult.directions}
+          directions={directionsResult}
           options={{
+            suppressMarkers: false,
             polylineOptions: {
-              strokeColor: 'red',
-              strokeOpacity: 0.5,
-              strokeWeight: 6,
-              clickable: false,
+              strokeColor: '#FF0000',
+              strokeOpacity: 0.8,
+              strokeWeight: 3,
             },
-            draggable: true,
           }}
           onLoad={onDirectionsLoad}
-          onDirectionsChanged={handleDirectionsChanged}
         />
       )}
     </GoogleMap>
