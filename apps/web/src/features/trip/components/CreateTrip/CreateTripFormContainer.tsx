@@ -13,6 +13,7 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { tripSchema } from '../../helpers/formValidation';
 import { getTripsQuery } from '../../server/db/getTripsQuery';
+import { useRouter } from 'next/navigation';
 
 export type TFormValuesProps = {
   title: string;
@@ -28,6 +29,7 @@ export const CreateTripFormContainer = () => {
   const { directionsValue, setDirectionsValue, handleClearDirections } = useGoogleMapsDirections();
   const { isLoaded } = useGoogleMapLoader();
   const { authUserId } = useAuthenticatedUser();
+  const router = useRouter();
 
   const [createTripMutation] = useMutation(createTripMutationQuery);
 
@@ -53,24 +55,31 @@ export const CreateTripFormContainer = () => {
     }
   };
 
-  const handleOnSubmit: SubmitHandler<TFormValuesProps> = (data) => {
-    createTripMutation({
-      variables: {
-        data: {
-          title: data.title,
-          origin: data.origin,
-          destination: data.destination,
-          creator: {
-            connect: {
-              id: authUserId,
+  const handleOnSubmit: SubmitHandler<TFormValuesProps> = async (data) => {
+    try {
+      const createTripResponse = await createTripMutation({
+        variables: {
+          data: {
+            title: data.title,
+            origin: data.origin,
+            destination: data.destination,
+            creator: {
+              connect: {
+                id: authUserId,
+              },
             },
           },
         },
-      },
-      refetchQueries: [{ query: getTripsQuery }],
-    });
-    useFormReturn.reset();
-    handleClearDirections();
+        refetchQueries: [{ query: getTripsQuery }],
+      });
+
+      const tripId = createTripResponse?.data?.createTrip?.id;
+      useFormReturn.reset();
+      handleClearDirections();
+      router?.push(`/trip/${tripId}`);
+    } catch (e) {
+      console.error(e.message);
+    }
   };
 
   const handleSubmitCallback = useFormReturn.handleSubmit(handleOnSubmit);
