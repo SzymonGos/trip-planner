@@ -3,3 +3,9 @@ export type TDirectionsValueProps = {
   destination: google.maps.LatLngLiteral | string;
   waypoints?: google.maps.DirectionsWaypoint[];
 };
+
+export const initialDirections = {
+  origin: '',
+  destination: '',
+  waypoints: [],
+};
