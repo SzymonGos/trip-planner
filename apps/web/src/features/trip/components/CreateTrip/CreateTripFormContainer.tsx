@@ -25,7 +25,7 @@ export type TAutocompleteProps = google.maps.places.Autocomplete | null;
 export const CreateTripFormContainer = () => {
   const [originAutocomplete, setOriginAutocomplete] = useState<TAutocompleteProps>(null);
   const [destinationAutocomplete, setDestinationAutocomplete] = useState<TAutocompleteProps>(null);
-  const { directionsValue, setDirectionsValue } = useGoogleMapsDirections();
+  const { directionsValue, setDirectionsValue, handleClearDirections } = useGoogleMapsDirections();
   const { isLoaded } = useGoogleMapLoader();
   const { authUserId } = useAuthenticatedUser();
 
@@ -70,6 +70,7 @@ export const CreateTripFormContainer = () => {
       refetchQueries: [{ query: getTripsQuery }],
     });
     useFormReturn.reset();
+    handleClearDirections();
   };
 
   const handleSubmitCallback = useFormReturn.handleSubmit(handleOnSubmit);
@@ -91,6 +92,7 @@ export const CreateTripFormContainer = () => {
       destinationAutocomplete={destinationAutocomplete}
       setOriginAutocomplete={setOriginAutocomplete}
       setDestinationAutocomplete={setDestinationAutocomplete}
+      handleClearDirections={handleClearDirections}
     />
   );
 };
