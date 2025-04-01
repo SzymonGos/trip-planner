@@ -1,14 +1,15 @@
+import { getTripPlannerUrl } from '@/features/trip/helpers/getTripPlannerUrl';
+import { getTripsUrl } from '@/features/trip/helpers/getTripsUrl';
+
 export const navbarLinks = [
   {
     id: 'plan_trip',
     name: 'plan trip',
-    //todo: export url
-    url: '/trip/planner',
+    url: getTripPlannerUrl(),
   },
   {
     id: 'trips',
     name: 'trips',
-    //todo: export url
-    url: '/trips',
+    url: getTripsUrl(),
   },
 ];

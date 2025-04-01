@@ -1,10 +1,9 @@
 import { ViewTrip } from '@/features/trip/components/ViewTrip/ViewTrip';
 import { getTripQuery } from '@/features/trip/server/db/getTripQuery';
-import { getClient } from '@/lib/apolloClient';
+import { query } from '@/lib/apolloClient';
 
 const TripPage = async ({ params }: { params: { id: string } }) => {
-  const client = getClient();
-  const { data } = await client.query({
+  const { data } = await query({
     query: getTripQuery,
     variables: {
       id: params.id,
@@ -13,7 +12,6 @@ const TripPage = async ({ params }: { params: { id: string } }) => {
 
   return (
     <div>
-      View Trip
       <ViewTrip data={data?.trip} />
     </div>
   );

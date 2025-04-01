@@ -14,6 +14,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { tripSchema } from '../../helpers/formValidation';
 import { getTripsQuery } from '../../server/db/getTripsQuery';
 import { useRouter } from 'next/navigation';
+import { getTripUrl } from '../../helpers/getTripUrl';
 
 export type TFormValuesProps = {
   title: string;
@@ -76,7 +77,7 @@ export const CreateTripFormContainer = () => {
       const tripId = createTripResponse?.data?.createTrip?.id;
       useFormReturn.reset();
       handleClearDirections();
-      router?.push(`/trip/${tripId}`);
+      router?.push(getTripUrl(tripId));
     } catch (e) {
       console.error(e.message);
     }
