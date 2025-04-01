@@ -13,6 +13,8 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { tripSchema } from '../../helpers/formValidation';
 import { getTripsQuery } from '../../server/db/getTripsQuery';
+import { useRouter } from 'next/navigation';
+import { getTripUrl } from '../../helpers/getTripUrl';
 
 export type TFormValuesProps = {
   title: string;
@@ -25,9 +27,10 @@ export type TAutocompleteProps = google.maps.places.Autocomplete | null;
 export const CreateTripFormContainer = () => {
   const [originAutocomplete, setOriginAutocomplete] = useState<TAutocompleteProps>(null);
   const [destinationAutocomplete, setDestinationAutocomplete] = useState<TAutocompleteProps>(null);
-  const { directionsValue, setDirectionsValue } = useGoogleMapsDirections();
+  const { directionsValue, setDirectionsValue, handleClearDirections } = useGoogleMapsDirections();
   const { isLoaded } = useGoogleMapLoader();
   const { authUserId } = useAuthenticatedUser();
+  const router = useRouter();
 
   const [createTripMutation] = useMutation(createTripMutationQuery);
 
@@ -53,23 +56,31 @@ export const CreateTripFormContainer = () => {
     }
   };
 
-  const handleOnSubmit: SubmitHandler<TFormValuesProps> = (data) => {
-    createTripMutation({
-      variables: {
-        data: {
-          title: data.title,
-          origin: data.origin,
-          destination: data.destination,
-          creator: {
-            connect: {
-              id: authUserId,
+  const handleOnSubmit: SubmitHandler<TFormValuesProps> = async (data) => {
+    try {
+      const createTripResponse = await createTripMutation({
+        variables: {
+          data: {
+            title: data.title,
+            origin: data.origin,
+            destination: data.destination,
+            creator: {
+              connect: {
+                id: authUserId,
+              },
             },
           },
         },
-      },
-      refetchQueries: [{ query: getTripsQuery }],
-    });
-    useFormReturn.reset();
+        refetchQueries: [{ query: getTripsQuery }],
+      });
+
+      const tripId = createTripResponse?.data?.createTrip?.id;
+      useFormReturn.reset();
+      handleClearDirections();
+      router?.push(getTripUrl(tripId));
+    } catch (e) {
+      console.error(e.message);
+    }
   };
 
   const handleSubmitCallback = useFormReturn.handleSubmit(handleOnSubmit);
@@ -91,6 +102,7 @@ export const CreateTripFormContainer = () => {
       destinationAutocomplete={destinationAutocomplete}
       setOriginAutocomplete={setOriginAutocomplete}
       setDestinationAutocomplete={setDestinationAutocomplete}
+      handleClearDirections={handleClearDirections}
     />
   );
 };
