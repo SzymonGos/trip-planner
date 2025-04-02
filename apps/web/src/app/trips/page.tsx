@@ -4,6 +4,7 @@ import { getTripsQuery } from '@/features/trip/server/db/getTripsQuery';
 import { Trip as TTrip } from 'tp-graphql-types';
 import { query } from '@/lib/apolloClient';
 import { headers } from 'next/headers';
+import { TripsWrapper } from './TripsWrapper';
 
 const TripsPage = async () => {
   headers();
@@ -14,9 +15,11 @@ const TripsPage = async () => {
   const trips = data?.trips;
 
   return (
-    <div className="w-full flex flex-col items-center">
-      {trips?.map((trip: TTrip) => <TripCard key={trip?.id} trip={trip} />)}
-    </div>
+    <TripsWrapper>
+      <div className="w-full flex flex-col items-center">
+        {trips?.map((trip: TTrip) => <TripCard key={trip?.id} trip={trip} />)}
+      </div>
+    </TripsWrapper>
   );
 };
 
