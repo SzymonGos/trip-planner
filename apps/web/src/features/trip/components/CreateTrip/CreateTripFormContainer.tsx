@@ -12,9 +12,10 @@ import { useAuthenticatedUser } from '@/features/user/hooks/useAuthenticatedUser
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { tripSchema } from '../../helpers/formValidation';
-import { getTripsQuery } from '../../server/db/getTripsQuery';
 import { useRouter } from 'next/navigation';
 import { getTripUrl } from '../../helpers/getTripUrl';
+import { getUserTripsQuery } from '@/features/user/server/db/getUserTripsQuery';
+import { getTripsQuery } from '../../server/db/getTripsQuery';
 
 export type TFormValuesProps = {
   title: string;
@@ -71,7 +72,7 @@ export const CreateTripFormContainer = () => {
             },
           },
         },
-        refetchQueries: [{ query: getTripsQuery }],
+        refetchQueries: [{ query: getTripsQuery }, { query: getUserTripsQuery }],
       });
 
       const tripId = createTripResponse?.data?.createTrip?.id;
