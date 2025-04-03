@@ -12,8 +12,8 @@ import { TDirectionsValueProps } from '@/lib/contexts/constants';
 type TCreateTripFormProps = {
   onSubmit: () => void;
   useForm: UseFormReturn<TFormValuesProps>;
-  setDirectionsValue: (value: TFormValuesProps) => void;
-  handlePlaceSelect: (autocompleteInstance: TAutocompleteProps, fieldName: TDirectionsValueProps) => void;
+  setDirectionsValue: (value: TDirectionsValueProps) => void;
+  handlePlaceSelect: (autocompleteInstance: TAutocompleteProps, fieldName: 'origin' | 'destination') => void;
   originAutocomplete: TAutocompleteProps;
   destinationAutocomplete: TAutocompleteProps;
   setOriginAutocomplete: (value: TAutocompleteProps) => void;

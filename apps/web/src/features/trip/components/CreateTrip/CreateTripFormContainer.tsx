@@ -19,8 +19,8 @@ import { getTripsQuery } from '../../server/db/getTripsQuery';
 
 export type TFormValuesProps = {
   title: string;
-  origin: TDirectionsValueProps['origin'];
-  destination: TDirectionsValueProps['destination'];
+  origin: string;
+  destination: string;
 } & z.infer<typeof tripSchema>;
 
 export type TAutocompleteProps = google.maps.places.Autocomplete | null;
@@ -28,7 +28,8 @@ export type TAutocompleteProps = google.maps.places.Autocomplete | null;
 export const CreateTripFormContainer = () => {
   const [originAutocomplete, setOriginAutocomplete] = useState<TAutocompleteProps>(null);
   const [destinationAutocomplete, setDestinationAutocomplete] = useState<TAutocompleteProps>(null);
-  const { directionsValue, setDirectionsValue, handleClearDirections } = useGoogleMapsDirections();
+  const { directionsValue, setDirectionsValue, handleClearDirections, distanceInfo, getDistance } =
+    useGoogleMapsDirections();
   const { isLoaded } = useGoogleMapLoader();
   const { authUserId } = useAuthenticatedUser();
   const router = useRouter();
@@ -37,23 +38,27 @@ export const CreateTripFormContainer = () => {
 
   const defaultValues = {
     title: '',
-    origin: directionsValue?.origin || '',
-    destination: directionsValue?.destination || '',
+    origin: typeof directionsValue?.origin === 'string' ? directionsValue.origin : '',
+    destination: typeof directionsValue?.destination === 'string' ? directionsValue.destination : '',
   };
+
   const useFormReturn = useForm<TFormValuesProps>({
     resolver: zodResolver(tripSchema),
     defaultValues,
   });
 
-  const handlePlaceSelect = (autocompleteInstance: TAutocompleteProps, fieldName: TDirectionsValueProps) => {
+  const handlePlaceSelect = (autocompleteInstance: TAutocompleteProps, fieldName: 'origin' | 'destination') => {
     const place = autocompleteInstance?.getPlace();
     if (!place) return;
     if (place && place.formatted_address) {
       useFormReturn.setValue(fieldName, place.formatted_address);
-      setDirectionsValue((prev: TDirectionsValueProps) => ({
-        ...prev,
+
+      const newDirectionsValue: TDirectionsValueProps = {
+        ...directionsValue,
         [fieldName]: place.formatted_address,
-      }));
+      };
+
+      setDirectionsValue(newDirectionsValue);
     }
   };
 
@@ -87,23 +92,56 @@ export const CreateTripFormContainer = () => {
   const handleSubmitCallback = useFormReturn.handleSubmit(handleOnSubmit);
 
   useEffect(() => {
-    useFormReturn.setValue('origin', directionsValue?.origin as string);
-    useFormReturn.setValue('destination', directionsValue?.destination as string);
+    useFormReturn.setValue('origin', typeof directionsValue?.origin === 'string' ? directionsValue.origin : '');
+    useFormReturn.setValue(
+      'destination',
+      typeof directionsValue?.destination === 'string' ? directionsValue.destination : '',
+    );
   }, [directionsValue, useFormReturn]);
+
+  useEffect(() => {
+    const fetchDistance = async () => {
+      if (directionsValue.origin && directionsValue.destination) {
+        const originStr =
+          typeof directionsValue.origin === 'string' ? directionsValue.origin : JSON.stringify(directionsValue.origin);
+
+        const destinationStr =
+          typeof directionsValue.destination === 'string'
+            ? directionsValue.destination
+            : JSON.stringify(directionsValue.destination);
+
+        getDistance(originStr, destinationStr).catch((error) => {
+          console.error('Error fetching distance:', error);
+        });
+      }
+    };
+
+    fetchDistance();
+  }, [directionsValue.origin, directionsValue.destination, getDistance]);
 
   if (!isLoaded) return <div>Form Loading...</div>;
 
   return (
-    <CreateTripForm
-      onSubmit={handleSubmitCallback}
-      useForm={useFormReturn}
-      setDirectionsValue={setDirectionsValue}
-      handlePlaceSelect={handlePlaceSelect}
-      originAutocomplete={originAutocomplete}
-      destinationAutocomplete={destinationAutocomplete}
-      setOriginAutocomplete={setOriginAutocomplete}
-      setDestinationAutocomplete={setDestinationAutocomplete}
-      handleClearDirections={handleClearDirections}
-    />
+    <div>
+      <CreateTripForm
+        onSubmit={handleSubmitCallback}
+        useForm={useFormReturn}
+        setDirectionsValue={setDirectionsValue}
+        handlePlaceSelect={handlePlaceSelect}
+        originAutocomplete={originAutocomplete}
+        destinationAutocomplete={destinationAutocomplete}
+        setOriginAutocomplete={setOriginAutocomplete}
+        setDestinationAutocomplete={setDestinationAutocomplete}
+        handleClearDirections={handleClearDirections}
+      />
+
+      {distanceInfo && (
+        <div className="mt-4 p-4 bg-gray-50 rounded-md">
+          <div className="font-medium">Trip Information</div>
+          <div>Distance: {distanceInfo.distance}</div>
+          <div>Estimated Duration: {distanceInfo.duration}</div>
+        </div>
+      )}
+    </div>
   );
 };

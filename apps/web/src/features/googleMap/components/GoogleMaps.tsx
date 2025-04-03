@@ -17,8 +17,14 @@ const defaultCenter: TLocationCoordsProps = {
 };
 
 export const GoogleMaps = () => {
-  const { directionsValue, setDirectionsValue, directionsResult, setDirectionsResult, directionsRendererRef } =
-    useGoogleMapsDirections();
+  const {
+    directionsValue,
+    setDirectionsValue,
+    directionsResult,
+    setDirectionsResult,
+    directionsRendererRef,
+    getDistance,
+  } = useGoogleMapsDirections();
   const { isLoaded } = useGoogleMapLoader();
   const { location } = useUserGeolocation();
 
@@ -47,11 +53,25 @@ export const GoogleMaps = () => {
     (result: google.maps.DirectionsResult | null, status: google.maps.DirectionsStatus) => {
       if (status === 'OK' && result !== null) {
         setDirectionsResult(result);
+
+        if (directionsValue.origin && directionsValue.destination) {
+          const originStr =
+            typeof directionsValue.origin === 'string'
+              ? directionsValue.origin
+              : JSON.stringify(directionsValue.origin);
+
+          const destinationStr =
+            typeof directionsValue.destination === 'string'
+              ? directionsValue.destination
+              : JSON.stringify(directionsValue.destination);
+
+          getDistance(originStr, destinationStr);
+        }
       } else {
         console.error('Directions request failed:', status);
       }
     },
-    [setDirectionsResult],
+    [setDirectionsResult, directionsValue, getDistance],
   );
 
   const onDirectionsLoad = useCallback(
