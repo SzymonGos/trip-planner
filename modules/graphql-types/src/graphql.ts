@@ -348,6 +348,8 @@ export type Trip = {
   __typename?: 'Trip';
   creator?: Maybe<User>;
   destination?: Maybe<Scalars['String']['output']>;
+  distance?: Maybe<Scalars['String']['output']>;
+  estimatedDuration?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   origin?: Maybe<Scalars['String']['output']>;
   title?: Maybe<Scalars['String']['output']>;
@@ -356,12 +358,16 @@ export type Trip = {
 export type TripCreateInput = {
   creator?: InputMaybe<UserRelateToOneForCreateInput>;
   destination?: InputMaybe<Scalars['String']['input']>;
+  distance?: InputMaybe<Scalars['String']['input']>;
+  estimatedDuration?: InputMaybe<Scalars['String']['input']>;
   origin?: InputMaybe<Scalars['String']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type TripOrderByInput = {
   destination?: InputMaybe<OrderDirection>;
+  distance?: InputMaybe<OrderDirection>;
+  estimatedDuration?: InputMaybe<OrderDirection>;
   id?: InputMaybe<OrderDirection>;
   origin?: InputMaybe<OrderDirection>;
   title?: InputMaybe<OrderDirection>;
@@ -375,6 +381,8 @@ export type TripUpdateArgs = {
 export type TripUpdateInput = {
   creator?: InputMaybe<UserRelateToOneForUpdateInput>;
   destination?: InputMaybe<Scalars['String']['input']>;
+  distance?: InputMaybe<Scalars['String']['input']>;
+  estimatedDuration?: InputMaybe<Scalars['String']['input']>;
   origin?: InputMaybe<Scalars['String']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
 };
@@ -385,6 +393,8 @@ export type TripWhereInput = {
   OR?: InputMaybe<Array<TripWhereInput>>;
   creator?: InputMaybe<UserWhereInput>;
   destination?: InputMaybe<StringFilter>;
+  distance?: InputMaybe<StringFilter>;
+  estimatedDuration?: InputMaybe<StringFilter>;
   id?: InputMaybe<IdFilter>;
   origin?: InputMaybe<StringFilter>;
   title?: InputMaybe<StringFilter>;

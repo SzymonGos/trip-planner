@@ -75,6 +75,8 @@ export const CreateTripFormContainer = () => {
                 id: authUserId,
               },
             },
+            distance: distanceInfo.distance,
+            estimatedDuration: distanceInfo.duration,
           },
         },
         refetchQueries: [{ query: getTripsQuery }, { query: getUserTripsQuery }],

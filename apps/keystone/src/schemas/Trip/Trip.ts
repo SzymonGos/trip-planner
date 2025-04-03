@@ -8,6 +8,20 @@ export const Trip = list({
     origin: text({ validation: { isRequired: true } }),
     destination: text({ validation: { isRequired: true } }),
     creator: relationship({ ref: 'User' }),
+    distance: text({
+      ui: {
+        itemView: {
+          fieldMode: 'read',
+        },
+      },
+    }),
+    estimatedDuration: text({
+      ui: {
+        itemView: {
+          fieldMode: 'read',
+        },
+      },
+    }),
   },
   access: allowAll,
   hooks: {
