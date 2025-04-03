@@ -97,6 +97,8 @@ type Trip {
   origin: String
   destination: String
   creator: User
+  distance: String
+  estimatedDuration: String
 }
 
 input TripWhereUniqueInput {
@@ -112,6 +114,8 @@ input TripWhereInput {
   origin: StringFilter
   destination: StringFilter
   creator: UserWhereInput
+  distance: StringFilter
+  estimatedDuration: StringFilter
 }
 
 input TripOrderByInput {
@@ -119,6 +123,8 @@ input TripOrderByInput {
   title: OrderDirection
   origin: OrderDirection
   destination: OrderDirection
+  distance: OrderDirection
+  estimatedDuration: OrderDirection
 }
 
 input TripUpdateInput {
@@ -126,6 +132,8 @@ input TripUpdateInput {
   origin: String
   destination: String
   creator: UserRelateToOneForUpdateInput
+  distance: String
+  estimatedDuration: String
 }
 
 input UserRelateToOneForUpdateInput {
@@ -144,6 +152,8 @@ input TripCreateInput {
   origin: String
   destination: String
   creator: UserRelateToOneForCreateInput
+  distance: String
+  estimatedDuration: String
 }
 
 input UserRelateToOneForCreateInput {
