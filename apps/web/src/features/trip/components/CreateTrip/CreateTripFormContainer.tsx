@@ -16,6 +16,7 @@ import { useRouter } from 'next/navigation';
 import { getTripUrl } from '../../helpers/getTripUrl';
 import { getUserTripsQuery } from '@/features/user/server/db/getUserTripsQuery';
 import { getTripsQuery } from '../../server/db/getTripsQuery';
+import { Trip as TTrip } from 'tp-graphql-types';
 
 export type TFormValuesProps = {
   title: string;
@@ -25,7 +26,11 @@ export type TFormValuesProps = {
 
 export type TAutocompleteProps = google.maps.places.Autocomplete | null;
 
-export const CreateTripFormContainer = () => {
+type TCreateTripFormContainerProps = {
+  tripData?: TTrip;
+};
+
+export const CreateTripFormContainer = ({ tripData }: TCreateTripFormContainerProps) => {
   const [originAutocomplete, setOriginAutocomplete] = useState<TAutocompleteProps>(null);
   const [destinationAutocomplete, setDestinationAutocomplete] = useState<TAutocompleteProps>(null);
   const { directionsValue, setDirectionsValue, handleClearDirections, distanceInfo, getDistance } =
@@ -37,15 +42,24 @@ export const CreateTripFormContainer = () => {
   const [createTripMutation] = useMutation(createTripMutationQuery);
 
   const defaultValues = {
-    title: '',
-    origin: typeof directionsValue?.origin === 'string' ? directionsValue.origin : '',
-    destination: typeof directionsValue?.destination === 'string' ? directionsValue.destination : '',
+    title: tripData?.title || '',
+    origin: tripData?.origin || directionsValue.origin || '',
+    destination: tripData?.destination || directionsValue.destination || '',
   };
 
   const useFormReturn = useForm<TFormValuesProps>({
     resolver: zodResolver(tripSchema),
     defaultValues,
   });
+
+  useEffect(() => {
+    if (tripData?.origin && tripData?.destination) {
+      setDirectionsValue({
+        origin: tripData.origin,
+        destination: tripData.destination,
+      });
+    }
+  }, [tripData, setDirectionsValue, handleClearDirections]);
 
   const handlePlaceSelect = (autocompleteInstance: TAutocompleteProps, fieldName: 'origin' | 'destination') => {
     const place = autocompleteInstance?.getPlace();
@@ -94,23 +108,16 @@ export const CreateTripFormContainer = () => {
   const handleSubmitCallback = useFormReturn.handleSubmit(handleOnSubmit);
 
   useEffect(() => {
-    useFormReturn.setValue('origin', typeof directionsValue?.origin === 'string' ? directionsValue.origin : '');
-    useFormReturn.setValue(
-      'destination',
-      typeof directionsValue?.destination === 'string' ? directionsValue.destination : '',
-    );
+    useFormReturn.setValue('origin', directionsValue?.origin);
+    useFormReturn.setValue('destination', directionsValue.destination);
   }, [directionsValue, useFormReturn]);
 
   useEffect(() => {
     const fetchDistance = async () => {
       if (directionsValue.origin && directionsValue.destination) {
-        const originStr =
-          typeof directionsValue.origin === 'string' ? directionsValue.origin : JSON.stringify(directionsValue.origin);
+        const originStr = JSON.stringify(directionsValue.origin);
 
-        const destinationStr =
-          typeof directionsValue.destination === 'string'
-            ? directionsValue.destination
-            : JSON.stringify(directionsValue.destination);
+        const destinationStr = JSON.stringify(directionsValue.destination);
 
         getDistance(originStr, destinationStr).catch((error) => {
           console.error('Error fetching distance:', error);
