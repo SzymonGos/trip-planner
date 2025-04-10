@@ -1,9 +1,10 @@
-import { ViewTrip } from '@/features/trip/components/ViewTrip/ViewTrip';
+import React from 'react';
 import { getTripQuery } from '@/features/trip/server/db/getTripQuery';
 import { query } from '@/lib/apolloClient';
+import { EditTripFormContainer } from '@/features/trip/components/EditTrip/EditTripFormContainer';
 import { headers } from 'next/headers';
 
-const TripPage = async ({ params }: { params: { id: string } }) => {
+const EditTripPage = async ({ params }: { params: { id: string } }) => {
   headers();
   const { data } = await query({
     query: getTripQuery,
@@ -11,12 +12,13 @@ const TripPage = async ({ params }: { params: { id: string } }) => {
       id: params.id,
     },
   });
+  const tripData = data?.trip;
 
   return (
     <div>
-      <ViewTrip trip={data?.trip} />
+      <EditTripFormContainer trip={tripData} />
     </div>
   );
 };
 
-export default TripPage;
+export default EditTripPage;

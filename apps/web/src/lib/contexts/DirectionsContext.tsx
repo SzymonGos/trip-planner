@@ -61,10 +61,8 @@ export const DirectionsProvider = ({ children }) => {
           setDistanceInfo(result);
           return result;
         }
-        return null;
       } catch (error) {
         console.error('Error getting distance matrix:', error);
-        return null;
       }
     },
     [isLoaded],

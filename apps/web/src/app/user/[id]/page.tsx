@@ -4,6 +4,7 @@ import { getUserTripsQuery } from '@/features/user/server/db/getUserTripsQuery';
 import { query } from '@/lib/apolloClient';
 import { UserPageWrapper } from '@/features/user/components/UserPageWrapper';
 import { headers } from 'next/headers';
+import { TripCard } from '@/features/trip/components/TripCard';
 
 const UserPage = async ({ params }: { params: { id: string } }) => {
   headers();
@@ -27,15 +28,7 @@ const UserPage = async ({ params }: { params: { id: string } }) => {
       </div>
       <UserPageWrapper>
         <div className="w-full px-1 border-[0.5px] border-slate-200" />
-        <div className="w-full">
-          {tripsData?.trips?.map((trip) => (
-            <div key={trip.id} className="p-4 border rounded-lg mb-4">
-              <h3 className="font-semibold">{trip.title}</h3>
-              <p>From: {trip.origin}</p>
-              <p>To: {trip.destination}</p>
-            </div>
-          ))}
-        </div>
+        <div className="w-full">{tripsData?.trips?.map((trip) => <TripCard key={trip.id} trip={trip} />)}</div>
       </UserPageWrapper>
     </div>
   );
