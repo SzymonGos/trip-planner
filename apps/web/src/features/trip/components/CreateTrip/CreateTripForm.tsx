@@ -19,6 +19,7 @@ type TCreateTripFormProps = {
   setOriginAutocomplete: (value: TAutocompleteProps) => void;
   setDestinationAutocomplete: (value: TAutocompleteProps) => void;
   handleClearDirections: () => void;
+  isEditing?: boolean;
 };
 
 export const CreateTripForm: FC<TCreateTripFormProps> = ({
@@ -30,6 +31,7 @@ export const CreateTripForm: FC<TCreateTripFormProps> = ({
   originAutocomplete,
   destinationAutocomplete,
   handleClearDirections,
+  isEditing = false,
 }) => (
   <Form {...useForm}>
     <form onSubmit={onSubmit}>
@@ -51,7 +53,8 @@ export const CreateTripForm: FC<TCreateTripFormProps> = ({
       <Button variant="destructive" type="reset" onClick={handleClearDirections}>
         Reset
       </Button>
-      <Button type="submit">Create Trip</Button>
+
+      <Button type="submit">{isEditing ? 'Save' : 'Create Trip'}</Button>
     </form>
   </Form>
 );

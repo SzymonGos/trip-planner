@@ -1,9 +1,11 @@
 import React from 'react';
 import { getTripQuery } from '@/features/trip/server/db/getTripQuery';
 import { query } from '@/lib/apolloClient';
-import { CreateTripFormContainer } from '@/features/trip/components/CreateTrip/CreateTripFormContainer';
+import { EditTripFormContainer } from '@/features/trip/components/EditTrip/EditTripFormContainer';
+import { headers } from 'next/headers';
 
 const EditTripPage = async ({ params }: { params: { id: string } }) => {
+  headers();
   const { data } = await query({
     query: getTripQuery,
     variables: {
@@ -14,7 +16,7 @@ const EditTripPage = async ({ params }: { params: { id: string } }) => {
 
   return (
     <div>
-      <CreateTripFormContainer tripData={tripData} />
+      <EditTripFormContainer trip={tripData} />
     </div>
   );
 };

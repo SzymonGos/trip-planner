@@ -1,45 +1,35 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { CreateTripForm } from './CreateTripForm';
 import { useGoogleMapsDirections } from '@/lib/contexts/DirectionsContext';
-import { TDirectionsValueProps } from '@/lib/contexts/constants';
-import { useMutation } from '@apollo/client';
-import { createTripMutationQuery } from '../../server/actions/createTripMutationQuery';
-import { useGoogleMapLoader } from '@/features/googleMap/hooks/useGoogleMapLoader';
-import { useAuthenticatedUser } from '@/features/user/hooks/useAuthenticatedUser';
-import { z } from 'zod';
+import React, { FC, useEffect, useState } from 'react';
+import { CreateTripForm } from '../CreateTrip/CreateTripForm';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { TAutocompleteProps, TFormValuesProps } from '../CreateTrip/CreateTripFormContainer';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { tripSchema } from '../../helpers/formValidation';
-import { useRouter } from 'next/navigation';
-import { getTripUrl } from '../../helpers/getTripUrl';
-import { getUserTripsQuery } from '@/features/user/server/db/getUserTripsQuery';
-import { getTripsQuery } from '../../server/db/getTripsQuery';
+import { TDirectionsValueProps } from '@/lib/contexts/constants';
+import { useGoogleMapLoader } from '@/features/googleMap/hooks/useGoogleMapLoader';
+import { useMutation } from '@apollo/client';
+import { updateTripMutationQuery } from '../../server/actions/updateTripMutationQuery';
+import { Trip as TTrip } from 'tp-graphql-types';
 
-export type TFormValuesProps = {
-  title: string;
-  origin: string;
-  destination: string;
-} & z.infer<typeof tripSchema>;
+type TEditTripFormContainerProps = {
+  trip: TTrip;
+};
 
-export type TAutocompleteProps = google.maps.places.Autocomplete | null;
-
-export const CreateTripFormContainer = () => {
+export const EditTripFormContainer: FC<TEditTripFormContainerProps> = ({ trip }) => {
   const [originAutocomplete, setOriginAutocomplete] = useState<TAutocompleteProps>(null);
   const [destinationAutocomplete, setDestinationAutocomplete] = useState<TAutocompleteProps>(null);
   const { directionsValue, setDirectionsValue, handleClearDirections, distanceInfo, getDistance } =
     useGoogleMapsDirections();
   const { isLoaded } = useGoogleMapLoader();
-  const { authUserId } = useAuthenticatedUser();
-  const router = useRouter();
 
-  const [createTripMutation] = useMutation(createTripMutationQuery);
+  const [updateTripMutation] = useMutation(updateTripMutationQuery);
 
   const defaultValues = {
-    title: '',
-    origin: directionsValue.origin || '',
-    destination: directionsValue.destination || '',
+    title: trip.title,
+    origin: trip.origin,
+    destination: trip.destination,
   };
 
   const useFormReturn = useForm<TFormValuesProps>({
@@ -64,28 +54,19 @@ export const CreateTripFormContainer = () => {
 
   const handleOnSubmit: SubmitHandler<TFormValuesProps> = async (data) => {
     try {
-      const createTripResponse = await createTripMutation({
+      await updateTripMutation({
         variables: {
+          where: { id: trip.id },
           data: {
             title: data.title,
             origin: data.origin,
             destination: data.destination,
-            creator: {
-              connect: {
-                id: authUserId,
-              },
-            },
             distance: distanceInfo.distance,
             estimatedDuration: distanceInfo.duration,
           },
         },
-        refetchQueries: [{ query: getTripsQuery }, { query: getUserTripsQuery }],
       });
-
-      const tripId = createTripResponse?.data?.createTrip?.id;
-      useFormReturn.reset();
       handleClearDirections();
-      router?.push(getTripUrl(tripId));
     } catch (e) {
       console.error(e.message);
     }
@@ -117,26 +98,17 @@ export const CreateTripFormContainer = () => {
   if (!isLoaded) return <div>Form Loading...</div>;
 
   return (
-    <div>
-      <CreateTripForm
-        onSubmit={handleSubmitCallback}
-        useForm={useFormReturn}
-        setDirectionsValue={setDirectionsValue}
-        handlePlaceSelect={handlePlaceSelect}
-        originAutocomplete={originAutocomplete}
-        destinationAutocomplete={destinationAutocomplete}
-        setOriginAutocomplete={setOriginAutocomplete}
-        setDestinationAutocomplete={setDestinationAutocomplete}
-        handleClearDirections={handleClearDirections}
-      />
-
-      {distanceInfo && (
-        <div className="mt-4 p-4 bg-gray-50 rounded-md">
-          <div className="font-medium">Trip Information</div>
-          <div>Distance: {distanceInfo.distance}</div>
-          <div>Estimated Duration: {distanceInfo.duration}</div>
-        </div>
-      )}
-    </div>
+    <CreateTripForm
+      onSubmit={handleSubmitCallback}
+      useForm={useFormReturn}
+      setDirectionsValue={setDirectionsValue}
+      handlePlaceSelect={handlePlaceSelect}
+      originAutocomplete={originAutocomplete}
+      destinationAutocomplete={destinationAutocomplete}
+      setOriginAutocomplete={setOriginAutocomplete}
+      setDestinationAutocomplete={setDestinationAutocomplete}
+      handleClearDirections={handleClearDirections}
+      isEditing={true}
+    />
   );
 };
