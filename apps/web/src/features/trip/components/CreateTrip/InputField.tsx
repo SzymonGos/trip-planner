@@ -4,7 +4,7 @@ import { Input } from '@/components/ui/input';
 import { Control } from 'react-hook-form';
 import { TFormValuesProps } from './CreateTripFormContainer';
 
-type TInputFieldProps = {
+export type TInputFieldProps = {
   control: Control<TFormValuesProps>;
   name: string;
   label: string;
