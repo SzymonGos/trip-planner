@@ -5,6 +5,15 @@ import { allowAll } from '@keystone-6/core/access';
 export const Trip = list({
   fields: {
     title: text({ validation: { isRequired: true, length: { min: 5, max: 100 } } }),
+    description: text({
+      ui: {
+        displayMode: 'textarea',
+      },
+      validation: {
+        isRequired: false,
+        length: { max: 700 },
+      },
+    }),
     origin: text({ validation: { isRequired: true } }),
     destination: text({ validation: { isRequired: true } }),
     creator: relationship({ ref: 'User' }),
