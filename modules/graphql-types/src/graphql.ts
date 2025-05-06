@@ -347,6 +347,7 @@ export type StringFilter = {
 export type Trip = {
   __typename?: 'Trip';
   creator?: Maybe<User>;
+  description?: Maybe<Scalars['String']['output']>;
   destination?: Maybe<Scalars['String']['output']>;
   distance?: Maybe<Scalars['String']['output']>;
   estimatedDuration?: Maybe<Scalars['String']['output']>;
@@ -357,6 +358,7 @@ export type Trip = {
 
 export type TripCreateInput = {
   creator?: InputMaybe<UserRelateToOneForCreateInput>;
+  description?: InputMaybe<Scalars['String']['input']>;
   destination?: InputMaybe<Scalars['String']['input']>;
   distance?: InputMaybe<Scalars['String']['input']>;
   estimatedDuration?: InputMaybe<Scalars['String']['input']>;
@@ -365,6 +367,7 @@ export type TripCreateInput = {
 };
 
 export type TripOrderByInput = {
+  description?: InputMaybe<OrderDirection>;
   destination?: InputMaybe<OrderDirection>;
   distance?: InputMaybe<OrderDirection>;
   estimatedDuration?: InputMaybe<OrderDirection>;
@@ -380,6 +383,7 @@ export type TripUpdateArgs = {
 
 export type TripUpdateInput = {
   creator?: InputMaybe<UserRelateToOneForUpdateInput>;
+  description?: InputMaybe<Scalars['String']['input']>;
   destination?: InputMaybe<Scalars['String']['input']>;
   distance?: InputMaybe<Scalars['String']['input']>;
   estimatedDuration?: InputMaybe<Scalars['String']['input']>;
@@ -392,6 +396,7 @@ export type TripWhereInput = {
   NOT?: InputMaybe<Array<TripWhereInput>>;
   OR?: InputMaybe<Array<TripWhereInput>>;
   creator?: InputMaybe<UserWhereInput>;
+  description?: InputMaybe<StringFilter>;
   destination?: InputMaybe<StringFilter>;
   distance?: InputMaybe<StringFilter>;
   estimatedDuration?: InputMaybe<StringFilter>;
