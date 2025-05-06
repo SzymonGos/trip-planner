@@ -1,18 +1,30 @@
+'use client';
+
 import React from 'react';
 import { NavbarSignInLink } from './NavbarSignInLink';
-import { auth, currentUser } from '@clerk/nextjs/server';
-import { SignedIn, SignedOut } from '@clerk/nextjs';
+import { SignedIn, SignedOut, useUser } from '@clerk/nextjs';
 import { UserMenu } from './UserMenu';
 import Link from 'next/link';
 import { navbarLinks } from '../config';
 import { Container } from '../Container/Container';
+import cx from 'classnames';
+import { useScrollY } from '@/hooks/useScrollY';
 
-export const Navbar = async () => {
-  const user = await currentUser();
-  const { userId: clerkId } = await auth();
+interface NavbarClientProps {
+  userName: string;
+  clerkId: string;
+}
+
+export const Navbar = ({ userName, clerkId }: NavbarClientProps) => {
+  const { isLoaded } = useUser();
+  const scrollY = useScrollY();
 
   return (
-    <div className="fixed top-0 z-50 w-full bg-transparent p-6">
+    <div
+      className={cx('fixed top-0 z-50 w-full bg-transparent p-6 transition-colors duration-200', {
+        '!bg-white': scrollY > 0,
+      })}
+    >
       <Container className="flex">
         <div className="">
           <Link href="/">Navbar Logo</Link>
@@ -26,12 +38,18 @@ export const Navbar = async () => {
               </li>
             ))}
           </ul>
-          <SignedIn>
-            <UserMenu userName={user?.username} clerkId={clerkId} />
-          </SignedIn>
-          <SignedOut>
-            <NavbarSignInLink />
-          </SignedOut>
+          {isLoaded ? (
+            <>
+              <SignedIn>
+                <UserMenu userName={userName} clerkId={clerkId} />
+              </SignedIn>
+              <SignedOut>
+                <NavbarSignInLink />
+              </SignedOut>
+            </>
+          ) : (
+            <div>Loading</div>
+          )}
         </div>
       </Container>
     </div>

@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client';
 
-export const getTripsQuery = gql`
+export const getHomePageRecommededTripsQuery = gql`
   query trips {
-    trips {
+    trips(take: 4) {
       id
       title
       origin

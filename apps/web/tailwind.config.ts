@@ -52,6 +52,9 @@ export default {
           '4': 'hsl(var(--chart-4))',
           '5': 'hsl(var(--chart-5))',
         },
+        tp: {
+          primary: '#fb6f3c',
+        },
       },
       borderRadius: {
         lg: 'var(--radius)',
