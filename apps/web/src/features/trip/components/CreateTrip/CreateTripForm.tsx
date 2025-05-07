@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { InputField } from './InputField';
 import { Autocomplete } from '@react-google-maps/api';
 import { TDirectionsValueProps } from '@/lib/contexts/constants';
+import { TextareaField } from './TextareaField';
 
 type TCreateTripFormProps = {
   onSubmit: () => void;
@@ -35,7 +36,10 @@ export const CreateTripForm: FC<TCreateTripFormProps> = ({
 }) => (
   <Form {...useForm}>
     <form onSubmit={onSubmit}>
-      <InputField control={useForm.control} name="title" label="Title" placeholder="Trip Title" />
+      <div className="">
+        <InputField control={useForm.control} name="title" label="Title" placeholder="Trip Title" />
+        <TextareaField control={useForm.control} name="description" label="Description" placeholder="Description" />
+      </div>
       <div className="mt-10">
         <Autocomplete
           onLoad={(autocomplete) => setOriginAutocomplete(autocomplete)}

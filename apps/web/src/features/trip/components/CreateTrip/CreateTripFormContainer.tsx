@@ -19,6 +19,7 @@ import { getTripsQuery } from '../../server/db/getTripsQuery';
 
 export type TFormValuesProps = {
   title: string;
+  description?: string;
   origin: string;
   destination: string;
 } & z.infer<typeof tripSchema>;
@@ -38,6 +39,7 @@ export const CreateTripFormContainer = () => {
 
   const defaultValues = {
     title: '',
+    description: '',
     origin: directionsValue.origin || '',
     destination: directionsValue.destination || '',
   };
@@ -68,6 +70,7 @@ export const CreateTripFormContainer = () => {
         variables: {
           data: {
             title: data.title,
+            description: data.destination,
             origin: data.origin,
             destination: data.destination,
             creator: {

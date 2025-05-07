@@ -94,6 +94,7 @@ input UserCreateInput {
 type Trip {
   id: ID!
   title: String
+  description: String
   origin: String
   destination: String
   creator: User
@@ -111,6 +112,7 @@ input TripWhereInput {
   NOT: [TripWhereInput!]
   id: IDFilter
   title: StringFilter
+  description: StringFilter
   origin: StringFilter
   destination: StringFilter
   creator: UserWhereInput
@@ -121,6 +123,7 @@ input TripWhereInput {
 input TripOrderByInput {
   id: OrderDirection
   title: OrderDirection
+  description: OrderDirection
   origin: OrderDirection
   destination: OrderDirection
   distance: OrderDirection
@@ -129,6 +132,7 @@ input TripOrderByInput {
 
 input TripUpdateInput {
   title: String
+  description: String
   origin: String
   destination: String
   creator: UserRelateToOneForUpdateInput
@@ -149,6 +153,7 @@ input TripUpdateArgs {
 
 input TripCreateInput {
   title: String
+  description: String
   origin: String
   destination: String
   creator: UserRelateToOneForCreateInput
