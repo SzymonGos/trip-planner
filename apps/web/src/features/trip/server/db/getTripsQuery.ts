@@ -6,6 +6,7 @@ export const getTripsQuery = gql`
       id
       title
       origin
+      description
       destination
       creator {
         id

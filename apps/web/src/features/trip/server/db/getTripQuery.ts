@@ -5,8 +5,10 @@ export const getTripQuery = gql`
     trip(where: { id: $id }) {
       id
       title
+      description
       origin
       destination
+      createdAt
     }
   }
 `;
