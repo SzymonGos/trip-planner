@@ -5,6 +5,7 @@ export const getHomePageRecommededTripsQuery = gql`
     trips(take: 4) {
       id
       title
+      description
       origin
       destination
       creator {
@@ -13,6 +14,7 @@ export const getHomePageRecommededTripsQuery = gql`
       }
       distance
       estimatedDuration
+      createdAt
     }
   }
 `;
