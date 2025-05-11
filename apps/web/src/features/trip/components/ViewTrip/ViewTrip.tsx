@@ -31,7 +31,7 @@ export const ViewTrip: FC<TViewTripProps> = ({ trip }) => {
       </div>
 
       <div className="mt-4">
-        <Link passHref href={`/trip/planner/edit/${trip.id}`}>
+        <Link passHref href={`/trip/planner/edit/${trip?.id}`}>
           <Button>Edit</Button>
         </Link>
       </div>

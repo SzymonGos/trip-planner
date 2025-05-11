@@ -5,6 +5,7 @@ import { Trip as TTrip } from 'tp-graphql-types';
 import { query } from '@/lib/apolloClient';
 import { headers } from 'next/headers';
 import { TripsWrapper } from './TripsWrapper';
+import { Container } from '@/components/Container/Container';
 
 const TripsPage = async () => {
   headers();
@@ -16,9 +17,12 @@ const TripsPage = async () => {
 
   return (
     <TripsWrapper>
-      <div className="w-full flex flex-col items-center">
-        {trips?.map((trip: TTrip) => <TripCard key={trip?.id} trip={trip} />)}
-      </div>
+      <Container className="mt-24">
+        <h3 className="flex w-full justify-center text-2xl font-bold">Browse All Trips</h3>
+        <div className="mt-10 w-full grid grid-cols-4 gap-4 items-center">
+          {trips?.map((trip: TTrip) => <TripCard key={trip?.id} trip={trip} />)}
+        </div>
+      </Container>
     </TripsWrapper>
   );
 };

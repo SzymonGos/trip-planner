@@ -1,6 +1,14 @@
+import { Footer } from '@/components/Footer/Footer';
+import { FeaturedDestinationsContainer } from '@/features/homepage/FeaturedDestinationsContainer';
+import { HeroSection } from '@/features/homepage/HeroSection';
+import { HowItWorks } from '@/features/homepage/HowItWorks';
+
 const Home = () => (
-  <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-    Home Page
+  <div className="min-h-[calc(100vh-72px)]">
+    <HeroSection />
+    <HowItWorks />
+    <FeaturedDestinationsContainer />
+    <Footer />
   </div>
 );
 

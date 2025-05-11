@@ -13,7 +13,7 @@ export const TextareaField: FC<TTextareaFieldProps> = ({ control, label, name, p
       <FormItem>
         <FormLabel>{label}</FormLabel>
         <FormControl>
-          <Textarea placeholder={placeholder} {...field} />
+          <Textarea placeholder={placeholder} {...field} maxLength={350} />
         </FormControl>
         <FormMessage />
       </FormItem>

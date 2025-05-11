@@ -20,15 +20,16 @@ model User {
 }
 
 model Trip {
-  id                String  @id @default(cuid())
-  title             String  @default("")
-  description       String  @default("")
-  origin            String  @default("")
-  destination       String  @default("")
-  creator           User?   @relation("Trip_creator", fields: [creatorId], references: [id])
-  creatorId         String? @map("creator")
-  distance          String  @default("")
-  estimatedDuration String  @default("")
+  id                String    @id @default(cuid())
+  title             String    @default("")
+  description       String    @default("") @mysql.Text
+  origin            String    @default("")
+  destination       String    @default("")
+  creator           User?     @relation("Trip_creator", fields: [creatorId], references: [id])
+  creatorId         String?   @map("creator")
+  distance          String    @default("")
+  estimatedDuration String    @default("")
+  createdAt         DateTime? @default(now())
 
   @@index([creatorId])
 }

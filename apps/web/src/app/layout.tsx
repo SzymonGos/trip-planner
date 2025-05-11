@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { Providers } from '@/lib/providers/providers';
-import { Navbar } from '@/components/Navbar/Navbar';
+import { NavbarContainer } from '@/components/Navbar/NavbarContainer';
 
 export const metadata: Metadata = {
   title: 'Trip Planner',
@@ -12,7 +12,7 @@ const RootLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => (
   <html lang="en">
     <body>
       <Providers>
-        <Navbar />
+        <NavbarContainer />
         {children}
       </Providers>
     </body>

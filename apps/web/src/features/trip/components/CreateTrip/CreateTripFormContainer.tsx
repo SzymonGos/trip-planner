@@ -70,7 +70,7 @@ export const CreateTripFormContainer = () => {
         variables: {
           data: {
             title: data.title,
-            description: data.destination,
+            description: data.description,
             origin: data.origin,
             destination: data.destination,
             creator: {
