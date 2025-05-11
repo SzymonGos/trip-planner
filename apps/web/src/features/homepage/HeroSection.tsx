@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import React from 'react';
+import { getTripPlannerUrl } from '../trip/helpers/getTripPlannerUrl';
 
 export const HeroSection = () => (
   <section className="relative h-[70vh] flex mb-20 items-center justify-center">
@@ -9,15 +10,7 @@ export const HeroSection = () => (
       <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6">Plan Your Destination</h1>
       <p className="text-xl sm:text-2xl text-white/90 mb-8">Amazing destinations in the world</p>
     </div>
-
-    <svg
-      className="absolute bottom-0 block w-full h-[60px]"
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 1440 100"
-      preserveAspectRatio="none"
-    >
-      <path fill="#ffffff" d="M0,0 C480,100 960,100 1440,0 L1440,100 L0,100 Z"></path>
-    </svg>
+    <div className="absolute bottom-0 w-full h-[60px] bg-white mask-wave" />
     <div className="absolute flex items-center justify-center -bottom-7 bg-white rounded-xl w-[500px] h-[100px] shadow-sm ">
       {/* style buttons */}
       <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -27,7 +20,7 @@ export const HeroSection = () => (
           size="lg"
           // className="bg-tp-primary text-white px-8 py-3 rounded-lg text-lg font-semibold transition-colors"
         >
-          <Link href="/trips" className="">
+          <Link href={getTripPlannerUrl()} className="">
             Start Planning
           </Link>
         </Button>

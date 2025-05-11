@@ -7,5 +7,5 @@ type TContainerProps = {
 };
 
 export const Container: FC<TContainerProps> = ({ children, className }) => (
-  <div className={cx('max-w-[1440px] mx-auto', className)}>{children}</div>
+  <div className={cx('max-w-[1440px] mx-auto px-4', className)}>{children}</div>
 );
