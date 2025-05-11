@@ -100,7 +100,10 @@ type Trip {
   creator: User
   distance: String
   estimatedDuration: String
+  createdAt: DateTime
 }
+
+scalar DateTime @specifiedBy(url: "https://datatracker.ietf.org/doc/html/rfc3339#section-5.6")
 
 input TripWhereUniqueInput {
   id: ID
@@ -118,6 +121,18 @@ input TripWhereInput {
   creator: UserWhereInput
   distance: StringFilter
   estimatedDuration: StringFilter
+  createdAt: DateTimeNullableFilter
+}
+
+input DateTimeNullableFilter {
+  equals: DateTime
+  in: [DateTime!]
+  notIn: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  gt: DateTime
+  gte: DateTime
+  not: DateTimeNullableFilter
 }
 
 input TripOrderByInput {
@@ -128,6 +143,7 @@ input TripOrderByInput {
   destination: OrderDirection
   distance: OrderDirection
   estimatedDuration: OrderDirection
+  createdAt: OrderDirection
 }
 
 input TripUpdateInput {
@@ -138,6 +154,7 @@ input TripUpdateInput {
   creator: UserRelateToOneForUpdateInput
   distance: String
   estimatedDuration: String
+  createdAt: DateTime
 }
 
 input UserRelateToOneForUpdateInput {
@@ -159,6 +176,7 @@ input TripCreateInput {
   creator: UserRelateToOneForCreateInput
   distance: String
   estimatedDuration: String
+  createdAt: DateTime
 }
 
 input UserRelateToOneForCreateInput {

@@ -13,8 +13,20 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
+  DateTime: { input: any; output: any; }
   /** The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
   JSON: { input: any; output: any; }
+};
+
+export type DateTimeNullableFilter = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  gt?: InputMaybe<Scalars['DateTime']['input']>;
+  gte?: InputMaybe<Scalars['DateTime']['input']>;
+  in?: InputMaybe<Array<Scalars['DateTime']['input']>>;
+  lt?: InputMaybe<Scalars['DateTime']['input']>;
+  lte?: InputMaybe<Scalars['DateTime']['input']>;
+  not?: InputMaybe<DateTimeNullableFilter>;
+  notIn?: InputMaybe<Array<Scalars['DateTime']['input']>>;
 };
 
 export type IdFilter = {
@@ -346,6 +358,7 @@ export type StringFilter = {
 
 export type Trip = {
   __typename?: 'Trip';
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
   creator?: Maybe<User>;
   description?: Maybe<Scalars['String']['output']>;
   destination?: Maybe<Scalars['String']['output']>;
@@ -357,6 +370,7 @@ export type Trip = {
 };
 
 export type TripCreateInput = {
+  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   creator?: InputMaybe<UserRelateToOneForCreateInput>;
   description?: InputMaybe<Scalars['String']['input']>;
   destination?: InputMaybe<Scalars['String']['input']>;
@@ -367,6 +381,7 @@ export type TripCreateInput = {
 };
 
 export type TripOrderByInput = {
+  createdAt?: InputMaybe<OrderDirection>;
   description?: InputMaybe<OrderDirection>;
   destination?: InputMaybe<OrderDirection>;
   distance?: InputMaybe<OrderDirection>;
@@ -382,6 +397,7 @@ export type TripUpdateArgs = {
 };
 
 export type TripUpdateInput = {
+  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   creator?: InputMaybe<UserRelateToOneForUpdateInput>;
   description?: InputMaybe<Scalars['String']['input']>;
   destination?: InputMaybe<Scalars['String']['input']>;
@@ -395,6 +411,7 @@ export type TripWhereInput = {
   AND?: InputMaybe<Array<TripWhereInput>>;
   NOT?: InputMaybe<Array<TripWhereInput>>;
   OR?: InputMaybe<Array<TripWhereInput>>;
+  createdAt?: InputMaybe<DateTimeNullableFilter>;
   creator?: InputMaybe<UserWhereInput>;
   description?: InputMaybe<StringFilter>;
   destination?: InputMaybe<StringFilter>;

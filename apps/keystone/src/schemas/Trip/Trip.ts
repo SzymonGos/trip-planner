@@ -1,5 +1,5 @@
 import { list } from '@keystone-6/core';
-import { relationship, text } from '@keystone-6/core/fields';
+import { relationship, text, timestamp } from '@keystone-6/core/fields';
 import { allowAll } from '@keystone-6/core/access';
 
 export const Trip = list({
@@ -9,9 +9,8 @@ export const Trip = list({
       ui: {
         displayMode: 'textarea',
       },
-      validation: {
-        isRequired: false,
-        length: { max: 700 },
+      db: {
+        nativeType: 'Text',
       },
     }),
     origin: text({ validation: { isRequired: true } }),
@@ -29,6 +28,12 @@ export const Trip = list({
         itemView: {
           fieldMode: 'read',
         },
+      },
+    }),
+    createdAt: timestamp({
+      defaultValue: { kind: 'now' },
+      ui: {
+        itemView: { fieldMode: 'read' },
       },
     }),
   },
