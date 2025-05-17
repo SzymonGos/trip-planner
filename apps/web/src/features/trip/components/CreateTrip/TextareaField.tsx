@@ -11,11 +11,16 @@ export const TextareaField: FC<TTextareaFieldProps> = ({ control, label, name, p
     name={name}
     render={({ field }) => (
       <FormItem>
-        <FormLabel>{label}</FormLabel>
+        <FormLabel className="text-base">{label}</FormLabel>
         <FormControl>
-          <Textarea placeholder={placeholder} {...field} maxLength={350} />
+          <Textarea
+            placeholder={placeholder}
+            {...field}
+            maxLength={350}
+            className="md:text-base border-tp-gray-100 shadow-none"
+          />
         </FormControl>
-        <FormMessage />
+        <FormMessage className="text-base" />
       </FormItem>
     )}
   />

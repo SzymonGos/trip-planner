@@ -9,19 +9,25 @@ export type TInputFieldProps = {
   name: string;
   label: string;
   placeholder: string;
+  hasError: boolean;
 };
 
-export const InputField: FC<TInputFieldProps> = ({ control, name, label, placeholder }) => (
+export const InputField: FC<TInputFieldProps> = ({ control, name, label, placeholder, hasError }) => (
   <FormField
     control={control}
     name={name}
     render={({ field }) => (
       <FormItem>
-        <FormLabel>{label}</FormLabel>
+        <FormLabel className="text-base">{label}</FormLabel>
         <FormControl>
-          <Input placeholder={placeholder} {...field} />
+          <Input
+            placeholder={placeholder}
+            {...field}
+            className="py-6 md:text-base focus-visible:ring-0 border-tp-gray-100 focus:border focus:border-tp-gray-200 shadow-none"
+            hasError={hasError}
+          />
         </FormControl>
-        <FormMessage />
+        <FormMessage className="text-base" />
       </FormItem>
     )}
   />
