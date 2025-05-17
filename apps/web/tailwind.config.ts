@@ -11,6 +11,10 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        primary: ['Outfit', 'sans-serif'],
+        secondary: ['Inter', 'sans-serif'],
+      },
       colors: {
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
@@ -54,6 +58,16 @@ export default {
         },
         tp: {
           primary: '#fb6f3c',
+          white: {
+            100: '#F9F9F9',
+          },
+          gray: {
+            100: '#CCCCCC',
+            200: '#666666',
+          },
+          red: {
+            100: '#E51818',
+          },
         },
       },
       borderRadius: {

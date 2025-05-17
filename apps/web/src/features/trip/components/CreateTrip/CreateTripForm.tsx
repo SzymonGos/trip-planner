@@ -36,29 +36,61 @@ export const CreateTripForm: FC<TCreateTripFormProps> = ({
 }) => (
   <Form {...useForm}>
     <form onSubmit={onSubmit}>
-      <div className="">
-        <InputField control={useForm.control} name="title" label="Title" placeholder="Trip Title" />
+      <div className="flex flex-col gap-5">
+        <InputField
+          control={useForm.control}
+          hasError={!!useForm.formState.errors.title}
+          name="title"
+          label="Title"
+          placeholder="Trip Title"
+        />
         <TextareaField control={useForm.control} name="description" label="Description" placeholder="Description" />
       </div>
-      <div className="mt-10">
+      <div className="mt-10 flex flex-col gap-5">
         <Autocomplete
           onLoad={(autocomplete) => setOriginAutocomplete(autocomplete)}
           onPlaceChanged={() => handlePlaceSelect(originAutocomplete, 'origin')}
         >
-          <InputField control={useForm.control} name="origin" label="From" placeholder="Start Route" />
+          <InputField
+            control={useForm.control}
+            hasError={!!useForm.formState.errors.origin}
+            name="origin"
+            label="Origin"
+            placeholder="Start Route"
+          />
         </Autocomplete>
         <Autocomplete
           onLoad={(autocomplete) => setDestinationAutocomplete(autocomplete)}
           onPlaceChanged={() => handlePlaceSelect(destinationAutocomplete, 'destination')}
         >
-          <InputField control={useForm.control} name="destination" label="To" placeholder="End Route" />
+          <InputField
+            control={useForm.control}
+            hasError={!!useForm.formState.errors.destination}
+            name="destination"
+            label="Destination"
+            placeholder="End Route"
+          />
         </Autocomplete>
       </div>
-      <Button variant="destructive" type="reset" onClick={handleClearDirections}>
-        Reset
-      </Button>
-
-      <Button type="submit">{isEditing ? 'Save' : 'Create Trip'}</Button>
+      <div className="mt-10 flex gap-2 items-center">
+        <Button type="submit">{isEditing ? 'Save' : 'Create Trip'}</Button>
+        <Button variant="secondary" type="reset" className="text-gray-500 !px-2" onClick={handleClearDirections}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="size-6"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 0 0-3.7-3.7 48.678 48.678 0 0 0-7.324 0 4.006 4.006 0 0 0-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 0 0 3.7 3.7 48.656 48.656 0 0 0 7.324 0 4.006 4.006 0 0 0 3.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3-3 3"
+            />
+          </svg>
+        </Button>
+      </div>
     </form>
   </Form>
 );

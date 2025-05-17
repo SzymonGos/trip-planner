@@ -9,7 +9,7 @@ type TTripCardProps = {
 };
 
 export const TripCard: FC<TTripCardProps> = ({ trip }) => (
-  <div className="relative w-full max-w-xs rounded-2xl border-[0.5px] bg-white overflow-hidden hover:border-none hover:-translate-y-1 hover:shadow-lg transition-transform duration-200">
+  <div className="relative w-full max-w-xs rounded-2xl border-[0.5px] bg-white overflow-hidden hover:border-none  hover:shadow-lg transition-transform duration-200">
     <Link href={getTripUrl(trip.id)} className="absolute z-10 w-full h-full inset-0" />
     <div className="relative w-full">
       {/* images here */}
@@ -23,7 +23,7 @@ export const TripCard: FC<TTripCardProps> = ({ trip }) => (
     <div className="pt-8 pb-4 px-6 flex flex-col h-48">
       <div className="text-center">
         <h4 className="text-xl font-bold mb-1">{trip.title}</h4>
-        <p className="line-clamp-3">{trip.description}</p>
+        <p className="line-clamp-3 font-secondary">{trip.description}</p>
       </div>
       <div className="flex justify-center items-center text-gray-300 text-xs gap-2 mt-auto pt-4">
         <span>{trip.distance}</span>
