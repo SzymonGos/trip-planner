@@ -25,10 +25,10 @@ const FormField = <
 >({
   ...props
 }: ControllerProps<TFieldValues, TName>) => (
-    <FormFieldContext.Provider value={{ name: props.name }}>
-      <Controller {...props} />
-    </FormFieldContext.Provider>
-  );
+  <FormFieldContext.Provider value={{ name: props.name }}>
+    <Controller {...props} />
+  </FormFieldContext.Provider>
+);
 
 const useFormField = () => {
   const fieldContext = React.useContext(FormFieldContext);
@@ -78,7 +78,7 @@ const FormLabel = React.forwardRef<
 >(({ className, ...props }, ref) => {
   const { error, formItemId } = useFormField();
 
-  return <Label ref={ref} className={cn(error && 'text-destructive', className)} htmlFor={formItemId} {...props} />;
+  return <Label ref={ref} className={cn(error && 'text-tp-red-100', className)} htmlFor={formItemId} {...props} />;
 });
 FormLabel.displayName = 'FormLabel';
 
@@ -120,12 +120,7 @@ const FormMessage = React.forwardRef<HTMLParagraphElement, React.HTMLAttributes<
     }
 
     return (
-      <p
-        ref={ref}
-        id={formMessageId}
-        className={cn('text-[0.8rem] font-medium text-destructive', className)}
-        {...props}
-      >
+      <p ref={ref} id={formMessageId} className={cn('text-[0.8rem] font-medium text-tp-red-100', className)} {...props}>
         {body}
       </p>
     );

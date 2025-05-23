@@ -29,16 +29,6 @@ export const DirectionsProvider = ({ children }) => {
   const directionsRendererRef = useRef<google.maps.DirectionsRenderer | null>(null);
   const { isLoaded } = useGoogleMapLoader();
 
-  const handleClearDirections = useCallback(() => {
-    if (directionsRendererRef.current) {
-      directionsRendererRef.current.setMap(null);
-      directionsRendererRef.current = null;
-    }
-    setDirectionsValue(initialDirections);
-    setDirectionsResult(null);
-    setDistanceInfo(null);
-  }, []);
-
   const getDistance = useCallback(
     async (origin: string, destination: string): Promise<TDistanceMatrixResult | null> => {
       if (!isLoaded) return null;
@@ -67,6 +57,16 @@ export const DirectionsProvider = ({ children }) => {
     },
     [isLoaded],
   );
+
+  const handleClearDirections = useCallback(() => {
+    if (directionsRendererRef.current) {
+      directionsRendererRef.current.setMap(null);
+      directionsRendererRef.current = null;
+    }
+    setDirectionsValue(initialDirections);
+    setDirectionsResult(null);
+    setDistanceInfo(null);
+  }, []);
 
   const contextValue = useMemo(
     () => ({

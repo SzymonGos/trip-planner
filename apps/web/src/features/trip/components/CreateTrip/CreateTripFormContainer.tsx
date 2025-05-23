@@ -94,6 +94,11 @@ export const CreateTripFormContainer = () => {
     }
   };
 
+  const handleClearForm = () => {
+    useFormReturn.reset();
+    handleClearDirections();
+  };
+
   const handleSubmitCallback = useFormReturn.handleSubmit(handleOnSubmit);
 
   useEffect(() => {
@@ -130,7 +135,7 @@ export const CreateTripFormContainer = () => {
         destinationAutocomplete={destinationAutocomplete}
         setOriginAutocomplete={setOriginAutocomplete}
         setDestinationAutocomplete={setDestinationAutocomplete}
-        handleClearDirections={handleClearDirections}
+        handleClearForm={handleClearForm}
       />
 
       {distanceInfo && (
