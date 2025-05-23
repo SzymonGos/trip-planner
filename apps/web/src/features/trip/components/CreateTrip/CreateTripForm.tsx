@@ -9,6 +9,7 @@ import { InputField } from './InputField';
 import { Autocomplete } from '@react-google-maps/api';
 import { TDirectionsValueProps } from '@/lib/contexts/constants';
 import { TextareaField } from './TextareaField';
+import { ResetIcon } from '@/components/Icons/ResetIcon';
 
 type TCreateTripFormProps = {
   onSubmit: () => void;
@@ -19,7 +20,7 @@ type TCreateTripFormProps = {
   destinationAutocomplete: TAutocompleteProps;
   setOriginAutocomplete: (value: TAutocompleteProps) => void;
   setDestinationAutocomplete: (value: TAutocompleteProps) => void;
-  handleClearDirections: () => void;
+  handleClearForm: () => void;
   isEditing?: boolean;
 };
 
@@ -31,12 +32,12 @@ export const CreateTripForm: FC<TCreateTripFormProps> = ({
   setOriginAutocomplete,
   originAutocomplete,
   destinationAutocomplete,
-  handleClearDirections,
+  handleClearForm,
   isEditing = false,
 }) => (
   <Form {...useForm}>
     <form onSubmit={onSubmit}>
-      <div className="flex flex-col gap-5">
+      <div className="flex flex-col gap-6">
         <InputField
           control={useForm.control}
           hasError={!!useForm.formState.errors.title}
@@ -46,7 +47,7 @@ export const CreateTripForm: FC<TCreateTripFormProps> = ({
         />
         <TextareaField control={useForm.control} name="description" label="Description" placeholder="Description" />
       </div>
-      <div className="mt-10 flex flex-col gap-5">
+      <div className="mt-10 flex flex-col gap-6">
         <Autocomplete
           onLoad={(autocomplete) => setOriginAutocomplete(autocomplete)}
           onPlaceChanged={() => handlePlaceSelect(originAutocomplete, 'origin')}
@@ -74,21 +75,8 @@ export const CreateTripForm: FC<TCreateTripFormProps> = ({
       </div>
       <div className="mt-10 flex gap-2 items-center">
         <Button type="submit">{isEditing ? 'Save' : 'Create Trip'}</Button>
-        <Button variant="secondary" type="reset" className="text-gray-500 !px-2" onClick={handleClearDirections}>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="size-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 0 0-3.7-3.7 48.678 48.678 0 0 0-7.324 0 4.006 4.006 0 0 0-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 0 0 3.7 3.7 48.656 48.656 0 0 0 7.324 0 4.006 4.006 0 0 0 3.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3-3 3"
-            />
-          </svg>
+        <Button variant="secondary" type="reset" className="text-gray-500 !px-2" onClick={handleClearForm}>
+          <ResetIcon />
         </Button>
       </div>
     </form>
