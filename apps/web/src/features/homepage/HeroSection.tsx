@@ -7,7 +7,7 @@ export const HeroSection = () => (
   <section className="relative h-[70vh] flex mb-20 items-center justify-center">
     <div className="absolute inset-0 z-0 bg-gradient-to-b from-black/50 to-transparent" />
     <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
-      <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6">Plan Your Destination</h1>
+      <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6 font-outfit">Plan Your Destination</h1>
       <p className="text-xl sm:text-2xl text-white/90 mb-8">Amazing destinations in the world</p>
     </div>
     <div className="absolute bottom-0 w-full h-[60px] bg-white mask-wave" />

@@ -94,6 +94,11 @@ export const CreateTripFormContainer = () => {
     }
   };
 
+  const handleClearForm = () => {
+    useFormReturn.reset();
+    handleClearDirections();
+  };
+
   const handleSubmitCallback = useFormReturn.handleSubmit(handleOnSubmit);
 
   useEffect(() => {
@@ -130,14 +135,20 @@ export const CreateTripFormContainer = () => {
         destinationAutocomplete={destinationAutocomplete}
         setOriginAutocomplete={setOriginAutocomplete}
         setDestinationAutocomplete={setDestinationAutocomplete}
-        handleClearDirections={handleClearDirections}
+        handleClearForm={handleClearForm}
       />
 
       {distanceInfo && (
-        <div className="mt-4 p-4 bg-gray-50 rounded-md">
-          <div className="font-medium">Trip Information</div>
-          <div>Distance: {distanceInfo.distance}</div>
-          <div>Estimated Duration: {distanceInfo.duration}</div>
+        <div className="mt-4 p-4 border-[0.5px] rounded-md  border-tp-gray-100">
+          <h4 className="mb-4 text-lg font-primary font-semibold">Trip Information: </h4>
+
+          <div className="w-full flex">
+            Distance:
+            <div className="ml-auto font-semibold">{distanceInfo.distance}</div>
+          </div>
+          <div className="w-full flex">
+            Estimated Duration: <div className="ml-auto font-semibold">{distanceInfo.duration}</div>
+          </div>
         </div>
       )}
     </div>
