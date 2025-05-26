@@ -17,7 +17,7 @@ export const TextareaField: FC<TTextareaFieldProps> = ({ control, label, name, p
             placeholder={placeholder}
             {...field}
             maxLength={350}
-            className="md:text-base border-tp-gray-100 shadow-none"
+            className="md:text-base !border-[0.5px] focus-visible:ring-0 border-tp-gray-100 focus:border focus:border-tp-gray-200 shadow-none"
           />
         </FormControl>
         <FormMessage className="text-base" />

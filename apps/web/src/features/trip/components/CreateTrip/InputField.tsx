@@ -23,7 +23,7 @@ export const InputField: FC<TInputFieldProps> = ({ control, name, label, placeho
           <Input
             placeholder={placeholder}
             {...field}
-            className="py-6 md:text-base focus-visible:ring-0 border-tp-gray-100 focus:border focus:border-tp-gray-200 shadow-none"
+            className="py-6 md:text-base !border-[0.5px] focus-visible:ring-0 border-tp-gray-100 focus:border focus:border-tp-gray-200 shadow-none"
             hasError={hasError}
           />
         </FormControl>
