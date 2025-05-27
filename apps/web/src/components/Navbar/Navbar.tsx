@@ -9,6 +9,8 @@ import { navbarLinks } from '../config';
 import { Container } from '../Container/Container';
 import cx from 'classnames';
 import { useScrollY } from '@/hooks/useScrollY';
+import { usePathname } from 'next/navigation';
+import { isFullWidthNavbar } from '@/lib/utils';
 
 interface NavbarClientProps {
   userName: string;
@@ -18,6 +20,9 @@ interface NavbarClientProps {
 export const Navbar = ({ userName, clerkId }: NavbarClientProps) => {
   const { isLoaded } = useUser();
   const scrollY = useScrollY();
+  const pathname = usePathname();
+
+  console.log({ pathname });
 
   return (
     <div
@@ -25,7 +30,11 @@ export const Navbar = ({ userName, clerkId }: NavbarClientProps) => {
         '!bg-white': scrollY > 0,
       })}
     >
-      <Container className="flex">
+      <Container
+        className={cx('flex', {
+          '!max-w-none': isFullWidthNavbar(pathname),
+        })}
+      >
         <div className="">
           <Link href="/">Navbar Logo</Link>
         </div>
