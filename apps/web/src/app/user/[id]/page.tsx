@@ -5,6 +5,8 @@ import { query } from '@/lib/apolloClient';
 import { UserPageWrapper } from '@/features/user/components/UserPageWrapper';
 import { headers } from 'next/headers';
 import { TripCard } from '@/features/trip/components/TripCard';
+import { Container } from '@/components/Container/Container';
+import { UserDetails } from '@/features/user/components/UserDetails';
 
 const UserPage = async ({ params }: { params: { id: string } }) => {
   headers();
@@ -22,13 +24,16 @@ const UserPage = async ({ params }: { params: { id: string } }) => {
   });
 
   return (
-    <div className="flex flex-col items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <div>
-        <p>{userData?.user?.username}</p>
-      </div>
+    <div className="min-h-screen mt-10 p-8 pb-20 sm:p-20">
+      <Container className="my-10">
+        <UserDetails user={userData?.user} />
+      </Container>
       <UserPageWrapper>
-        <div className="w-full px-1 border-[0.5px] border-slate-200" />
-        <div className="w-full">{tripsData?.trips?.map((trip) => <TripCard key={trip.id} trip={trip} />)}</div>
+        <Container className="mt-10 px-0">
+          <div className="grid gap-5 grid-cols-1 lg:grid-cols-3 xl:grid-cols-4">
+            {tripsData?.trips?.map((trip) => <TripCard key={trip.id} trip={trip} />)}
+          </div>
+        </Container>
       </UserPageWrapper>
     </div>
   );
