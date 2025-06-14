@@ -2,6 +2,13 @@
 import { v2 as cloudinary } from 'cloudinary';
 import { TCloudinaryImageProps } from '../../../../config';
 
+// Configure Cloudinary
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
 type BeforeOperationArgs = {
   operation: 'create' | 'update' | 'delete';
   resolvedData: Record<string, any>;
@@ -17,7 +24,6 @@ const renameCloudinaryImage = async (publicId: string) => {
   try {
     const filename = publicId.split('/').pop() || publicId;
     const newPublicId = `removed-${filename}`;
-
     const fullPublicId = `${process.env.CLOUDINARY_API_FOLDER}/${filename}`;
 
     await cloudinary.uploader.rename(fullPublicId, `${newPublicId}`, {
@@ -36,23 +42,20 @@ export const removeCloudinaryImage =
       if (!item?.[field]) return;
 
       const profileImage = item[field] as TCloudinaryImageProps;
-      const currentPublicId = profileImage._meta?.public_id;
-      if (!currentPublicId) return;
+      const currentId = profileImage.id;
+      if (!currentId) return;
 
       switch (operation) {
         case 'update':
-          if (
-            resolvedData[field] &&
-            (resolvedData[field] as TCloudinaryImageProps)._meta?.public_id !== currentPublicId
-          ) {
-            console.log(`Cleaning up old image on update: ${currentPublicId}`);
-            await renameCloudinaryImage(currentPublicId);
+          if (resolvedData[field] && (resolvedData[field] as TCloudinaryImageProps).id !== currentId) {
+            console.log(`Cleaning up old image on update: ${currentId}`);
+            await renameCloudinaryImage(currentId);
           }
           break;
 
         case 'delete':
-          console.log(`Cleaning up image on delete: ${currentPublicId}`);
-          await renameCloudinaryImage(currentPublicId);
+          console.log(`Cleaning up image on delete: ${currentId}`);
+          await renameCloudinaryImage(currentId);
           break;
       }
     } catch (error) {
