@@ -6,6 +6,12 @@ export const getUserDataQuery = gql`
       id
       email
       username
+      profileImage {
+        id
+        filename
+        publicUrl
+        publicUrlTransformed
+      }
     }
   }
 `;

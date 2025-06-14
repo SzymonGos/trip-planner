@@ -16,6 +16,7 @@ model User {
   clerkId           String @unique @default("")
   username          String @default("")
   email             String @default("")
+  profileImage      Json?
   from_Trip_creator Trip[] @relation("Trip_creator")
 }
 

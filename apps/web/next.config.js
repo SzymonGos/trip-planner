@@ -9,6 +9,9 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  images: {
+    domains: [process.env.CLOUDINARY_API_DOMAIN || ''],
+  },
 };
 
 module.exports = nextConfig;
