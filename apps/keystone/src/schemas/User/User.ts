@@ -3,7 +3,7 @@ import { allowAll } from '@keystone-6/core/access';
 import { text } from '@keystone-6/core/fields';
 import { cloudinaryImage } from '@keystone-6/cloudinary';
 import { CLOUDINARY_CONFIGS } from '../../../config';
-import { removeCloudinaryImage } from './hooks/cloudinaryImageCleanup';
+import { removeCloudinaryImage } from './hooks/removeCloudinaryImage';
 
 export const User = list({
   fields: {
