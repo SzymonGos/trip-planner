@@ -1,5 +1,5 @@
 import React from 'react';
-import { getUserDataQuery } from '@/features/user/server/db/getUserDataQuery';
+import { getUserDataByUsernameQuery } from '@/features/user/server/db/getUserDataQuery';
 import { getUserTripsQuery } from '@/features/user/server/db/getUserTripsQuery';
 import { query } from '@/lib/apolloClient';
 import { UserPageWrapper } from '@/features/user/components/UserPageWrapper';
@@ -8,18 +8,20 @@ import { TripCard } from '@/features/trip/components/TripCard';
 import { Container } from '@/components/Container/Container';
 import { UserDetails } from '@/features/user/components/UserDetails';
 
-const UserPage = async ({ params }: { params: { id: string } }) => {
+const UserPage = async ({ params }: { params: { username: string } }) => {
   headers();
+
   const { data: userData } = await query({
-    query: getUserDataQuery,
+    query: getUserDataByUsernameQuery,
     variables: {
-      id: params.id.trim(),
+      username: params?.username?.trim(),
     },
   });
+
   const { data: tripsData } = await query({
     query: getUserTripsQuery,
     variables: {
-      id: params.id.trim(),
+      id: userData.user?.id,
     },
   });
 

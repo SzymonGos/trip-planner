@@ -1,21 +1,16 @@
 import { Container } from '@/components/Container/Container';
-import { auth } from '@clerk/nextjs/server';
-import { redirect } from 'next/navigation';
-import { getRedirectUrl } from '@/lib/auth/getRedirectUrl';
 import React from 'react';
+import { UserSettingsContainer } from '@/features/user/components/UserSettingsContainer';
+import { forceSignIn } from '@/lib/auth/forceSignIn';
 
 const UserSettingsPage = async () => {
-  const { userId } = await auth();
-
-  if (!userId) {
-    redirect(`/sign-in?redirect_url=${encodeURIComponent(getRedirectUrl('/user/settings'))}`);
-  }
+  await forceSignIn('/user/settings');
 
   return (
     <section className="mt-40">
       <Container>
         <h1 className="mb-10 text-4xl">Personal Information</h1>
-        User Settings
+        <UserSettingsContainer />
       </Container>
     </section>
   );

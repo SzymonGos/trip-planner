@@ -30,7 +30,7 @@ export const UserMenu: FC<TUserMenuProps> = ({ userName, clerkId }) => {
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-48">
           <DropdownMenuItem asChild>
-            <Link href={`/user/${data?.user?.id}`} className="cursor-pointer">
+            <Link href={`/user/${data?.user?.username}`} className="cursor-pointer">
               My Account
             </Link>
           </DropdownMenuItem>
