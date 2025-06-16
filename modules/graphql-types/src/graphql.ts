@@ -540,4 +540,5 @@ export type UserWhereInput = {
 export type UserWhereUniqueInput = {
   clerkId?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['ID']['input']>;
+  username?: InputMaybe<Scalars['String']['input']>;
 };

@@ -60,6 +60,7 @@ input CloudinaryImageFormat {
 input UserWhereUniqueInput {
   id: ID
   clerkId: String
+  username: String
 }
 
 input UserWhereInput {
