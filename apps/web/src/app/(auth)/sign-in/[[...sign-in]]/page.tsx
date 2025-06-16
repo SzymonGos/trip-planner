@@ -1,7 +1,7 @@
 import { SignIn } from '@clerk/nextjs';
 import React from 'react';
+import { getRedirectUrl } from '@/lib/auth/getRedirectUrl';
 
-// export url
-const SignInPage = () => <SignIn signUpUrl="/sign-up" />;
+const SignInPage = () => <SignIn signUpUrl="/sign-up" fallbackRedirectUrl={getRedirectUrl()} />;
 
 export default SignInPage;
