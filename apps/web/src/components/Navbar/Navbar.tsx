@@ -24,7 +24,7 @@ export const Navbar = ({ userName, clerkId }: NavbarClientProps) => {
 
   return (
     <div
-      className={cx('fixed top-0 z-50 w-full bg-transparent p-6 transition-colors duration-200', {
+      className={cx('fixed top-0 z-50 w-full bg-transparent py-6 transition-colors duration-200', {
         '!bg-white': scrollY > 0,
       })}
     >
