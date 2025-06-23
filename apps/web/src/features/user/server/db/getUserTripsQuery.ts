@@ -11,6 +11,10 @@ export const getUserTripsQuery = gql`
         id
         username
       }
+      description
+      distance
+      estimatedDuration
+      createdAt
     }
   }
 `;

@@ -16,6 +16,61 @@ export type Scalars = {
   DateTime: { input: any; output: any; }
   /** The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
   JSON: { input: any; output: any; }
+  /** The `Upload` scalar type represents a file upload. */
+  Upload: { input: any; output: any; }
+};
+
+/**
+ * Mirrors the formatting options [Cloudinary provides](https://cloudinary.com/documentation/image_transformation_reference).
+ * All options are strings as they ultimately end up in a URL.
+ */
+export type CloudinaryImageFormat = {
+  angle?: InputMaybe<Scalars['String']['input']>;
+  aspect_ratio?: InputMaybe<Scalars['String']['input']>;
+  background?: InputMaybe<Scalars['String']['input']>;
+  border?: InputMaybe<Scalars['String']['input']>;
+  color?: InputMaybe<Scalars['String']['input']>;
+  color_space?: InputMaybe<Scalars['String']['input']>;
+  crop?: InputMaybe<Scalars['String']['input']>;
+  default_image?: InputMaybe<Scalars['String']['input']>;
+  delay?: InputMaybe<Scalars['String']['input']>;
+  density?: InputMaybe<Scalars['String']['input']>;
+  dpr?: InputMaybe<Scalars['String']['input']>;
+  effect?: InputMaybe<Scalars['String']['input']>;
+  fetch_format?: InputMaybe<Scalars['String']['input']>;
+  flags?: InputMaybe<Scalars['String']['input']>;
+  format?: InputMaybe<Scalars['String']['input']>;
+  gravity?: InputMaybe<Scalars['String']['input']>;
+  height?: InputMaybe<Scalars['String']['input']>;
+  opacity?: InputMaybe<Scalars['String']['input']>;
+  overlay?: InputMaybe<Scalars['String']['input']>;
+  page?: InputMaybe<Scalars['String']['input']>;
+  /**  Rewrites the filename to be this pretty string. Do not include `/` or `.` */
+  prettyName?: InputMaybe<Scalars['String']['input']>;
+  quality?: InputMaybe<Scalars['String']['input']>;
+  radius?: InputMaybe<Scalars['String']['input']>;
+  transformation?: InputMaybe<Scalars['String']['input']>;
+  underlay?: InputMaybe<Scalars['String']['input']>;
+  width?: InputMaybe<Scalars['String']['input']>;
+  x?: InputMaybe<Scalars['String']['input']>;
+  y?: InputMaybe<Scalars['String']['input']>;
+  zoom?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type CloudinaryImage_File = {
+  __typename?: 'CloudinaryImage_File';
+  encoding?: Maybe<Scalars['String']['output']>;
+  filename?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['ID']['output']>;
+  mimetype?: Maybe<Scalars['String']['output']>;
+  originalFilename?: Maybe<Scalars['String']['output']>;
+  publicUrl?: Maybe<Scalars['String']['output']>;
+  publicUrlTransformed?: Maybe<Scalars['String']['output']>;
+};
+
+
+export type CloudinaryImage_FilePublicUrlTransformedArgs = {
+  transformation?: InputMaybe<CloudinaryImageFormat>;
 };
 
 export type DateTimeNullableFilter = {
@@ -431,12 +486,14 @@ export type User = {
   clerkId?: Maybe<Scalars['String']['output']>;
   email?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
+  profileImage?: Maybe<CloudinaryImage_File>;
   username?: Maybe<Scalars['String']['output']>;
 };
 
 export type UserCreateInput = {
   clerkId?: InputMaybe<Scalars['String']['input']>;
   email?: InputMaybe<Scalars['String']['input']>;
+  profileImage?: InputMaybe<Scalars['Upload']['input']>;
   username?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -466,6 +523,7 @@ export type UserUpdateArgs = {
 export type UserUpdateInput = {
   clerkId?: InputMaybe<Scalars['String']['input']>;
   email?: InputMaybe<Scalars['String']['input']>;
+  profileImage?: InputMaybe<Scalars['Upload']['input']>;
   username?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -482,4 +540,5 @@ export type UserWhereInput = {
 export type UserWhereUniqueInput = {
   clerkId?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['ID']['input']>;
+  username?: InputMaybe<Scalars['String']['input']>;
 };

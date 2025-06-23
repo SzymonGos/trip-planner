@@ -7,6 +7,7 @@ import { Button } from '../ui/button';
 import Link from 'next/link';
 import { useQuery } from '@apollo/client';
 import { getUserIdByClerkIdQuery } from '@/features/user/server/db/getUserIdByClerkIdQuery';
+import { SettingsIcon } from '../Icons/SettingsIcon';
 
 type TUserMenuProps = {
   userName: string;
@@ -30,8 +31,14 @@ export const UserMenu: FC<TUserMenuProps> = ({ userName, clerkId }) => {
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-48">
           <DropdownMenuItem asChild>
-            <Link href={`/user/${data?.user?.id}`} className="cursor-pointer">
+            <Link href={`/user/${data?.user?.username}`} className="cursor-pointer">
               My Account
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem asChild>
+            <Link href="/user/settings" className="cursor-pointer flex items-center gap-2">
+              <SettingsIcon />
+              Settings
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem>
