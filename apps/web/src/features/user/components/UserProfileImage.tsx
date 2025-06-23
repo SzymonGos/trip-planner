@@ -7,11 +7,17 @@ type TUserProfileImageProfileProps = {
 };
 
 export const UserProfileImage: FC<TUserProfileImageProfileProps> = ({ id }) => (
-  <CldImage
-    src={getCloudinaryImageSrc(id)}
-    width={100}
-    height={100}
-    className="w-full h-full rounded-full object-cover"
-    alt="User profile"
-  />
+  <>
+    {id ? (
+      <CldImage
+        src={getCloudinaryImageSrc(id)}
+        width={150}
+        height={150}
+        className="w-full h-full rounded-full object-cover"
+        alt="User profile"
+      />
+    ) : (
+      <div className="h-[100px] w-[100px] rounded-full bg-gray-300" />
+    )}
+  </>
 );

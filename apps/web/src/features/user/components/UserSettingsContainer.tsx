@@ -1,23 +1,71 @@
 'use client';
 
 import { useAuthenticatedUser } from '@/features/user/hooks/useAuthenticatedUser';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { UserSettings } from './UserSettings';
-import { useQuery } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client';
 import { getUserDataQuery } from '../server/db/getUserDataQuery';
+import { updateUserMutationQuery } from '../server/actions/updateUserMutationQuery';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { userSettingsSchema } from '../helpers/formValidation';
+import { z } from 'zod';
+import { CloudinaryImage_File, UserUpdateArgs } from 'tp-graphql-types';
+
+type TFormValuesProps = z.infer<typeof userSettingsSchema> & {
+  profileImage?: CloudinaryImage_File | File;
+};
 
 export const UserSettingsContainer = () => {
   const { authUserId } = useAuthenticatedUser();
 
-  const { data, loading, error } = useQuery(getUserDataQuery, {
+  const { data } = useQuery(getUserDataQuery, {
     variables: {
       id: authUserId,
     },
-    skip: !authUserId,
   });
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error loading user settings</div>;
+  const [updateUserMutation] = useMutation(updateUserMutationQuery);
 
-  return <UserSettings user={data?.user} />;
+  const useFormReturn = useForm<TFormValuesProps>({
+    resolver: zodResolver(userSettingsSchema),
+    defaultValues: {
+      username: '',
+      email: '',
+    },
+  });
+
+  useEffect(() => {
+    if (data?.user) {
+      useFormReturn.reset({
+        username: data.user.username || '',
+        email: data.user.email || '',
+      });
+    }
+  }, [data?.user, useFormReturn]);
+
+  const handleOnSubmit = async (data: UserUpdateArgs['data']) => {
+    try {
+      let profileImage = data.profileImage;
+      if (profileImage && !(profileImage instanceof File)) {
+        profileImage = undefined;
+      }
+
+      await updateUserMutation({
+        variables: {
+          where: { id: authUserId },
+          data: {
+            ...data,
+            profileImage,
+          },
+        },
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const handleSubmitCallback = useFormReturn.handleSubmit(handleOnSubmit);
+
+  return <UserSettings user={data?.user} useFormReturn={useFormReturn} onSubmit={handleSubmitCallback} />;
 };
