@@ -8,6 +8,8 @@ export default config({
     cors: {
       origin: CORS_ORIGIN,
       credentials: true,
+      methods: ['GET', 'POST', 'OPTIONS'],
+      allowedHeaders: ['Content-Type', 'Authorization', 'Apollo-Require-Preflight'],
     },
   },
   db: {

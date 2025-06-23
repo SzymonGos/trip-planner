@@ -1,5 +1,5 @@
-import { HttpLink } from '@apollo/client';
 import { registerApolloClient, ApolloClient, InMemoryCache } from '@apollo/experimental-nextjs-app-support';
+import { HttpLink } from '@apollo/client';
 import { GRAPHQL_API_URL } from './config';
 
 export const { getClient, query, PreloadQuery } = registerApolloClient(
@@ -20,6 +20,7 @@ export const { getClient, query, PreloadQuery } = registerApolloClient(
       }),
       link: new HttpLink({
         uri: GRAPHQL_API_URL,
+        credentials: 'include',
       }),
     }),
 );
