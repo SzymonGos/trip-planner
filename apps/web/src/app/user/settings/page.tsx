@@ -9,8 +9,10 @@ const UserSettingsPage = async () => {
   return (
     <section className="mt-40">
       <Container>
-        <h1 className="mb-10 text-4xl">Personal Information</h1>
-        <UserSettingsContainer />
+        <div className="mx-auto max-w-2xl">
+          <h1 className="mb-10 text-4xl">Personal Information</h1>
+          <UserSettingsContainer />
+        </div>
       </Container>
     </section>
   );
