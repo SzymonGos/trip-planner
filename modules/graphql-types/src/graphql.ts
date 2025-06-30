@@ -249,14 +249,20 @@ export type KeystoneMeta = {
 export type Mutation = {
   __typename?: 'Mutation';
   createTrip?: Maybe<Trip>;
+  createTripImage?: Maybe<TripImage>;
+  createTripImages?: Maybe<Array<Maybe<TripImage>>>;
   createTrips?: Maybe<Array<Maybe<Trip>>>;
   createUser?: Maybe<User>;
   createUsers?: Maybe<Array<Maybe<User>>>;
   deleteTrip?: Maybe<Trip>;
+  deleteTripImage?: Maybe<TripImage>;
+  deleteTripImages?: Maybe<Array<Maybe<TripImage>>>;
   deleteTrips?: Maybe<Array<Maybe<Trip>>>;
   deleteUser?: Maybe<User>;
   deleteUsers?: Maybe<Array<Maybe<User>>>;
   updateTrip?: Maybe<Trip>;
+  updateTripImage?: Maybe<TripImage>;
+  updateTripImages?: Maybe<Array<Maybe<TripImage>>>;
   updateTrips?: Maybe<Array<Maybe<Trip>>>;
   updateUser?: Maybe<User>;
   updateUsers?: Maybe<Array<Maybe<User>>>;
@@ -265,6 +271,16 @@ export type Mutation = {
 
 export type MutationCreateTripArgs = {
   data: TripCreateInput;
+};
+
+
+export type MutationCreateTripImageArgs = {
+  data: TripImageCreateInput;
+};
+
+
+export type MutationCreateTripImagesArgs = {
+  data: Array<TripImageCreateInput>;
 };
 
 
@@ -288,6 +304,16 @@ export type MutationDeleteTripArgs = {
 };
 
 
+export type MutationDeleteTripImageArgs = {
+  where: TripImageWhereUniqueInput;
+};
+
+
+export type MutationDeleteTripImagesArgs = {
+  where: Array<TripImageWhereUniqueInput>;
+};
+
+
 export type MutationDeleteTripsArgs = {
   where: Array<TripWhereUniqueInput>;
 };
@@ -306,6 +332,17 @@ export type MutationDeleteUsersArgs = {
 export type MutationUpdateTripArgs = {
   data: TripUpdateInput;
   where: TripWhereUniqueInput;
+};
+
+
+export type MutationUpdateTripImageArgs = {
+  data: TripImageUpdateInput;
+  where: TripImageWhereUniqueInput;
+};
+
+
+export type MutationUpdateTripImagesArgs = {
+  data: Array<TripImageUpdateArgs>;
 };
 
 
@@ -347,6 +384,9 @@ export type Query = {
   __typename?: 'Query';
   keystone: KeystoneMeta;
   trip?: Maybe<Trip>;
+  tripImage?: Maybe<TripImage>;
+  tripImages?: Maybe<Array<TripImage>>;
+  tripImagesCount?: Maybe<Scalars['Int']['output']>;
   trips?: Maybe<Array<Trip>>;
   tripsCount?: Maybe<Scalars['Int']['output']>;
   user?: Maybe<User>;
@@ -357,6 +397,25 @@ export type Query = {
 
 export type QueryTripArgs = {
   where: TripWhereUniqueInput;
+};
+
+
+export type QueryTripImageArgs = {
+  where: TripImageWhereUniqueInput;
+};
+
+
+export type QueryTripImagesArgs = {
+  cursor?: InputMaybe<TripImageWhereUniqueInput>;
+  orderBy?: Array<TripImageOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: TripImageWhereInput;
+};
+
+
+export type QueryTripImagesCountArgs = {
+  where?: TripImageWhereInput;
 };
 
 
@@ -421,7 +480,24 @@ export type Trip = {
   estimatedDuration?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   origin?: Maybe<Scalars['String']['output']>;
+  status?: Maybe<TripStatusType>;
   title?: Maybe<Scalars['String']['output']>;
+  tripImages?: Maybe<Array<TripImage>>;
+  tripImagesCount?: Maybe<Scalars['Int']['output']>;
+};
+
+
+export type TripTripImagesArgs = {
+  cursor?: InputMaybe<TripImageWhereUniqueInput>;
+  orderBy?: Array<TripImageOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: TripImageWhereInput;
+};
+
+
+export type TripTripImagesCountArgs = {
+  where?: TripImageWhereInput;
 };
 
 export type TripCreateInput = {
@@ -432,7 +508,65 @@ export type TripCreateInput = {
   distance?: InputMaybe<Scalars['String']['input']>;
   estimatedDuration?: InputMaybe<Scalars['String']['input']>;
   origin?: InputMaybe<Scalars['String']['input']>;
+  status?: InputMaybe<TripStatusType>;
   title?: InputMaybe<Scalars['String']['input']>;
+  tripImages?: InputMaybe<TripImageRelateToManyForCreateInput>;
+};
+
+export type TripImage = {
+  __typename?: 'TripImage';
+  id: Scalars['ID']['output'];
+  image?: Maybe<CloudinaryImage_File>;
+  trip?: Maybe<Trip>;
+};
+
+export type TripImageCreateInput = {
+  image?: InputMaybe<Scalars['Upload']['input']>;
+  trip?: InputMaybe<TripRelateToOneForCreateInput>;
+};
+
+export type TripImageManyRelationFilter = {
+  every?: InputMaybe<TripImageWhereInput>;
+  none?: InputMaybe<TripImageWhereInput>;
+  some?: InputMaybe<TripImageWhereInput>;
+};
+
+export type TripImageOrderByInput = {
+  id?: InputMaybe<OrderDirection>;
+};
+
+export type TripImageRelateToManyForCreateInput = {
+  connect?: InputMaybe<Array<TripImageWhereUniqueInput>>;
+  create?: InputMaybe<Array<TripImageCreateInput>>;
+};
+
+export type TripImageRelateToManyForUpdateInput = {
+  connect?: InputMaybe<Array<TripImageWhereUniqueInput>>;
+  create?: InputMaybe<Array<TripImageCreateInput>>;
+  disconnect?: InputMaybe<Array<TripImageWhereUniqueInput>>;
+  set?: InputMaybe<Array<TripImageWhereUniqueInput>>;
+};
+
+export type TripImageUpdateArgs = {
+  data: TripImageUpdateInput;
+  where: TripImageWhereUniqueInput;
+};
+
+export type TripImageUpdateInput = {
+  image?: InputMaybe<Scalars['Upload']['input']>;
+  trip?: InputMaybe<TripRelateToOneForUpdateInput>;
+};
+
+export type TripImageWhereInput = {
+  AND?: InputMaybe<Array<TripImageWhereInput>>;
+  NOT?: InputMaybe<Array<TripImageWhereInput>>;
+  OR?: InputMaybe<Array<TripImageWhereInput>>;
+  id?: InputMaybe<IdFilter>;
+  trip?: InputMaybe<TripWhereInput>;
+};
+
+export type TripImageWhereUniqueInput = {
+  id?: InputMaybe<Scalars['ID']['input']>;
 };
 
 export type TripOrderByInput = {
@@ -443,7 +577,31 @@ export type TripOrderByInput = {
   estimatedDuration?: InputMaybe<OrderDirection>;
   id?: InputMaybe<OrderDirection>;
   origin?: InputMaybe<OrderDirection>;
+  status?: InputMaybe<OrderDirection>;
   title?: InputMaybe<OrderDirection>;
+};
+
+export type TripRelateToOneForCreateInput = {
+  connect?: InputMaybe<TripWhereUniqueInput>;
+  create?: InputMaybe<TripCreateInput>;
+};
+
+export type TripRelateToOneForUpdateInput = {
+  connect?: InputMaybe<TripWhereUniqueInput>;
+  create?: InputMaybe<TripCreateInput>;
+  disconnect?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export enum TripStatusType {
+  Completed = 'completed',
+  Planning = 'planning'
+}
+
+export type TripStatusTypeNullableFilter = {
+  equals?: InputMaybe<TripStatusType>;
+  in?: InputMaybe<Array<TripStatusType>>;
+  not?: InputMaybe<TripStatusTypeNullableFilter>;
+  notIn?: InputMaybe<Array<TripStatusType>>;
 };
 
 export type TripUpdateArgs = {
@@ -459,7 +617,9 @@ export type TripUpdateInput = {
   distance?: InputMaybe<Scalars['String']['input']>;
   estimatedDuration?: InputMaybe<Scalars['String']['input']>;
   origin?: InputMaybe<Scalars['String']['input']>;
+  status?: InputMaybe<TripStatusType>;
   title?: InputMaybe<Scalars['String']['input']>;
+  tripImages?: InputMaybe<TripImageRelateToManyForUpdateInput>;
 };
 
 export type TripWhereInput = {
@@ -474,7 +634,9 @@ export type TripWhereInput = {
   estimatedDuration?: InputMaybe<StringFilter>;
   id?: InputMaybe<IdFilter>;
   origin?: InputMaybe<StringFilter>;
+  status?: InputMaybe<TripStatusTypeNullableFilter>;
   title?: InputMaybe<StringFilter>;
+  tripImages?: InputMaybe<TripImageManyRelationFilter>;
 };
 
 export type TripWhereUniqueInput = {

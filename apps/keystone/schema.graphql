@@ -153,9 +153,17 @@ type Trip {
   origin: String
   destination: String
   creator: User
+  status: TripStatusType
+  tripImages(where: TripImageWhereInput! = {}, orderBy: [TripImageOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TripImageWhereUniqueInput): [TripImage!]
+  tripImagesCount(where: TripImageWhereInput! = {}): Int
   distance: String
   estimatedDuration: String
   createdAt: DateTime
+}
+
+enum TripStatusType {
+  planning
+  completed
 }
 
 scalar DateTime @specifiedBy(url: "https://datatracker.ietf.org/doc/html/rfc3339#section-5.6")
@@ -174,9 +182,24 @@ input TripWhereInput {
   origin: StringFilter
   destination: StringFilter
   creator: UserWhereInput
+  status: TripStatusTypeNullableFilter
+  tripImages: TripImageManyRelationFilter
   distance: StringFilter
   estimatedDuration: StringFilter
   createdAt: DateTimeNullableFilter
+}
+
+input TripStatusTypeNullableFilter {
+  equals: TripStatusType
+  in: [TripStatusType!]
+  notIn: [TripStatusType!]
+  not: TripStatusTypeNullableFilter
+}
+
+input TripImageManyRelationFilter {
+  every: TripImageWhereInput
+  some: TripImageWhereInput
+  none: TripImageWhereInput
 }
 
 input DateTimeNullableFilter {
@@ -196,6 +219,7 @@ input TripOrderByInput {
   description: OrderDirection
   origin: OrderDirection
   destination: OrderDirection
+  status: OrderDirection
   distance: OrderDirection
   estimatedDuration: OrderDirection
   createdAt: OrderDirection
@@ -207,6 +231,8 @@ input TripUpdateInput {
   origin: String
   destination: String
   creator: UserRelateToOneForUpdateInput
+  status: TripStatusType
+  tripImages: TripImageRelateToManyForUpdateInput
   distance: String
   estimatedDuration: String
   createdAt: DateTime
@@ -216,6 +242,13 @@ input UserRelateToOneForUpdateInput {
   create: UserCreateInput
   connect: UserWhereUniqueInput
   disconnect: Boolean
+}
+
+input TripImageRelateToManyForUpdateInput {
+  disconnect: [TripImageWhereUniqueInput!]
+  set: [TripImageWhereUniqueInput!]
+  create: [TripImageCreateInput!]
+  connect: [TripImageWhereUniqueInput!]
 }
 
 input TripUpdateArgs {
@@ -229,6 +262,8 @@ input TripCreateInput {
   origin: String
   destination: String
   creator: UserRelateToOneForCreateInput
+  status: TripStatusType
+  tripImages: TripImageRelateToManyForCreateInput
   distance: String
   estimatedDuration: String
   createdAt: DateTime
@@ -237,6 +272,59 @@ input TripCreateInput {
 input UserRelateToOneForCreateInput {
   create: UserCreateInput
   connect: UserWhereUniqueInput
+}
+
+input TripImageRelateToManyForCreateInput {
+  create: [TripImageCreateInput!]
+  connect: [TripImageWhereUniqueInput!]
+}
+
+type TripImage {
+  id: ID!
+  image: CloudinaryImage_File
+  trip: Trip
+}
+
+input TripImageWhereUniqueInput {
+  id: ID
+}
+
+input TripImageWhereInput {
+  AND: [TripImageWhereInput!]
+  OR: [TripImageWhereInput!]
+  NOT: [TripImageWhereInput!]
+  id: IDFilter
+  trip: TripWhereInput
+}
+
+input TripImageOrderByInput {
+  id: OrderDirection
+}
+
+input TripImageUpdateInput {
+  image: Upload
+  trip: TripRelateToOneForUpdateInput
+}
+
+input TripRelateToOneForUpdateInput {
+  create: TripCreateInput
+  connect: TripWhereUniqueInput
+  disconnect: Boolean
+}
+
+input TripImageUpdateArgs {
+  where: TripImageWhereUniqueInput!
+  data: TripImageUpdateInput!
+}
+
+input TripImageCreateInput {
+  image: Upload
+  trip: TripRelateToOneForCreateInput
+}
+
+input TripRelateToOneForCreateInput {
+  create: TripCreateInput
+  connect: TripWhereUniqueInput
 }
 
 """
@@ -257,6 +345,12 @@ type Mutation {
   updateTrips(data: [TripUpdateArgs!]!): [Trip]
   deleteTrip(where: TripWhereUniqueInput!): Trip
   deleteTrips(where: [TripWhereUniqueInput!]!): [Trip]
+  createTripImage(data: TripImageCreateInput!): TripImage
+  createTripImages(data: [TripImageCreateInput!]!): [TripImage]
+  updateTripImage(where: TripImageWhereUniqueInput!, data: TripImageUpdateInput!): TripImage
+  updateTripImages(data: [TripImageUpdateArgs!]!): [TripImage]
+  deleteTripImage(where: TripImageWhereUniqueInput!): TripImage
+  deleteTripImages(where: [TripImageWhereUniqueInput!]!): [TripImage]
 }
 
 type Query {
@@ -266,6 +360,9 @@ type Query {
   trip(where: TripWhereUniqueInput!): Trip
   trips(where: TripWhereInput! = {}, orderBy: [TripOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TripWhereUniqueInput): [Trip!]
   tripsCount(where: TripWhereInput! = {}): Int
+  tripImage(where: TripImageWhereUniqueInput!): TripImage
+  tripImages(where: TripImageWhereInput! = {}, orderBy: [TripImageOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TripImageWhereUniqueInput): [TripImage!]
+  tripImagesCount(where: TripImageWhereInput! = {}): Int
   keystone: KeystoneMeta!
 }
 

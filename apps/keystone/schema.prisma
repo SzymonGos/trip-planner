@@ -21,16 +21,32 @@ model User {
 }
 
 model Trip {
-  id                String    @id @default(cuid())
-  title             String    @default("")
-  description       String    @default("") @mysql.Text
-  origin            String    @default("")
-  destination       String    @default("")
-  creator           User?     @relation("Trip_creator", fields: [creatorId], references: [id])
-  creatorId         String?   @map("creator")
-  distance          String    @default("")
-  estimatedDuration String    @default("")
-  createdAt         DateTime? @default(now())
+  id                String         @id @default(cuid())
+  title             String         @default("")
+  description       String         @default("") @mysql.Text
+  origin            String         @default("")
+  destination       String         @default("")
+  creator           User?          @relation("Trip_creator", fields: [creatorId], references: [id])
+  creatorId         String?        @map("creator")
+  status            TripStatusType @default(planning)
+  tripImages        TripImage[]    @relation("TripImage_trip")
+  distance          String         @default("")
+  estimatedDuration String         @default("")
+  createdAt         DateTime?      @default(now())
 
   @@index([creatorId])
+}
+
+model TripImage {
+  id     String  @id @default(cuid())
+  image  Json?
+  trip   Trip?   @relation("TripImage_trip", fields: [tripId], references: [id])
+  tripId String? @map("trip")
+
+  @@index([tripId])
+}
+
+enum TripStatusType {
+  planning
+  completed
 }
