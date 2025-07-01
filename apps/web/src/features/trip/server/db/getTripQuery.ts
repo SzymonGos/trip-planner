@@ -9,6 +9,21 @@ export const getTripQuery = gql`
       origin
       destination
       createdAt
+      tripImages {
+        id
+        image {
+          id
+          publicUrl
+          publicUrlTransformed
+        }
+      }
+      distance
+      estimatedDuration
+      status
+      creator {
+        id
+        username
+      }
     }
   }
 `;
