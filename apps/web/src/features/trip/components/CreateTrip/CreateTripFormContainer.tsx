@@ -17,11 +17,19 @@ import { getTripUrl } from '../../helpers/getTripUrl';
 import { getUserTripsQuery } from '@/features/user/server/db/getUserTripsQuery';
 import { getTripsQuery } from '../../server/db/getTripsQuery';
 
+export type TTripImageFormValue = {
+  id: string;
+  publicUrl: string;
+  publicUrlTransformed: string;
+};
+
 export type TFormValuesProps = {
   title: string;
   description?: string;
   origin: string;
   destination: string;
+  status: 'planning' | 'completed';
+  images?: (File | TTripImageFormValue)[];
 } & z.infer<typeof tripSchema>;
 
 export type TAutocompleteProps = google.maps.places.Autocomplete | null;
@@ -40,8 +48,10 @@ export const CreateTripFormContainer = () => {
   const defaultValues = {
     title: '',
     description: '',
-    origin: directionsValue.origin || '',
-    destination: directionsValue.destination || '',
+    origin: typeof directionsValue.origin === 'string' ? directionsValue.origin : '',
+    destination: typeof directionsValue.destination === 'string' ? directionsValue.destination : '',
+    status: 'planning' as const,
+    images: [],
   };
 
   const useFormReturn = useForm<TFormValuesProps>({
@@ -66,6 +76,8 @@ export const CreateTripFormContainer = () => {
 
   const handleOnSubmit: SubmitHandler<TFormValuesProps> = async (data) => {
     try {
+      const files = (data.images || []).filter((img): img is File => img instanceof File);
+      const tripImages = files.map((file) => ({ image: file }));
       const createTripResponse = await createTripMutation({
         variables: {
           data: {
@@ -73,6 +85,10 @@ export const CreateTripFormContainer = () => {
             description: data.description,
             origin: data.origin,
             destination: data.destination,
+            status: data.status,
+            tripImages: {
+              create: tripImages,
+            },
             creator: {
               connect: {
                 id: authUserId,
@@ -102,8 +118,11 @@ export const CreateTripFormContainer = () => {
   const handleSubmitCallback = useFormReturn.handleSubmit(handleOnSubmit);
 
   useEffect(() => {
-    useFormReturn.setValue('origin', directionsValue?.origin);
-    useFormReturn.setValue('destination', directionsValue.destination);
+    useFormReturn.setValue('origin', typeof directionsValue?.origin === 'string' ? directionsValue.origin : '');
+    useFormReturn.setValue(
+      'destination',
+      typeof directionsValue.destination === 'string' ? directionsValue.destination : '',
+    );
   }, [directionsValue, useFormReturn]);
 
   useEffect(() => {
@@ -121,6 +140,15 @@ export const CreateTripFormContainer = () => {
 
     fetchDistance();
   }, [directionsValue.origin, directionsValue.destination, getDistance]);
+
+  useEffect(() => {
+    const currentStatus = useFormReturn.watch('status');
+    const currentImages = useFormReturn.watch('images');
+
+    if (currentStatus === 'planning' && currentImages && currentImages.length > 0) {
+      useFormReturn.setValue('images', []);
+    }
+  }, [useFormReturn.watch('status')]);
 
   if (!isLoaded) return <div>Form Loading...</div>;
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Control, FieldValues, Path } from 'react-hook-form';
@@ -8,16 +8,10 @@ export type TInputFieldProps<T extends FieldValues> = {
   name: Path<T>;
   label: string;
   placeholder: string;
-  hasError: boolean;
+  hasError?: boolean;
 };
 
-export const InputField = <T extends FieldValues>({
-  control,
-  name,
-  label,
-  placeholder,
-  hasError,
-}: TInputFieldProps<T>) => (
+export const InputField: FC<TInputFieldProps<FieldValues>> = ({ control, name, label, placeholder, hasError }) => (
   <FormField
     control={control}
     name={name}

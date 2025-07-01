@@ -30,6 +30,9 @@ export const EditTripFormContainer: FC<TEditTripFormContainerProps> = ({ trip })
     title: trip.title,
     origin: trip.origin,
     destination: trip.destination,
+    status: trip.status,
+    description: trip.description || '',
+    images: [],
   };
 
   const useFormReturn = useForm<TFormValuesProps>({
@@ -75,8 +78,11 @@ export const EditTripFormContainer: FC<TEditTripFormContainerProps> = ({ trip })
   const handleSubmitCallback = useFormReturn.handleSubmit(handleOnSubmit);
 
   useEffect(() => {
-    useFormReturn.setValue('origin', directionsValue?.origin);
-    useFormReturn.setValue('destination', directionsValue.destination);
+    useFormReturn.setValue('origin', typeof directionsValue?.origin === 'string' ? directionsValue.origin : '');
+    useFormReturn.setValue(
+      'destination',
+      typeof directionsValue.destination === 'string' ? directionsValue.destination : '',
+    );
   }, [directionsValue, useFormReturn]);
 
   useEffect(() => {
@@ -95,6 +101,15 @@ export const EditTripFormContainer: FC<TEditTripFormContainerProps> = ({ trip })
     fetchDistance();
   }, [directionsValue.origin, directionsValue.destination, getDistance]);
 
+  useEffect(() => {
+    const currentStatus = useFormReturn.watch('status');
+    const currentImages = useFormReturn.watch('images');
+
+    if (currentStatus === 'planning' && currentImages && currentImages.length > 0) {
+      useFormReturn.setValue('images', []);
+    }
+  }, [useFormReturn.watch('status')]);
+
   if (!isLoaded) return <div>Form Loading...</div>;
 
   return (
@@ -107,7 +122,7 @@ export const EditTripFormContainer: FC<TEditTripFormContainerProps> = ({ trip })
       destinationAutocomplete={destinationAutocomplete}
       setOriginAutocomplete={setOriginAutocomplete}
       setDestinationAutocomplete={setDestinationAutocomplete}
-      handleClearDirections={handleClearDirections}
+      handleClearForm={handleClearDirections}
       isEditing={true}
     />
   );
