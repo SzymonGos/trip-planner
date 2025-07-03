@@ -1,39 +1,46 @@
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import React from 'react';
+import React, { FC } from 'react';
 import { getTripPlannerUrl } from '../trip/helpers/getTripPlannerUrl';
+import Image from 'next/image';
+import { motion, MotionValue } from 'framer-motion';
 
-export const HeroSection = () => (
-  <section className="relative h-[70vh] flex mb-20 items-center justify-center">
-    <div className="absolute inset-0 z-0 bg-gradient-to-b from-black/50 to-transparent" />
-    <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
-      <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6 font-outfit">Plan Your Destination</h1>
-      <p className="text-xl sm:text-2xl text-white/90 mb-8">Amazing destinations in the world</p>
-    </div>
-    <div className="absolute bottom-0 w-full h-[60px] bg-white mask-wave" />
-    <div className="absolute flex items-center justify-center -bottom-7 bg-white rounded-xl w-[500px] h-[100px] shadow-sm ">
-      {/* style buttons */}
+type THeroSectionProps = {
+  backgroundY: MotionValue<number>;
+  overlayY: MotionValue<number>;
+  textY: MotionValue<number>;
+};
+
+export const HeroSection: FC<THeroSectionProps> = ({ backgroundY, overlayY, textY }) => (
+  <section className="relative h-[70vh] flex mb-20 items-center justify-center overflow-hidden">
+    <motion.div className="absolute inset-0 z-0" style={{ y: backgroundY }}>
+      <Image src="/images/road-landscape.webp" alt="Open road with mountains" fill className="object-cover" priority />
+    </motion.div>
+
+    <motion.div
+      className="absolute inset-0 z-10 bg-gradient-to-b from-black/20 to-transparent"
+      style={{ y: overlayY }}
+    />
+
+    <motion.div
+      className="relative z-20 text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto flex flex-col items-center justify-center"
+      style={{ y: textY }}
+    >
+      <h1 className="text-4xl sm:text-5xl md:text-6xl font-semibold text-white mb-6 font-primary">
+        Plan Your Next Adventure
+      </h1>
+      <p className="text-lg sm:text-xl text-white mb-10 font-normal max-w-2xl mx-auto font-secondary">
+        Turn your dream trip into a shared journey — plan it, shape it, live it.
+      </p>
       <div className="flex flex-col sm:flex-row gap-4 justify-center">
-        <Button
-          asChild
-          className="py-6 text-lg font-bold bg-tp-primary"
-          size="lg"
-          // className="bg-tp-primary text-white px-8 py-3 rounded-lg text-lg font-semibold transition-colors"
-        >
-          <Link href={getTripPlannerUrl()} className="">
-            Start Planning
-          </Link>
+        <Button asChild className="py-6 text-lg bg-tp-primary" size="lg">
+          <Link href={getTripPlannerUrl()}>Start Planning</Link>
         </Button>
-        <Button
-          asChild
-          variant="outline"
-          className="py-6 text-lg font-bold"
-          size="lg"
-          // className="bg-white/10 hover:bg-white/20 text-gray-600 px-8 py-4 rounded-lg text-lg font-semibold"
-        >
+        <Button asChild variant="outline" className="py-6 text-lg" size="lg">
           <Link href="/trips">Browse Trips</Link>
         </Button>
       </div>
-    </div>
+    </motion.div>
+    <div className="absolute bottom-0 w-full h-[60px] bg-[#f9f9f9] backdrop-blur-sm mask-wave" />
   </section>
 );

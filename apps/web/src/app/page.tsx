@@ -1,11 +1,11 @@
 import { Footer } from '@/components/Footer/Footer';
 import { FeaturedDestinationsContainer } from '@/features/homepage/FeaturedDestinationsContainer';
-import { HeroSection } from '@/features/homepage/HeroSection';
+import { HeroSectionContainer } from '@/features/homepage/HeroSectionContainer';
 import { HowItWorks } from '@/features/homepage/HowItWorks';
 
 const Home = () => (
   <div className="min-h-[calc(100vh-72px)]">
-    <HeroSection />
+    <HeroSectionContainer />
     <HowItWorks />
     <FeaturedDestinationsContainer />
     <Footer />
