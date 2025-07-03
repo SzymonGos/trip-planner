@@ -12,8 +12,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        primary: ['Outfit', 'sans-serif'],
-        secondary: ['Inter', 'sans-serif'],
+        primary: ['Montserrat', 'sans-serif'],
+        secondary: ['Open Sans', 'sans-serif'],
       },
       colors: {
         background: 'hsl(var(--background))',
@@ -57,7 +57,7 @@ export default {
           '5': 'hsl(var(--chart-5))',
         },
         tp: {
-          primary: '#fb6f3c',
+          primary: '#000000',
           white: {
             100: '#F9F9F9',
           },
