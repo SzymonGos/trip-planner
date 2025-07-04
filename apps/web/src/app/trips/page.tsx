@@ -1,5 +1,5 @@
 import React from 'react';
-import { TripCard } from '@/features/trip/components/TripCard';
+import { TripCard } from '@/features/trip/components/TripCard/TripCard';
 import { getTripsQuery } from '@/features/trip/server/db/getTripsQuery';
 import { Trip as TTrip } from 'tp-graphql-types';
 import { query } from '@/lib/apolloClient';
