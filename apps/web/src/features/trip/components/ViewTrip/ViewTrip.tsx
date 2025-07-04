@@ -89,12 +89,12 @@ export const ViewTrip: FC<TViewTripProps> = ({ trip }) => {
           <div className="flex flex-col gap-3">
             <div className="flex items-center gap-3">
               <span className="text-base">
-                Length: <span className="font-medium">{trip?.distance || 'N/A'}</span>
+                Length: <span className="font-medium">{trip?.distance}</span>
               </span>
             </div>
             <div className="flex items-center gap-3">
               <span className="text-base">
-                Duration: <span className="font-medium">{trip?.estimatedDuration || 'N/A'}</span>
+                Duration: <span className="font-medium">{trip?.estimatedDuration}</span>
               </span>
             </div>
           </div>

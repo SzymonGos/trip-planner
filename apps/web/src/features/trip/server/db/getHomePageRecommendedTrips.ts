@@ -15,6 +15,14 @@ export const getHomePageRecommededTripsQuery = gql`
       distance
       estimatedDuration
       createdAt
+      tripImages {
+        id
+        image {
+          id
+          publicUrl
+          publicUrlTransformed
+        }
+      }
     }
   }
 `;

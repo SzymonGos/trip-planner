@@ -1,5 +1,5 @@
 import { Trip as TTrip } from 'tp-graphql-types';
-import { TripCard } from '../trip/components/TripCard';
+import { TripCard } from '../trip/components/TripCard/TripCard';
 import { FC } from 'react';
 import { Container } from '@/components/Container/Container';
 
@@ -9,10 +9,10 @@ type TFeaturedDestinationsProps = {
 
 export const FeaturedDestinations: FC<TFeaturedDestinationsProps> = ({ trips }) => (
   <Container className="my-40">
-    <div className="w-full flex items-center justify-center my-10">
-      <h3 className="text-2xl font-bold">Discover Travel Adventures</h3>
+    <div className="w-full my-10">
+      <h3 className="text-2xl font-semibold font-primary">Discover Travel Adventures</h3>
     </div>
 
-    <div className="grid gap-5 grid-cols-4">{trips?.map((trip: TTrip) => <TripCard key={trip.id} trip={trip} />)}</div>
+    <div className="grid gap-5 grid-cols-3">{trips?.map((trip: TTrip) => <TripCard key={trip.id} trip={trip} />)}</div>
   </Container>
 );

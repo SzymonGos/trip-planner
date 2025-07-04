@@ -4,7 +4,7 @@ import { getUserTripsQuery } from '@/features/user/server/db/getUserTripsQuery';
 import { query } from '@/lib/apolloClient';
 import { UserPageWrapper } from '@/features/user/components/UserPageWrapper';
 import { headers } from 'next/headers';
-import { TripCard } from '@/features/trip/components/TripCard';
+import { TripCard } from '@/features/trip/components/TripCard/TripCard';
 import { Container } from '@/components/Container/Container';
 import { UserDetails } from '@/features/user/components/UserDetails';
 import UserProfileBanner from '@/features/user/components/UserProfileBanner';
