@@ -465,6 +465,7 @@ export type StringFilter = {
   in?: InputMaybe<Array<Scalars['String']['input']>>;
   lt?: InputMaybe<Scalars['String']['input']>;
   lte?: InputMaybe<Scalars['String']['input']>;
+  mode?: InputMaybe<QueryMode>;
   not?: InputMaybe<NestedStringFilter>;
   notIn?: InputMaybe<Array<Scalars['String']['input']>>;
   startsWith?: InputMaybe<Scalars['String']['input']>;

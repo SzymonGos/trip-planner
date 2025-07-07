@@ -1,4 +1,0 @@
--- AlterTable
-ALTER TABLE `Trip`
-ADD COLUMN `distance` VARCHAR(191) NOT NULL DEFAULT '',
-ADD COLUMN `estimatedDuration` VARCHAR(191) NOT NULL DEFAULT '';
