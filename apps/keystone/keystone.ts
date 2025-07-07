@@ -13,7 +13,7 @@ export default config({
     },
   },
   db: {
-    provider: 'mysql',
+    provider: 'postgresql',
     url: DATABASE_URL,
     onConnect: async () => {
       console.log('--- Generate graphql types');
