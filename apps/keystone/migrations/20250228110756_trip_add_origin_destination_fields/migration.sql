@@ -1,4 +1,0 @@
--- AlterTable
-ALTER TABLE `Trip`
-ADD COLUMN `destination` VARCHAR(191) NOT NULL DEFAULT '',
-ADD COLUMN `origin` VARCHAR(191) NOT NULL DEFAULT '';
