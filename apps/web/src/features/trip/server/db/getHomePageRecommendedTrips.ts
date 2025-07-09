@@ -11,6 +11,11 @@ export const getHomePageRecommededTripsQuery = gql`
       creator {
         id
         username
+        profileImage {
+          id
+          publicUrl
+          publicUrlTransformed
+        }
       }
       distance
       estimatedDuration

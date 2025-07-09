@@ -13,6 +13,8 @@ export const FeaturedDestinations: FC<TFeaturedDestinationsProps> = ({ trips }) 
       <h3 className="text-2xl font-semibold font-primary">Discover Travel Adventures</h3>
     </div>
 
-    <div className="grid gap-5 grid-cols-3">{trips?.map((trip: TTrip) => <TripCard key={trip.id} trip={trip} />)}</div>
+    <div className="grid gap-5 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+      {trips?.map((trip: TTrip) => <TripCard key={trip.id} trip={trip} />)}
+    </div>
   </Container>
 );
