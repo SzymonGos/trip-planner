@@ -4,7 +4,7 @@ import { getUserTripsQuery } from '@/features/user/server/db/getUserTripsQuery';
 import { query } from '@/lib/apolloClient';
 import { UserPageWrapper } from '@/features/user/components/UserPageWrapper';
 import { headers } from 'next/headers';
-import { TripCard } from '@/features/trip/components/TripCard';
+import { TripCard } from '@/features/trip/components/TripCard/TripCard';
 import { Container } from '@/components/Container/Container';
 import { UserDetails } from '@/features/user/components/UserDetails';
 import UserProfileBanner from '@/features/user/components/UserProfileBanner';
@@ -39,7 +39,7 @@ const UserPage = async ({ params }: { params: { username: string } }) => {
       <UserPageWrapper>
         <Container className="mt-10 px-0">
           <UserTripsTitle username={userData?.user?.username} />
-          <div className="grid gap-5 grid-cols-1 lg:grid-cols-3 xl:grid-cols-4">
+          <div className="grid gap-5 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
             {tripsData?.trips?.map((trip) => <TripCard key={trip.id} trip={trip} />)}
           </div>
         </Container>

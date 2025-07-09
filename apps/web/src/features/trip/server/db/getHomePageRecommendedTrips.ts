@@ -11,10 +11,23 @@ export const getHomePageRecommededTripsQuery = gql`
       creator {
         id
         username
+        profileImage {
+          id
+          publicUrl
+          publicUrlTransformed
+        }
       }
       distance
       estimatedDuration
       createdAt
+      tripImages {
+        id
+        image {
+          id
+          publicUrl
+          publicUrlTransformed
+        }
+      }
     }
   }
 `;

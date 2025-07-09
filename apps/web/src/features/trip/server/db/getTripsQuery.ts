@@ -11,9 +11,19 @@ export const getTripsQuery = gql`
       creator {
         id
         username
+        profileImage {
+          id
+        }
+      }
+      tripImages {
+        id
+        image {
+          id
+        }
       }
       distance
       estimatedDuration
+      createdAt
     }
   }
 `;
