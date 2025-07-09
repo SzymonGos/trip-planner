@@ -7,6 +7,7 @@ import { useGoogleMapsDirections } from '@/lib/contexts/DirectionsContext';
 import { SettingsIcon } from '@/components/Icons/SettingsIcon';
 import { useAuthenticatedUser } from '@/features/user/hooks/useAuthenticatedUser';
 import { TripImagesCarouselContainer } from './TripImagesCarouselContainer';
+import { UserProfileDetails } from '../UserProfileDetails';
 
 type TViewTripProps = {
   trip: TTrip;
@@ -30,7 +31,6 @@ export const ViewTrip: FC<TViewTripProps> = ({ trip }) => {
 
   return (
     <div className="h-full flex flex-col md:flex-row gap-8">
-      {/* Left Column: Trip Details */}
       <div className="flex-1 flex flex-col gap-4 max-w-xl">
         {/* Trip Title */}
         <div className="text-2xl font-bold mb-1">{trip?.title}</div>
@@ -53,29 +53,13 @@ export const ViewTrip: FC<TViewTripProps> = ({ trip }) => {
             </Link>
           )}
         </div>
-        {/* Trip Title Row with Status and Edit Cog */}
-        <div className="flex items-center justify-between mb-1">
-          <div className="flex items-center gap-2">
-            {/* Profile Photo Placeholder */}
-            <div className="w-10 h-10 rounded-full bg-gray-300 border flex items-center justify-center text-gray-500 text-lg font-bold">
-              {trip?.creator?.username?.[0]?.toUpperCase() || '?'}
-            </div>
-            {/* Username as link if exists */}
-            {trip?.creator?.username ? (
-              <Link
-                href={`/user/${trip.creator.username}`}
-                className="ml-3 font-semibold text-base text-gray-700 hover:underline focus:outline-none focus:ring-2 focus:ring-blue-400 rounded"
-                aria-label={`View ${trip.creator.username}'s profile`}
-                tabIndex={0}
-                title={`View ${trip.creator.username}'s profile`}
-              >
-                {trip.creator.username}
-              </Link>
-            ) : (
-              <span className="ml-3 font-semibold text-base text-gray-700">Unknown</span>
-            )}
-          </div>
-        </div>
+        <UserProfileDetails
+          username={trip?.creator?.username}
+          profileImageId={trip?.creator?.profileImage?.id}
+          className="mb-1"
+          imageSize="w-[45px] h-[45px]"
+          textSize="text-base"
+        />
         {/* Trip Description */}
         {trip?.description && <div className="mb-2 text-gray-700 whitespace-pre-line">{trip.description}</div>}
         {/* Trip Info */}

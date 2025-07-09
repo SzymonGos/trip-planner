@@ -23,6 +23,9 @@ export const getTripQuery = gql`
       creator {
         id
         username
+        profileImage {
+          id
+        }
       }
     }
   }
