@@ -10,6 +10,15 @@ export const getUserTripsQuery = gql`
       creator {
         id
         username
+        profileImage {
+          id
+        }
+      }
+      tripImages {
+        id
+        image {
+          id
+        }
       }
       description
       distance
