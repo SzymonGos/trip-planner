@@ -4,7 +4,7 @@ import Link from 'next/link';
 import React, { FC } from 'react';
 import { Trip as TTrip } from 'tp-graphql-types';
 import { getTripUrl } from '../../helpers/getTripUrl';
-import { TripCardFooter } from './TripCardFooter';
+import { TripStats } from '../TripStats';
 import { TripCardUserDetails } from './TripCardUserDetails';
 import { TripCardImage } from './TripCardImage';
 import { TripCardDetails } from './TripCardDetails';
@@ -26,7 +26,9 @@ export const TripCard: FC<TTripCardProps> = ({ trip }) => (
     </div>
     <div className="pt-4 pb-4 px-6 flex flex-col h-48">
       <TripCardDetails title={trip.title} description={trip.description} />
-      <TripCardFooter distance={trip.distance} estimatedDuration={trip.estimatedDuration} createdAt={trip.createdAt} />
+      <div className="mt-auto">
+        <TripStats distance={trip.distance} estimatedDuration={trip.estimatedDuration} createdAt={trip.createdAt} />
+      </div>
     </div>
   </div>
 );
