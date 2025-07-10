@@ -12,11 +12,7 @@ const TripPage = async ({ params }: { params: { id: string } }) => {
     },
   });
 
-  return (
-    <div className="px-6">
-      <ViewTrip trip={data?.trip} />
-    </div>
-  );
+  return <ViewTrip trip={data?.trip} />;
 };
 
 export default TripPage;

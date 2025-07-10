@@ -13,7 +13,7 @@ export const Providers: FC<TProvidersProps> = ({ children }) => (
     <ClerkProvider>
       <ApolloWrapper>
         <DirectionsProvider>
-          <TooltipProvider>{children}</TooltipProvider>
+          <TooltipProvider delayDuration={0}>{children}</TooltipProvider>
         </DirectionsProvider>
       </ApolloWrapper>
     </ClerkProvider>
