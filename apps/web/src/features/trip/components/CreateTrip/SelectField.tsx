@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Control, FieldValues, Path } from 'react-hook-form';
@@ -11,7 +11,13 @@ export type TSelectFieldProps<T extends FieldValues> = {
   options: { label: string; value: string }[];
 };
 
-export const SelectField: FC<TSelectFieldProps<FieldValues>> = ({ control, name, label, placeholder, options }) => (
+export const SelectField = <T extends FieldValues>({
+  control,
+  name,
+  label,
+  placeholder,
+  options,
+}: TSelectFieldProps<T>) => (
   <FormField
     control={control}
     name={name}

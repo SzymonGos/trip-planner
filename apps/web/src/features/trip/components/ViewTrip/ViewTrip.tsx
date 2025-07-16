@@ -2,6 +2,7 @@
 
 import React, { FC } from 'react';
 import { Trip as TTrip } from 'tp-graphql-types';
+import cx from 'classnames';
 import { TripImagesCarouselContainer } from './TripImagesCarouselContainer';
 import { UserProfileDetails } from '../UserProfileDetails';
 import { TripStats } from '../TripStats';
@@ -46,7 +47,9 @@ export const ViewTrip: FC<TViewTripProps> = ({ trip, isOwner, expanded, setExpan
       {trip?.description && (
         <div className="my-5">
           <p
-            className={`text-gray-600 text-base leading-relaxed font-normal whitespace-pre-line ${!expanded ? 'line-clamp-3' : ''}`}
+            className={cx('text-gray-600 text-base leading-relaxed font-normal whitespace-pre-line', {
+              'line-clamp-3': !expanded,
+            })}
           >
             {trip.description}
           </p>

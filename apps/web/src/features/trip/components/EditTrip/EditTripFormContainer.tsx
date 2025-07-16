@@ -12,6 +12,7 @@ import { useGoogleMapLoader } from '@/features/googleMap/hooks/useGoogleMapLoade
 import { useMutation } from '@apollo/client';
 import { updateTripMutationQuery } from '../../server/actions/updateTripMutationQuery';
 import { Trip as TTrip } from 'tp-graphql-types';
+import { TripFormProvider } from '../../contexts/TripFormProvider';
 
 type TEditTripFormContainerProps = {
   trip: TTrip;
@@ -32,7 +33,12 @@ export const EditTripFormContainer: FC<TEditTripFormContainerProps> = ({ trip })
     destination: trip.destination,
     status: trip.status,
     description: trip.description || '',
-    images: [],
+    images:
+      trip.tripImages?.map((tripImage) => ({
+        id: tripImage.image?.id || '',
+        publicUrl: tripImage.image?.publicUrl || '',
+        publicUrlTransformed: tripImage.image?.publicUrlTransformed || '',
+      })) || [],
   };
 
   const useFormReturn = useForm<TFormValuesProps>({
@@ -57,33 +63,45 @@ export const EditTripFormContainer: FC<TEditTripFormContainerProps> = ({ trip })
 
   const handleOnSubmit: SubmitHandler<TFormValuesProps> = async (data) => {
     try {
+      const newFiles = (data.images || []).filter((img): img is File => img instanceof File);
+
+      const updateData: {
+        title: string;
+        origin: string;
+        destination: string;
+        distance?: string;
+        estimatedDuration?: string;
+        description?: string;
+        status: 'planning' | 'completed';
+        tripImages?: { create: { image: File }[] };
+      } = {
+        title: data.title,
+        origin: data.origin,
+        destination: data.destination,
+        distance: distanceInfo.distance,
+        estimatedDuration: distanceInfo.duration,
+        description: data.description,
+        status: data.status,
+      };
+
+      if (newFiles.length > 0) {
+        updateData.tripImages = {
+          create: newFiles.map((file) => ({ image: file })),
+        };
+      }
+
       await updateTripMutation({
         variables: {
           where: { id: trip.id },
-          data: {
-            title: data.title,
-            origin: data.origin,
-            destination: data.destination,
-            distance: distanceInfo.distance,
-            estimatedDuration: distanceInfo.duration,
-          },
+          data: updateData,
         },
       });
-      handleClearDirections();
     } catch (e) {
       console.error(e.message);
     }
   };
 
   const handleSubmitCallback = useFormReturn.handleSubmit(handleOnSubmit);
-
-  useEffect(() => {
-    useFormReturn.setValue('origin', typeof directionsValue?.origin === 'string' ? directionsValue.origin : '');
-    useFormReturn.setValue(
-      'destination',
-      typeof directionsValue.destination === 'string' ? directionsValue.destination : '',
-    );
-  }, [directionsValue, useFormReturn]);
 
   useEffect(() => {
     const fetchDistance = async () => {
@@ -113,17 +131,24 @@ export const EditTripFormContainer: FC<TEditTripFormContainerProps> = ({ trip })
   if (!isLoaded) return <div>Form Loading...</div>;
 
   return (
-    <CreateTripForm
-      onSubmit={handleSubmitCallback}
+    <TripFormProvider
       useForm={useFormReturn}
-      setDirectionsValue={setDirectionsValue}
-      handlePlaceSelect={handlePlaceSelect}
-      originAutocomplete={originAutocomplete}
-      destinationAutocomplete={destinationAutocomplete}
-      setOriginAutocomplete={setOriginAutocomplete}
-      setDestinationAutocomplete={setDestinationAutocomplete}
-      handleClearForm={handleClearDirections}
       isEditing={true}
-    />
+      onSubmit={handleSubmitCallback}
+      onReset={handleClearDirections}
+    >
+      <div className="h-full px-5 border-r border-gray-200">
+        <CreateTripForm
+          useForm={useFormReturn}
+          setDirectionsValue={setDirectionsValue}
+          handlePlaceSelect={handlePlaceSelect}
+          originAutocomplete={originAutocomplete}
+          destinationAutocomplete={destinationAutocomplete}
+          setOriginAutocomplete={setOriginAutocomplete}
+          setDestinationAutocomplete={setDestinationAutocomplete}
+          isEditing={true}
+        />
+      </div>
+    </TripFormProvider>
   );
 };
