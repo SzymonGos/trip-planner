@@ -32,8 +32,12 @@ export const TripImagesCarousel: FC<TripImagesCarouselProps> = ({ images, emblaR
           })}
         </div>
       </div>
-      <ArrowButton direction="left" onClick={scrollPrev} ariaLabel="Previous image" />
-      <ArrowButton direction="right" onClick={scrollNext} ariaLabel="Next image" />
+      {images.length > 2 && (
+        <>
+          <ArrowButton direction="left" onClick={scrollPrev} ariaLabel="Previous image" />
+          <ArrowButton direction="right" onClick={scrollNext} ariaLabel="Next image" />
+        </>
+      )}
     </div>
   </div>
 );
