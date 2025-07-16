@@ -3,6 +3,7 @@ import { CldImage } from 'next-cloudinary';
 import { TripImage as TTripImage } from 'tp-graphql-types';
 import { ArrowButton } from './ArrowButton';
 import { EmblaViewportRefType } from 'embla-carousel-react';
+import { getCloudinaryImageSrc } from '@/features/user/utils/getCloudinaryImageSrc';
 
 interface TripImagesCarouselProps {
   images: TTripImage[];
@@ -17,7 +18,7 @@ export const TripImagesCarousel: FC<TripImagesCarouselProps> = ({ images, emblaR
       <div className="overflow-hidden" ref={emblaRef}>
         <div className="flex h-[200px]">
           {images.map((img) => {
-            const src = img?.image?.publicUrlTransformed || img?.image?.publicUrl;
+            const src = getCloudinaryImageSrc(img?.image?.id);
             return (
               <div className="flex-shrink-0 h-[200px] w-1/2 relative mr-2" key={img.id}>
                 <CldImage

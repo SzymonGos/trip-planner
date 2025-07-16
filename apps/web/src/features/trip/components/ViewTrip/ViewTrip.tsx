@@ -53,8 +53,7 @@ export const ViewTrip: FC<TViewTripProps> = ({ trip, isOwner, expanded, setExpan
           >
             {trip.description}
           </p>
-          {!expanded && <ReadMoreButton expanded={expanded} setExpanded={setExpanded} />}
-          {expanded && <ReadMoreButton expanded={expanded} setExpanded={setExpanded} />}
+          <ReadMoreButton expanded={expanded} setExpanded={setExpanded} />
         </div>
       )}
       <TripTimeline origin={trip?.origin} destination={trip?.destination} />
