@@ -1,11 +1,11 @@
 'use client';
 
 import React, { createContext, useContext, ReactNode } from 'react';
-import { TTripImageFormValue } from '../components/CreateTrip/CreateTripFormContainer';
+import { TTripImageFormValueProps } from '../components/CreateTrip/CreateTripFormContainer';
 
 export type TripFormContextTypeProps = {
   isEditing: boolean;
-  existingImages: TTripImageFormValue[];
+  existingImages: TTripImageFormValueProps[];
   newImages: File[];
   handleExistingImagesRemove: (imageId: string) => void;
   handleNewImagesChange: (files: File[]) => void;
@@ -14,6 +14,7 @@ export type TripFormContextTypeProps = {
   isSubmitting: boolean;
   handleSubmit: () => void;
   handleReset: () => void;
+  tripId?: string;
 };
 
 const defaultContextValue: TripFormContextTypeProps = {
@@ -27,6 +28,7 @@ const defaultContextValue: TripFormContextTypeProps = {
   isSubmitting: false,
   handleSubmit: () => {},
   handleReset: () => {},
+  tripId: undefined,
 };
 
 export const TripFormContext = createContext<TripFormContextTypeProps>(defaultContextValue);

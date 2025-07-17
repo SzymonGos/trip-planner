@@ -18,10 +18,12 @@ import { getUserTripsQuery } from '@/features/user/server/db/getUserTripsQuery';
 import { getTripsQuery } from '../../server/db/getTripsQuery';
 import { TripFormProvider } from '../../contexts/TripFormProvider';
 
-export type TTripImageFormValue = {
+export type TTripImageFormValueProps = {
   id: string;
-  publicUrl?: string;
-  publicUrlTransformed?: string;
+  image: {
+    id: string;
+    filename: string;
+  };
 };
 
 export type TFormValuesProps = {
@@ -30,7 +32,7 @@ export type TFormValuesProps = {
   origin: string;
   destination: string;
   status: 'planning' | 'completed';
-  images?: (File | TTripImageFormValue)[];
+  images?: (File | TTripImageFormValueProps)[];
 } & z.infer<typeof tripSchema>;
 
 export type TAutocompleteProps = google.maps.places.Autocomplete | null;

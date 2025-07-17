@@ -3,7 +3,7 @@
 import React, { useState, useCallback, ReactNode, useMemo } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { TripFormContext, TripFormContextTypeProps } from './TripFormContext';
-import { TTripImageFormValue, TFormValuesProps } from '../components/CreateTrip/CreateTripFormContainer';
+import { TTripImageFormValueProps, TFormValuesProps } from '../components/CreateTrip/CreateTripFormContainer';
 
 type TTripFormProviderProps = {
   children: ReactNode;
@@ -12,6 +12,7 @@ type TTripFormProviderProps = {
   onSubmit: () => void;
   onReset: () => void;
   isSubmitting?: boolean;
+  tripId?: string;
 };
 
 export const TripFormProvider: React.FC<TTripFormProviderProps> = ({
@@ -21,13 +22,14 @@ export const TripFormProvider: React.FC<TTripFormProviderProps> = ({
   onSubmit,
   onReset,
   isSubmitting = false,
+  tripId,
 }) => {
   const [newImages, setNewImages] = useState<File[]>([]);
 
   const currentImages = useForm.watch('images') || [];
   const formStatus = useForm.watch('status') as 'planning' | 'completed';
 
-  const existingImages = currentImages.filter((img): img is TTripImageFormValue => !(img instanceof File));
+  const existingImages = currentImages.filter((img): img is TTripImageFormValueProps => !(img instanceof File));
 
   const handleExistingImagesRemove = useCallback(
     (imageId: string) => {
@@ -42,11 +44,12 @@ export const TripFormProvider: React.FC<TTripFormProviderProps> = ({
 
   const handleNewImagesChange = useCallback(
     (files: File[]) => {
-      setNewImages(files);
-      const updatedImages = [...existingImages, ...files];
+      const updatedNewImages = [...newImages, ...files];
+      setNewImages(updatedNewImages);
+      const updatedImages = [...existingImages, ...updatedNewImages];
       useForm.setValue('images', updatedImages);
     },
-    [existingImages, useForm],
+    [existingImages, newImages, useForm],
   );
 
   const contextValue: TripFormContextTypeProps = useMemo(
@@ -61,6 +64,7 @@ export const TripFormProvider: React.FC<TTripFormProviderProps> = ({
       isSubmitting,
       handleSubmit: onSubmit,
       handleReset: onReset,
+      tripId,
     }),
     [
       isEditing,
@@ -72,6 +76,7 @@ export const TripFormProvider: React.FC<TTripFormProviderProps> = ({
       isSubmitting,
       onSubmit,
       onReset,
+      tripId,
     ],
   );
 

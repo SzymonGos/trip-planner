@@ -14,8 +14,10 @@ export const tripSchema = z.object({
         z.instanceof(File),
         z.object({
           id: z.string(),
-          publicUrl: z.string(),
-          publicUrlTransformed: z.string(),
+          image: z.object({
+            id: z.string(),
+            filename: z.string(),
+          }),
         }),
       ]),
     )

@@ -13,6 +13,7 @@ export const updateTripMutationQuery = gql`
         id
         image {
           id
+          filename
           publicUrl
           publicUrlTransformed
         }

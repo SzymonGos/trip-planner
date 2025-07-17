@@ -13,8 +13,7 @@ export const getTripQuery = gql`
         id
         image {
           id
-          publicUrl
-          publicUrlTransformed
+          filename
         }
       }
       distance

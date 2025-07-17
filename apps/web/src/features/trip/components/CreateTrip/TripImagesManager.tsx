@@ -2,23 +2,24 @@
 
 import React, { FC } from 'react';
 import { TripImagesDisplay } from './TripImagesDisplay';
-import { TripImagesUpload } from './TripImagesUpload';
 import { useTripImages } from '../../hooks/useTripImages';
-import { TripImage as TTripImage } from 'tp-graphql-types';
+import { TTripImageFormValueProps } from './CreateTripFormContainer';
+import { TripImagesUploadContainer } from './TripImagesUploadContainer';
 
 export type TTripImagesManagerProps = {
   disabled?: boolean;
-  images?: TTripImage[];
+  images?: TTripImageFormValueProps[];
+  tripId?: string;
 };
 
-export const TripImagesManager: FC<TTripImagesManagerProps> = ({ disabled, images = [] }) => {
-  const { canAddMore } = useTripImages();
+export const TripImagesManager: FC<TTripImagesManagerProps> = ({ disabled, images = [], tripId }) => {
+  const { canAddMore, handleNewImagesChange } = useTripImages();
 
   return (
     <div className="flex gap-2 items-center flex-wrap">
-      <TripImagesDisplay images={images} disabled={disabled} />
+      <TripImagesDisplay images={images} disabled={disabled} tripId={tripId} />
 
-      {canAddMore && <TripImagesUpload disabled={disabled} />}
+      <TripImagesUploadContainer disabled={disabled} onFilesChange={handleNewImagesChange} canAddMore={canAddMore} />
     </div>
   );
 };

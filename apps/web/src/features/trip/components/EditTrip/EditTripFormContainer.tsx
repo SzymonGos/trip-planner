@@ -35,10 +35,14 @@ export const EditTripFormContainer: FC<TEditTripFormContainerProps> = ({ trip })
     description: trip.description || '',
     images:
       trip.tripImages?.map((tripImage) => ({
-        id: tripImage.image?.id || '',
-        publicUrl: tripImage.image?.publicUrl || '',
-        publicUrlTransformed: tripImage.image?.publicUrlTransformed || '',
+        id: tripImage.id,
+        image: {
+          id: tripImage.image?.id,
+          filename: tripImage.image?.filename,
+        },
       })) || [],
+    distance: trip.distance,
+    estimatedDuration: trip.estimatedDuration,
   };
 
   const useFormReturn = useForm<TFormValuesProps>({
@@ -64,7 +68,6 @@ export const EditTripFormContainer: FC<TEditTripFormContainerProps> = ({ trip })
   const handleOnSubmit: SubmitHandler<TFormValuesProps> = async (data) => {
     try {
       const newFiles = (data.images || []).filter((img): img is File => img instanceof File);
-
       const updateData: {
         title: string;
         origin: string;
@@ -79,7 +82,7 @@ export const EditTripFormContainer: FC<TEditTripFormContainerProps> = ({ trip })
         origin: data.origin,
         destination: data.destination,
         distance: distanceInfo.distance,
-        estimatedDuration: distanceInfo.duration,
+        estimatedDuration: distanceInfo?.duration,
         description: data.description,
         status: data.status,
       };
@@ -136,6 +139,7 @@ export const EditTripFormContainer: FC<TEditTripFormContainerProps> = ({ trip })
       isEditing={true}
       onSubmit={handleSubmitCallback}
       onReset={handleClearDirections}
+      tripId={trip.id}
     >
       <div className="h-full px-5 border-r border-gray-200">
         <CreateTripForm
