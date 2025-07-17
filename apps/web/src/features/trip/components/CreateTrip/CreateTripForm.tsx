@@ -11,12 +11,12 @@ import { TDirectionsValueProps } from '@/lib/contexts/constants';
 import { TextareaField } from './TextareaField';
 import { SelectField } from './SelectField';
 import { ResetIcon } from '@/components/Icons/ResetIcon';
-import { TripImagesUpload } from './TripImagesUpload';
+import { TripImagesManager } from './TripImagesManager';
 import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
-import { TTripImageFormValue } from './CreateTripFormContainer';
+import { useTripFormState } from '../../hooks/useTripFormState';
+import { useTripImages } from '../../hooks/useTripImages';
 
 type TCreateTripFormProps = {
-  onSubmit: () => void;
   useForm: UseFormReturn<TFormValuesProps>;
   setDirectionsValue: (value: TDirectionsValueProps) => void;
   handlePlaceSelect: (autocompleteInstance: TAutocompleteProps, fieldName: 'origin' | 'destination') => void;
@@ -24,26 +24,24 @@ type TCreateTripFormProps = {
   destinationAutocomplete: TAutocompleteProps;
   setOriginAutocomplete: (value: TAutocompleteProps) => void;
   setDestinationAutocomplete: (value: TAutocompleteProps) => void;
-  handleClearForm: () => void;
   isEditing?: boolean;
 };
 
 export const CreateTripForm: FC<TCreateTripFormProps> = ({
-  onSubmit,
   useForm,
   handlePlaceSelect,
   setDestinationAutocomplete,
   setOriginAutocomplete,
   originAutocomplete,
   destinationAutocomplete,
-  handleClearForm,
   isEditing = false,
 }) => {
-  const status = useForm.watch('status');
+  const { canAddImages, handleSubmit, handleReset } = useTripFormState();
+  const { existingImages } = useTripImages();
 
   return (
     <Form {...useForm}>
-      <form onSubmit={onSubmit}>
+      <form onSubmit={handleSubmit}>
         <div className="flex flex-col gap-6">
           <InputField
             control={useForm.control}
@@ -73,7 +71,7 @@ export const CreateTripForm: FC<TCreateTripFormProps> = ({
           >
             <InputField
               control={useForm.control}
-              hasError={!!useForm.formState.errors.destination}
+              hasError={!!useForm.formState.errors.origin}
               name="destination"
               label="Destination"
               placeholder="End Route"
@@ -90,17 +88,11 @@ export const CreateTripForm: FC<TCreateTripFormProps> = ({
             ]}
           />
           <div className="mt-2 w-fit">
-            {status !== 'completed' ? (
+            {!canAddImages ? (
               <Tooltip>
                 <TooltipTrigger asChild>
                   <div>
-                    <TripImagesUpload
-                      disabled
-                      defaultImages={
-                        useForm.watch('images')?.filter((img): img is TTripImageFormValue => !(img instanceof File)) ||
-                        []
-                      }
-                    />
+                    <TripImagesManager disabled />
                   </div>
                 </TooltipTrigger>
                 <TooltipContent side="right" sideOffset={8}>
@@ -108,20 +100,19 @@ export const CreateTripForm: FC<TCreateTripFormProps> = ({
                 </TooltipContent>
               </Tooltip>
             ) : (
-              <TripImagesUpload
-                onFilesChange={(images) => useForm.setValue('images', images)}
-                defaultImages={
-                  useForm.watch('images')?.filter((img): img is TTripImageFormValue => !(img instanceof File)) || []
-                }
-              />
+              <TripImagesManager images={existingImages} />
             )}
           </div>
         </div>
-        <div className="mt-10 flex gap-2 items-center">
-          <Button type="submit">{isEditing ? 'Save' : 'Create Trip'}</Button>
-          <Button variant="secondary" type="reset" className="text-gray-500 !px-2" onClick={handleClearForm}>
-            <ResetIcon />
+        <div className="mt-8 flex gap-4">
+          <Button type="submit" className="min-w-[200px]">
+            {isEditing ? 'Update Trip' : 'Create Trip'}
           </Button>
+          {!isEditing && (
+            <Button type="button" variant="outline" onClick={handleReset}>
+              <ResetIcon />
+            </Button>
+          )}
         </div>
       </form>
     </Form>

@@ -1,7 +1,7 @@
-import { ViewTrip } from '@/features/trip/components/ViewTrip/ViewTrip';
-import { getTripQuery } from '@/features/trip/server/db/getTripQuery';
 import { query } from '@/lib/apolloClient';
 import { headers } from 'next/headers';
+import { ViewTripContainer } from '@/features/trip/components/ViewTrip/ViewTripContainer';
+import { getTripQuery } from '@/features/trip/server/db/getTripQuery';
 
 const TripPage = async ({ params }: { params: { id: string } }) => {
   headers();
@@ -12,11 +12,7 @@ const TripPage = async ({ params }: { params: { id: string } }) => {
     },
   });
 
-  return (
-    <div className="px-6">
-      <ViewTrip trip={data?.trip} />
-    </div>
-  );
+  return <ViewTripContainer trip={data?.trip} />;
 };
 
 export default TripPage;

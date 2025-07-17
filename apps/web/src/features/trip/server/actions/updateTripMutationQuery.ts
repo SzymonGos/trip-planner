@@ -9,6 +9,17 @@ export const updateTripMutationQuery = gql`
       destination
       distance
       estimatedDuration
+      tripImages {
+        id
+        image {
+          id
+          filename
+          publicUrl
+          publicUrlTransformed
+        }
+      }
+      status
+      description
     }
   }
 `;

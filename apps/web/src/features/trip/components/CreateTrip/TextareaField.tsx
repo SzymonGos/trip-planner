@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { FormField, FormItem, FormLabel, FormControl, FormMessage } from '@/components/ui/form';
 import { Textarea } from '@/components/ui/textarea';
 import { TInputFieldProps } from './InputField';
@@ -6,7 +6,7 @@ import { TFormValuesProps } from './CreateTripFormContainer';
 
 type TTextareaFieldProps = TInputFieldProps<TFormValuesProps>;
 
-export const TextareaField: FC<TTextareaFieldProps> = ({ control, label, name, placeholder }) => (
+export const TextareaField = ({ control, label, name, placeholder }: TTextareaFieldProps) => (
   <FormField
     control={control}
     name={name}

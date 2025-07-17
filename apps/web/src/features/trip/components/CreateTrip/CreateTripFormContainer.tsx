@@ -16,11 +16,14 @@ import { useRouter } from 'next/navigation';
 import { getTripUrl } from '../../helpers/getTripUrl';
 import { getUserTripsQuery } from '@/features/user/server/db/getUserTripsQuery';
 import { getTripsQuery } from '../../server/db/getTripsQuery';
+import { TripFormProvider } from '../../contexts/TripFormProvider';
 
-export type TTripImageFormValue = {
+export type TTripImageFormValueProps = {
   id: string;
-  publicUrl: string;
-  publicUrlTransformed: string;
+  image: {
+    id: string;
+    filename: string;
+  };
 };
 
 export type TFormValuesProps = {
@@ -29,7 +32,7 @@ export type TFormValuesProps = {
   origin: string;
   destination: string;
   status: 'planning' | 'completed';
-  images?: (File | TTripImageFormValue)[];
+  images?: (File | TTripImageFormValueProps)[];
 } & z.infer<typeof tripSchema>;
 
 export type TAutocompleteProps = google.maps.places.Autocomplete | null;
@@ -153,32 +156,37 @@ export const CreateTripFormContainer = () => {
   if (!isLoaded) return <div>Form Loading...</div>;
 
   return (
-    <div>
-      <CreateTripForm
-        onSubmit={handleSubmitCallback}
-        useForm={useFormReturn}
-        setDirectionsValue={setDirectionsValue}
-        handlePlaceSelect={handlePlaceSelect}
-        originAutocomplete={originAutocomplete}
-        destinationAutocomplete={destinationAutocomplete}
-        setOriginAutocomplete={setOriginAutocomplete}
-        setDestinationAutocomplete={setDestinationAutocomplete}
-        handleClearForm={handleClearForm}
-      />
+    <TripFormProvider
+      useForm={useFormReturn}
+      isEditing={false}
+      onSubmit={handleSubmitCallback}
+      onReset={handleClearForm}
+    >
+      <div>
+        <CreateTripForm
+          useForm={useFormReturn}
+          setDirectionsValue={setDirectionsValue}
+          handlePlaceSelect={handlePlaceSelect}
+          originAutocomplete={originAutocomplete}
+          destinationAutocomplete={destinationAutocomplete}
+          setOriginAutocomplete={setOriginAutocomplete}
+          setDestinationAutocomplete={setDestinationAutocomplete}
+        />
 
-      {distanceInfo && (
-        <div className="mt-4 p-4 border-[0.5px] rounded-md  border-tp-gray-100">
-          <h4 className="mb-4 text-lg font-primary font-semibold">Trip Information: </h4>
+        {distanceInfo && (
+          <div className="mt-4 p-4 border-[0.5px] rounded-md  border-tp-gray-100">
+            <h4 className="mb-4 text-lg font-primary font-semibold">Trip Information: </h4>
 
-          <div className="w-full flex">
-            Distance:
-            <div className="ml-auto font-semibold">{distanceInfo.distance}</div>
+            <div className="w-full flex">
+              Distance:
+              <div className="ml-auto font-semibold">{distanceInfo.distance}</div>
+            </div>
+            <div className="w-full flex">
+              Estimated Duration: <div className="ml-auto font-semibold">{distanceInfo.duration}</div>
+            </div>
           </div>
-          <div className="w-full flex">
-            Estimated Duration: <div className="ml-auto font-semibold">{distanceInfo.duration}</div>
-          </div>
-        </div>
-      )}
-    </div>
+        )}
+      </div>
+    </TripFormProvider>
   );
 };

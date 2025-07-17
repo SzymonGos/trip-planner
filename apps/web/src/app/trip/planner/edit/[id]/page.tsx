@@ -14,11 +14,7 @@ const EditTripPage = async ({ params }: { params: { id: string } }) => {
   });
   const tripData = data?.trip;
 
-  return (
-    <div>
-      <EditTripFormContainer trip={tripData} />
-    </div>
-  );
+  return <EditTripFormContainer trip={tripData} />;
 };
 
 export default EditTripPage;

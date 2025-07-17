@@ -3,6 +3,7 @@ import { CldImage } from 'next-cloudinary';
 import { TripImage as TTripImage } from 'tp-graphql-types';
 import { ArrowButton } from './ArrowButton';
 import { EmblaViewportRefType } from 'embla-carousel-react';
+import { getCloudinaryImageSrc } from '@/features/user/utils/getCloudinaryImageSrc';
 
 interface TripImagesCarouselProps {
   images: TTripImage[];
@@ -14,12 +15,12 @@ interface TripImagesCarouselProps {
 export const TripImagesCarousel: FC<TripImagesCarouselProps> = ({ images, emblaRef, scrollPrev, scrollNext }) => (
   <div className="w-full max-w-xl mx-auto">
     <div className="relative">
-      <div className="overflow-hidden rounded-lg" ref={emblaRef}>
-        <div className="flex">
+      <div className="overflow-hidden" ref={emblaRef}>
+        <div className="flex h-[200px]">
           {images.map((img) => {
-            const src = img?.image?.publicUrlTransformed || img?.image?.publicUrl;
+            const src = getCloudinaryImageSrc(img?.image?.id);
             return (
-              <div className="flex-shrink-0 h-[240px] w-1/2 relative mr-2" key={img.id}>
+              <div className="flex-shrink-0 h-[200px] w-1/2 relative mr-2" key={img.id}>
                 <CldImage
                   src={src}
                   alt="Trip image"
@@ -31,8 +32,12 @@ export const TripImagesCarousel: FC<TripImagesCarouselProps> = ({ images, emblaR
           })}
         </div>
       </div>
-      <ArrowButton direction="left" onClick={scrollPrev} ariaLabel="Previous image" />
-      <ArrowButton direction="right" onClick={scrollNext} ariaLabel="Next image" />
+      {images.length > 2 && (
+        <>
+          <ArrowButton direction="left" onClick={scrollPrev} ariaLabel="Previous image" />
+          <ArrowButton direction="right" onClick={scrollNext} ariaLabel="Next image" />
+        </>
+      )}
     </div>
   </div>
 );
