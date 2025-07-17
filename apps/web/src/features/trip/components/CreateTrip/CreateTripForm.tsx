@@ -108,9 +108,11 @@ export const CreateTripForm: FC<TCreateTripFormProps> = ({
           <Button type="submit" className="min-w-[200px]">
             {isEditing ? 'Update Trip' : 'Create Trip'}
           </Button>
-          <Button type="button" variant="outline" onClick={handleReset} className="">
-            <ResetIcon />
-          </Button>
+          {!isEditing && (
+            <Button type="button" variant="outline" onClick={handleReset}>
+              <ResetIcon />
+            </Button>
+          )}
         </div>
       </form>
     </Form>
