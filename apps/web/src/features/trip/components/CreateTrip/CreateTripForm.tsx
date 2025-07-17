@@ -104,9 +104,11 @@ export const CreateTripForm: FC<TCreateTripFormProps> = ({
             )}
           </div>
         </div>
-        <div className="mt-10 flex gap-2 items-center">
-          <Button type="submit">{isEditing ? 'Save' : 'Create Trip'}</Button>
-          <Button variant="secondary" type="reset" className="text-gray-500 !px-2" onClick={handleReset}>
+        <div className="mt-8 flex gap-4">
+          <Button type="submit" className="min-w-[200px]">
+            {isEditing ? 'Update Trip' : 'Create Trip'}
+          </Button>
+          <Button type="button" variant="outline" onClick={handleReset} className="">
             <ResetIcon />
           </Button>
         </div>

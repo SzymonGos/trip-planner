@@ -81,7 +81,7 @@ export const EditTripFormContainer: FC<TEditTripFormContainerProps> = ({ trip })
         title: data.title,
         origin: data.origin,
         destination: data.destination,
-        distance: distanceInfo.distance,
+        distance: distanceInfo?.distance,
         estimatedDuration: distanceInfo?.duration,
         description: data.description,
         status: data.status,
