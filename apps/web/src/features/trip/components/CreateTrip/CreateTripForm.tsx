@@ -36,7 +36,7 @@ export const CreateTripForm: FC<TCreateTripFormProps> = ({
   destinationAutocomplete,
   isEditing = false,
 }) => {
-  const { canAddImages, handleSubmit, handleReset } = useTripFormState();
+  const { canAddImages, handleSubmit, handleReset, isSubmitting, hasChanges } = useTripFormState();
   const { existingImages } = useTripImages();
 
   return (
@@ -105,7 +105,7 @@ export const CreateTripForm: FC<TCreateTripFormProps> = ({
           </div>
         </div>
         <div className="mt-8 flex gap-4">
-          <Button type="submit" className="min-w-[200px]">
+          <Button type="submit" className="min-w-[200px]" disabled={isSubmitting || (isEditing && !hasChanges)}>
             {isEditing ? 'Update Trip' : 'Create Trip'}
           </Button>
           {!isEditing && (

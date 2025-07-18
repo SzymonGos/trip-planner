@@ -7,7 +7,6 @@ import { GRAPHQL_API_URL } from '../config';
 const client = () => {
   const uploadLink = createUploadLink({
     uri: GRAPHQL_API_URL,
-    fetchOptions: { cache: 'no-store' },
     headers: {
       'Apollo-Require-Preflight': 'true',
     },

@@ -1,20 +1,23 @@
 import React from 'react';
 import { getTripQuery } from '@/features/trip/server/db/getTripQuery';
-import { query } from '@/lib/apolloClient';
+import { PreloadQuery } from '@/lib/apolloClient';
 import { EditTripFormContainer } from '@/features/trip/components/EditTrip/EditTripFormContainer';
-import { headers } from 'next/headers';
+import { Suspense } from 'react';
+import { Trip as TTrip } from 'tp-graphql-types';
 
-const EditTripPage = async ({ params }: { params: { id: string } }) => {
-  headers();
-  const { data } = await query({
-    query: getTripQuery,
-    variables: {
+const EditTripPage = ({ params }: { params: { id: string } }) => (
+  <PreloadQuery<{ trip: TTrip }, { id: string }>
+    query={getTripQuery}
+    variables={{
       id: params.id,
-    },
-  });
-  const tripData = data?.trip;
-
-  return <EditTripFormContainer trip={tripData} />;
-};
+    }}
+  >
+    {(queryRef) => (
+      <Suspense fallback={<div>Loading trip...</div>}>
+        <EditTripFormContainer queryRef={queryRef} />
+      </Suspense>
+    )}
+  </PreloadQuery>
+);
 
 export default EditTripPage;

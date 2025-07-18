@@ -12,6 +12,7 @@ export type TripFormContextTypeProps = {
   maxTotalImages: number;
   formStatus: 'planning' | 'completed';
   isSubmitting: boolean;
+  hasChanges: boolean;
   handleSubmit: () => void;
   handleReset: () => void;
   tripId?: string;
@@ -26,6 +27,7 @@ const defaultContextValue: TripFormContextTypeProps = {
   maxTotalImages: 5,
   formStatus: 'planning',
   isSubmitting: false,
+  hasChanges: false,
   handleSubmit: () => {},
   handleReset: () => {},
   tripId: undefined,
