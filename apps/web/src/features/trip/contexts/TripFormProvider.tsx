@@ -13,6 +13,7 @@ type TTripFormProviderProps = {
   onReset: () => void;
   isSubmitting?: boolean;
   tripId?: string;
+  hasChanges?: boolean;
 };
 
 export const TripFormProvider: React.FC<TTripFormProviderProps> = ({
@@ -23,6 +24,7 @@ export const TripFormProvider: React.FC<TTripFormProviderProps> = ({
   onReset,
   isSubmitting = false,
   tripId,
+  hasChanges = false,
 }) => {
   const [newImages, setNewImages] = useState<File[]>([]);
 
@@ -37,7 +39,7 @@ export const TripFormProvider: React.FC<TTripFormProviderProps> = ({
         if (img instanceof File) return true;
         return img.id !== imageId;
       });
-      useForm.setValue('images', updatedImages);
+      useForm.setValue('images', updatedImages, { shouldDirty: true });
     },
     [currentImages, useForm],
   );
@@ -47,7 +49,7 @@ export const TripFormProvider: React.FC<TTripFormProviderProps> = ({
       const updatedNewImages = [...newImages, ...files];
       setNewImages(updatedNewImages);
       const updatedImages = [...existingImages, ...updatedNewImages];
-      useForm.setValue('images', updatedImages);
+      useForm.setValue('images', updatedImages, { shouldDirty: true });
     },
     [existingImages, newImages, useForm],
   );
@@ -62,6 +64,7 @@ export const TripFormProvider: React.FC<TTripFormProviderProps> = ({
       maxTotalImages: 5,
       formStatus,
       isSubmitting,
+      hasChanges,
       handleSubmit: onSubmit,
       handleReset: onReset,
       tripId,
@@ -74,6 +77,7 @@ export const TripFormProvider: React.FC<TTripFormProviderProps> = ({
       handleNewImagesChange,
       formStatus,
       isSubmitting,
+      hasChanges,
       onSubmit,
       onReset,
       tripId,

@@ -163,6 +163,7 @@ export const CreateTripFormContainer = () => {
       onReset={handleClearForm}
     >
       <div>
+        <h1 className="mb-5 text-3xl font-semibold">Plan your trip</h1>
         <CreateTripForm
           useForm={useFormReturn}
           setDirectionsValue={setDirectionsValue}

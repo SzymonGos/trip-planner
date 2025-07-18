@@ -1,54 +1,63 @@
 'use client';
 
-import { useGoogleMapsDirections } from '@/lib/contexts/DirectionsContext';
 import React, { FC, useEffect, useState } from 'react';
-import { CreateTripForm } from '../CreateTrip/CreateTripForm';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { TAutocompleteProps, TFormValuesProps } from '../CreateTrip/CreateTripFormContainer';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { tripSchema } from '../../helpers/formValidation';
+import { CreateTripForm } from '../CreateTrip/CreateTripForm';
+import { TAutocompleteProps, TFormValuesProps } from '../CreateTrip/CreateTripFormContainer';
 import { TDirectionsValueProps } from '@/lib/contexts/constants';
+import { tripSchema } from '../../helpers/formValidation';
+import { useGoogleMapsDirections } from '@/lib/contexts/DirectionsContext';
 import { useGoogleMapLoader } from '@/features/googleMap/hooks/useGoogleMapLoader';
 import { useMutation } from '@apollo/client';
 import { updateTripMutationQuery } from '../../server/actions/updateTripMutationQuery';
 import { Trip as TTrip } from 'tp-graphql-types';
 import { TripFormProvider } from '../../contexts/TripFormProvider';
+import { Toaster, toast } from 'sonner';
+import { getTripUrl } from '../../helpers/getTripUrl';
+import { useReadQuery, QueryRef } from '@apollo/client';
+import { revalidateTripPages } from '../../server/actions/revalidateTrip';
+import { Breadcrumb } from '@/features/breadcrumb/Breadcrumb';
 
 type TEditTripFormContainerProps = {
-  trip: TTrip;
+  queryRef: QueryRef<{ trip: TTrip }>;
 };
 
-export const EditTripFormContainer: FC<TEditTripFormContainerProps> = ({ trip }) => {
+export const EditTripFormContainer: FC<TEditTripFormContainerProps> = ({ queryRef }) => {
   const [originAutocomplete, setOriginAutocomplete] = useState<TAutocompleteProps>(null);
   const [destinationAutocomplete, setDestinationAutocomplete] = useState<TAutocompleteProps>(null);
   const { directionsValue, setDirectionsValue, handleClearDirections, distanceInfo, getDistance } =
     useGoogleMapsDirections();
   const { isLoaded } = useGoogleMapLoader();
 
-  const [updateTripMutation] = useMutation(updateTripMutationQuery);
+  const [updateTripMutation, { loading }] = useMutation(updateTripMutationQuery);
+
+  const { data } = useReadQuery(queryRef);
+  const trip = data?.trip;
 
   const defaultValues = {
-    title: trip.title,
-    origin: trip.origin,
-    destination: trip.destination,
-    status: trip.status,
-    description: trip.description || '',
+    title: trip?.title,
+    origin: trip?.origin,
+    destination: trip?.destination,
+    status: (trip?.status as 'planning' | 'completed') || 'planning',
+    description: trip?.description,
     images:
-      trip.tripImages?.map((tripImage) => ({
+      trip?.tripImages?.map((tripImage) => ({
         id: tripImage.id,
         image: {
           id: tripImage.image?.id,
           filename: tripImage.image?.filename,
         },
       })) || [],
-    distance: trip.distance,
-    estimatedDuration: trip.estimatedDuration,
+    distance: trip?.distance,
+    estimatedDuration: trip?.estimatedDuration,
   };
 
   const useFormReturn = useForm<TFormValuesProps>({
     resolver: zodResolver(tripSchema),
     defaultValues,
   });
+  const { isDirty } = useFormReturn.formState;
 
   const handlePlaceSelect = (autocompleteInstance: TAutocompleteProps, fieldName: 'origin' | 'destination') => {
     const place = autocompleteInstance?.getPlace();
@@ -95,11 +104,15 @@ export const EditTripFormContainer: FC<TEditTripFormContainerProps> = ({ trip })
 
       await updateTripMutation({
         variables: {
-          where: { id: trip.id },
+          where: { id: trip?.id },
           data: updateData,
         },
       });
+      await revalidateTripPages(trip?.id);
+      useFormReturn.reset(data);
+      toast.success(`Trip "${data.title.trim().slice(0, 15)}..." updated successfully!`);
     } catch (e) {
+      toast.error('Failed to update trip. Please try again.');
       console.error(e.message);
     }
   };
@@ -140,18 +153,25 @@ export const EditTripFormContainer: FC<TEditTripFormContainerProps> = ({ trip })
       onSubmit={handleSubmitCallback}
       onReset={handleClearDirections}
       tripId={trip.id}
+      isSubmitting={loading}
+      hasChanges={isDirty}
     >
-      <div className="h-full px-5 border-r border-gray-200">
-        <CreateTripForm
-          useForm={useFormReturn}
-          setDirectionsValue={setDirectionsValue}
-          handlePlaceSelect={handlePlaceSelect}
-          originAutocomplete={originAutocomplete}
-          destinationAutocomplete={destinationAutocomplete}
-          setOriginAutocomplete={setOriginAutocomplete}
-          setDestinationAutocomplete={setDestinationAutocomplete}
-          isEditing={true}
-        />
+      <div className="relative">
+        <Breadcrumb items={[{ label: trip.title, href: getTripUrl(trip.id) }, { label: 'Edit' }]} />
+        <div className="mt-10 h-full px-5 border-r border-gray-200">
+          <h1 className="text-3xl font-semibold mb-5">Edit Trip</h1>
+          <Toaster position="top-center" richColors duration={2000} />
+          <CreateTripForm
+            useForm={useFormReturn}
+            setDirectionsValue={setDirectionsValue}
+            handlePlaceSelect={handlePlaceSelect}
+            originAutocomplete={originAutocomplete}
+            destinationAutocomplete={destinationAutocomplete}
+            setOriginAutocomplete={setOriginAutocomplete}
+            setDestinationAutocomplete={setDestinationAutocomplete}
+            isEditing={true}
+          />
+        </div>
       </div>
     </TripFormProvider>
   );

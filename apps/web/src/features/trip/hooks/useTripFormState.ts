@@ -3,7 +3,7 @@
 import { useTripFormContext } from '../contexts/TripFormContext';
 
 export const useTripFormState = () => {
-  const { isEditing, formStatus, isSubmitting, handleSubmit, handleReset } = useTripFormContext();
+  const { isEditing, formStatus, isSubmitting, hasChanges, handleSubmit, handleReset } = useTripFormContext();
 
   const isCompleted = formStatus === 'completed';
   const isPlanning = formStatus === 'planning';
@@ -13,6 +13,7 @@ export const useTripFormState = () => {
     isEditing,
     formStatus,
     isSubmitting,
+    hasChanges,
     isCompleted,
     isPlanning,
     canAddImages,

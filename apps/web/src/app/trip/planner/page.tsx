@@ -2,8 +2,7 @@ import { CreateTripFormContainer } from '@/features/trip/components/CreateTrip/C
 import React from 'react';
 
 const CreateTripPage = () => (
-  <div className="px-8">
-    <h1 className="mb-10 text-4xl font-secondary">Plan your trip</h1>
+  <div className="px-5">
     <CreateTripFormContainer />
   </div>
 );
