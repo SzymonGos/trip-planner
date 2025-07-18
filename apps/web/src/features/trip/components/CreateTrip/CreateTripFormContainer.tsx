@@ -51,8 +51,8 @@ export const CreateTripFormContainer = () => {
   const defaultValues = {
     title: '',
     description: '',
-    origin: typeof directionsValue.origin === 'string' ? directionsValue.origin : '',
-    destination: typeof directionsValue.destination === 'string' ? directionsValue.destination : '',
+    origin: '',
+    destination: '',
     status: 'planning' as const,
     images: [],
   };
@@ -121,12 +121,8 @@ export const CreateTripFormContainer = () => {
   const handleSubmitCallback = useFormReturn.handleSubmit(handleOnSubmit);
 
   useEffect(() => {
-    useFormReturn.setValue('origin', typeof directionsValue?.origin === 'string' ? directionsValue.origin : '');
-    useFormReturn.setValue(
-      'destination',
-      typeof directionsValue.destination === 'string' ? directionsValue.destination : '',
-    );
-  }, [directionsValue, useFormReturn]);
+    handleClearDirections();
+  }, []);
 
   useEffect(() => {
     const fetchDistance = async () => {
