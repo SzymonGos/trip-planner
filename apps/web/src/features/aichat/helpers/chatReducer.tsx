@@ -33,7 +33,6 @@ export const chatReducer = (state: TChatStateProps, action: ChatAction): TChatSt
   switch (action.type) {
     case 'SET_INPUT':
       return { ...state, inputValue: action.payload };
-
     case 'SEND_MESSAGE': {
       const userMessage: TMessageProps = {
         id: Date.now().toString(),
@@ -49,13 +48,11 @@ export const chatReducer = (state: TChatStateProps, action: ChatAction): TChatSt
         error: null,
       };
     }
-
     case 'MESSAGE_SENT':
       return {
         ...state,
         messages: [...state.messages, action.payload],
       };
-
     case 'AI_RESPONSE': {
       const aiMessage: TMessageProps = {
         id: (Date.now() + 1).toString(),
@@ -69,23 +66,18 @@ export const chatReducer = (state: TChatStateProps, action: ChatAction): TChatSt
         isLoading: false,
       };
     }
-
     case 'SET_LOADING':
       return { ...state, isLoading: action.payload };
-
     case 'SET_ERROR':
       return {
         ...state,
         error: action.payload,
         isLoading: false,
       };
-
     case 'CLEAR_ERROR':
       return { ...state, error: null };
-
     case 'RESET_CHAT':
       return initialState;
-
     default:
       return state;
   }
