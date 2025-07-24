@@ -4,17 +4,16 @@ import React, { FC } from 'react';
 import { TAutocompleteProps, TFormValuesProps } from './CreateTripFormContainer';
 import { Form } from '@/components/ui/form';
 import { UseFormReturn } from 'react-hook-form';
-import { Button } from '@/components/ui/button';
 import { InputField } from './InputField';
 import { Autocomplete } from '@react-google-maps/api';
 import { TDirectionsValueProps } from '@/lib/contexts/constants';
 import { TextareaField } from './TextareaField';
 import { SelectField } from './SelectField';
-import { ResetIcon } from '@/components/Icons/ResetIcon';
 import { TripImagesManager } from './TripImagesManager';
 import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
 import { useTripFormState } from '../../hooks/useTripFormState';
 import { useTripImages } from '../../hooks/useTripImages';
+import { CreateTripFormActions } from './CreateTripFormActions';
 
 type TCreateTripFormProps = {
   useForm: UseFormReturn<TFormValuesProps>;
@@ -25,6 +24,7 @@ type TCreateTripFormProps = {
   setOriginAutocomplete: (value: TAutocompleteProps) => void;
   setDestinationAutocomplete: (value: TAutocompleteProps) => void;
   isEditing?: boolean;
+  authUserId: string;
 };
 
 export const CreateTripForm: FC<TCreateTripFormProps> = ({
@@ -35,6 +35,7 @@ export const CreateTripForm: FC<TCreateTripFormProps> = ({
   originAutocomplete,
   destinationAutocomplete,
   isEditing = false,
+  authUserId,
 }) => {
   const { canAddImages, handleSubmit, handleReset, isSubmitting, hasChanges } = useTripFormState();
   const { existingImages } = useTripImages();
@@ -104,16 +105,13 @@ export const CreateTripForm: FC<TCreateTripFormProps> = ({
             )}
           </div>
         </div>
-        <div className="mt-8 flex gap-4">
-          <Button type="submit" className="min-w-[200px]" disabled={isSubmitting || (isEditing && !hasChanges)}>
-            {isEditing ? 'Update Trip' : 'Create Trip'}
-          </Button>
-          {!isEditing && (
-            <Button type="button" variant="outline" onClick={handleReset}>
-              <ResetIcon />
-            </Button>
-          )}
-        </div>
+        <CreateTripFormActions
+          authUserId={authUserId}
+          isSubmitting={isSubmitting}
+          isEditing={isEditing}
+          hasChanges={hasChanges}
+          handleReset={handleReset}
+        />
       </form>
     </Form>
   );
