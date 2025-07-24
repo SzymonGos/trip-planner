@@ -1,144 +1,112 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import { Send, MessageCircle, Loader2 } from 'lucide-react';
+import { FC, useRef, useState } from 'react';
+import { MessageCircle, Maximize2, Minimize2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
-import { Textarea } from '@/components/ui/textarea';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
+import cx from 'classnames';
+import { AiChatSheetEmptyState } from './AiChatSheetEmptyState';
+import { AiChatSheetMessage } from './AiChatSheetMessage';
+import { AiChatLoading } from './AiChatLoading';
+import { AiChatSheetInput } from './AiChatSheetInput';
 
-interface Message {
+type TMessageProps = {
   id: string;
   content: string;
   role: 'user' | 'assistant';
   timestamp: Date;
-}
+};
 
-interface AiChatSheetProps {
-  messages: Message[];
+type TAiChatSheetProps = {
+  messages: TMessageProps[];
   inputValue: string;
   isLoading: boolean;
-  error: string | null;
   onInputChange: (value: string) => void;
   onSendMessage: () => void;
   onKeyPress: (e: React.KeyboardEvent) => void;
-  onClearError: () => void;
-}
+  authUserId: string;
+};
 
-export const AiChatSheet: React.FC<AiChatSheetProps> = ({
+export const AiChatSheet: FC<TAiChatSheetProps> = ({
   messages,
   inputValue,
   isLoading,
-  error,
   onInputChange,
   onSendMessage,
   onKeyPress,
-  onClearError,
+  authUserId,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
-
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
-
-  const formatTime = (date: Date) => date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger asChild>
         <Button
           size="icon"
-          className="fixed bottom-28 right-6 h-14 w-14 rounded-full bg-blue-600 hover:bg-blue-700 text-white shadow-lg hover:shadow-xl transition-all duration-200 z-50"
+          className="fixed bottom-28 right-6 h-14 w-14 rounded-full bg-zinc-400 hover:bg-zinc-500 text-white shadow-lg hover:shadow-xl transition-all duration-200 z-50"
         >
           <MessageCircle className="h-6 w-6" />
-          <span className="sr-only">AI Travel Assistant</span>
+          <span className="sr-only">Trip Planner</span>
         </Button>
       </SheetTrigger>
 
-      <SheetContent side="right" className="flex flex-col">
+      <SheetContent
+        side="right"
+        className={cx('flex flex-col transition-all duration-200 !border-l-0 focus:!ring-0 bg-tp-white-100', {
+          'w-screen !max-w-full': isExpanded,
+        })}
+      >
         <SheetHeader className="flex-shrink-0">
-          <SheetTitle className="flex items-center gap-2">
-            <MessageCircle className="h-5 w-5" />
-            AI Travel Assistant
+          <SheetTitle className="flex items-center gap-2 justify-between">
+            <div className="flex items-center gap-2">
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setIsExpanded(!isExpanded)}
+                className="h-8 w-8"
+                title={isExpanded ? 'Minimize' : 'Expand'}
+              >
+                {isExpanded ? <Minimize2 className="h-4 w-4" /> : <Maximize2 className="h-4 w-4" />}
+              </Button>
+              Trip Planner
+            </div>
           </SheetTitle>
-          <SheetDescription>Get personalized trip recommendations and planning help</SheetDescription>
         </SheetHeader>
 
         <div className="flex-1 flex flex-col min-h-0">
-          {/* Messages Container */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-4">
-            {messages.length === 0 && (
-              <div className="text-center text-muted-foreground py-8">
-                <MessageCircle className="h-12 w-12 mx-auto mb-4 opacity-50" />
-                <p>Ask me anything about trip planning!</p>
-                <p className="text-sm mt-2">I can help with routes, attractions, and travel tips.</p>
-              </div>
-            )}
+          <div
+            className={cx('flex-1 overflow-y-auto space-y-4', {
+              'lg:w-[780px] mx-auto': isExpanded,
+            })}
+          >
+            {messages.length === 0 && <AiChatSheetEmptyState />}
 
             {messages.map((message) => (
-              <div key={message.id} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                <div
-                  className={`max-w-[80%] rounded-lg px-4 py-2 ${
-                    message.role === 'user' ? 'bg-blue-600 text-white' : 'bg-muted text-foreground'
-                  }`}
-                >
-                  <p className="text-sm whitespace-pre-wrap">{message.content}</p>
-                  <p className={`text-xs mt-1 ${message.role === 'user' ? 'text-blue-100' : 'text-muted-foreground'}`}>
-                    {formatTime(message.timestamp)}
-                  </p>
-                </div>
-              </div>
+              <AiChatSheetMessage key={message.id} id={message.id} content={message.content} role={message.role} />
             ))}
 
-            {isLoading && (
-              <div className="flex justify-start">
-                <div className="bg-muted rounded-lg px-4 py-2 flex items-center gap-2">
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                  <span className="text-sm text-muted-foreground">AI is thinking...</span>
-                </div>
-              </div>
-            )}
-
-            {error && (
-              <div className="flex justify-start">
-                <div className="bg-red-50 border border-red-200 rounded-lg px-4 py-2">
-                  <p className="text-sm text-red-600">Error: {error}</p>
-                  <button onClick={onClearError} className="text-xs text-red-500 hover:text-red-700 mt-1">
-                    Dismiss
-                  </button>
-                </div>
-              </div>
-            )}
+            {isLoading && <AiChatLoading />}
 
             <div ref={messagesEndRef} />
           </div>
 
-          {/* Input Container */}
-          <div className="flex-shrink-0 p-4 border-t">
-            <div className="flex gap-2">
-              <Textarea
-                ref={inputRef}
-                value={inputValue}
-                onChange={(e) => onInputChange(e.target.value)}
-                onKeyPress={onKeyPress}
-                placeholder="Ask about trip planning, routes, or destinations..."
-                className="min-h-[60px] max-h-[120px] resize-none"
-                disabled={isLoading}
-              />
-              <Button
-                onClick={onSendMessage}
-                disabled={!inputValue.trim() || isLoading}
-                size="icon"
-                className="h-[60px] w-[60px] flex-shrink-0"
-              >
-                {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
-              </Button>
-            </div>
+          <div
+            className={cx('flex-shrink-0 transition-transform duration-200', {
+              'w-[780px] mx-auto': isExpanded,
+            })}
+          >
+            <AiChatSheetInput
+              inputRef={inputRef}
+              inputValue={inputValue}
+              onInputChange={onInputChange}
+              onKeyPress={onKeyPress}
+              isLoading={isLoading}
+              onSendMessage={onSendMessage}
+              authUserId={authUserId}
+            />
           </div>
         </div>
       </SheetContent>

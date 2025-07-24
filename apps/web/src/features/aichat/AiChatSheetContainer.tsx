@@ -3,9 +3,12 @@
 import React, { useReducer, useCallback } from 'react';
 import { AiChatSheet } from './AiChatSheet';
 import { chatReducer, initialState } from './helpers/chatReducer';
+import { CHAT_API_URL } from '@/lib/config';
+import { useAuthenticatedUser } from '../user/hooks/useAuthenticatedUser';
 
 export const AiChatSheetContainer = () => {
   const [state, dispatch] = useReducer(chatReducer, initialState);
+  const { authUserId } = useAuthenticatedUser();
 
   const handleSendMessage = useCallback(async () => {
     if (!state.inputValue.trim() || state.isLoading) return;
@@ -14,7 +17,7 @@ export const AiChatSheetContainer = () => {
     dispatch({ type: 'SEND_MESSAGE', payload: messageContent });
 
     try {
-      const response = await fetch('/api/chat', {
+      const response = await fetch(CHAT_API_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -54,20 +57,15 @@ export const AiChatSheetContainer = () => {
     [handleSendMessage],
   );
 
-  const handleClearError = useCallback(() => {
-    dispatch({ type: 'CLEAR_ERROR' });
-  }, []);
-
   return (
     <AiChatSheet
       messages={state.messages}
       inputValue={state.inputValue}
       isLoading={state.isLoading}
-      error={state.error}
       onInputChange={handleInputChange}
       onSendMessage={handleSendMessage}
       onKeyPress={handleKeyPress}
-      onClearError={handleClearError}
+      authUserId={authUserId}
     />
   );
 };
