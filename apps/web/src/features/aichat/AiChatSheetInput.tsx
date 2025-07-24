@@ -3,7 +3,7 @@ import { SendIcon } from '@/components/Icons/SendIcon';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Loader2 } from 'lucide-react';
-import Link from 'next/link';
+import { SignInButton } from '@/components/SignIn/SignInButton';
 
 type TAiChatSheetInputProps = {
   inputRef: React.RefObject<HTMLTextAreaElement>;
@@ -27,11 +27,7 @@ export const AiChatSheetInput: FC<TAiChatSheetInputProps> = ({
   if (!authUserId) {
     return (
       <div className="flex items-center justify-center p-4 text-center w-full">
-        <Link passHref href="/sign-in">
-          <Button size="sm" className="mt-2 bg-zinc-400 hover:bg-zinc-500 text-white w-[200px]">
-            Sign In
-          </Button>
-        </Link>
+        <SignInButton />
       </div>
     );
   }

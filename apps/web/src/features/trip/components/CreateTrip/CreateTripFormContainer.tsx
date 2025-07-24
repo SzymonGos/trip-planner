@@ -168,6 +168,7 @@ export const CreateTripFormContainer = () => {
           destinationAutocomplete={destinationAutocomplete}
           setOriginAutocomplete={setOriginAutocomplete}
           setDestinationAutocomplete={setDestinationAutocomplete}
+          authUserId={authUserId}
         />
 
         {distanceInfo && (
