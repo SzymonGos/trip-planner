@@ -149,6 +149,11 @@ export const CreateTripFormContainer = () => {
     }
   }, [useFormReturn.watch('status')]);
 
+  useEffect(() => {
+    useFormReturn.setValue('origin', directionsValue.origin as string);
+    useFormReturn.setValue('destination', directionsValue.destination as string);
+  }, [directionsValue, useFormReturn]);
+
   if (!isLoaded) return <div>Form Loading...</div>;
 
   return (
