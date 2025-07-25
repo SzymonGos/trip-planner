@@ -4,7 +4,6 @@ import React, { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { CreateTripForm } from './CreateTripForm';
 import { useGoogleMapsDirections } from '@/lib/contexts/DirectionsContext';
-import { TDirectionsValueProps } from '@/lib/contexts/constants';
 import { useMutation } from '@apollo/client';
 import { createTripMutationQuery } from '../../server/actions/createTripMutationQuery';
 import { useGoogleMapLoader } from '@/features/googleMap/hooks/useGoogleMapLoader';
@@ -17,14 +16,7 @@ import { getTripUrl } from '../../helpers/getTripUrl';
 import { getUserTripsQuery } from '@/features/user/server/db/getUserTripsQuery';
 import { getTripsQuery } from '../../server/db/getTripsQuery';
 import { TripFormProvider } from '../../contexts/TripFormProvider';
-
-export type TTripImageFormValueProps = {
-  id: string;
-  image: {
-    id: string;
-    filename: string;
-  };
-};
+import { useTripFormSync, TTripImageFormValueProps } from '../../hooks/useTripFormSync';
 
 export type TFormValuesProps = {
   title: string;
@@ -40,8 +32,7 @@ export type TAutocompleteProps = google.maps.places.Autocomplete | null;
 export const CreateTripFormContainer = () => {
   const [originAutocomplete, setOriginAutocomplete] = useState<TAutocompleteProps>(null);
   const [destinationAutocomplete, setDestinationAutocomplete] = useState<TAutocompleteProps>(null);
-  const { directionsValue, setDirectionsValue, handleClearDirections, distanceInfo, getDistance } =
-    useGoogleMapsDirections();
+  const { directionsValue, setDirectionsValue, handleClearDirections, distanceInfo } = useGoogleMapsDirections();
   const { isLoaded } = useGoogleMapLoader();
   const { authUserId } = useAuthenticatedUser();
   const router = useRouter();
@@ -62,13 +53,15 @@ export const CreateTripFormContainer = () => {
     defaultValues,
   });
 
+  const { isDistanceLoading } = useTripFormSync({ useFormReturn });
+
   const handlePlaceSelect = (autocompleteInstance: TAutocompleteProps, fieldName: 'origin' | 'destination') => {
     const place = autocompleteInstance?.getPlace();
     if (!place) return;
     if (place && place.formatted_address) {
       useFormReturn.setValue(fieldName, place.formatted_address);
 
-      const newDirectionsValue: TDirectionsValueProps = {
+      const newDirectionsValue = {
         ...directionsValue,
         [fieldName]: place.formatted_address,
       };
@@ -125,22 +118,6 @@ export const CreateTripFormContainer = () => {
   }, []);
 
   useEffect(() => {
-    const fetchDistance = async () => {
-      if (directionsValue.origin && directionsValue.destination) {
-        const originStr = JSON.stringify(directionsValue.origin);
-
-        const destinationStr = JSON.stringify(directionsValue.destination);
-
-        getDistance(originStr, destinationStr).catch((error) => {
-          console.error('Error fetching distance:', error);
-        });
-      }
-    };
-
-    fetchDistance();
-  }, [directionsValue.origin, directionsValue.destination, getDistance]);
-
-  useEffect(() => {
     const currentStatus = useFormReturn.watch('status');
     const currentImages = useFormReturn.watch('images');
 
@@ -148,11 +125,6 @@ export const CreateTripFormContainer = () => {
       useFormReturn.setValue('images', []);
     }
   }, [useFormReturn.watch('status')]);
-
-  useEffect(() => {
-    useFormReturn.setValue('origin', directionsValue.origin as string);
-    useFormReturn.setValue('destination', directionsValue.destination as string);
-  }, [directionsValue, useFormReturn]);
 
   if (!isLoaded) return <div>Form Loading...</div>;
 
@@ -182,7 +154,9 @@ export const CreateTripFormContainer = () => {
 
             <div className="w-full flex">
               Distance:
-              <div className="ml-auto font-semibold">{distanceInfo.distance}</div>
+              <div className="ml-auto font-semibold">
+                {isDistanceLoading ? 'Calculating...' : distanceInfo.distance}
+              </div>
             </div>
             <div className="w-full flex">
               Estimated Duration: <div className="ml-auto font-semibold">{distanceInfo.duration}</div>

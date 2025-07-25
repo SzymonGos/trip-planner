@@ -147,8 +147,8 @@ export const EditTripFormContainer: FC<TEditTripFormContainerProps> = ({ queryRe
   }, [useFormReturn.watch('status')]);
 
   useEffect(() => {
-    useFormReturn.setValue('origin', directionsValue.origin as string);
-    useFormReturn.setValue('destination', directionsValue.destination as string);
+    useFormReturn.setValue('origin', directionsValue.origin as string, { shouldDirty: true });
+    useFormReturn.setValue('destination', directionsValue.destination as string, { shouldDirty: true });
   }, [directionsValue, useFormReturn]);
 
   if (!isLoaded) return <div>Form Loading...</div>;
