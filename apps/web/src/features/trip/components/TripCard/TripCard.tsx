@@ -15,7 +15,7 @@ type TTripCardProps = {
 };
 
 export const TripCard: FC<TTripCardProps> = ({ trip }) => (
-  <div className="relative group rounded-md border-[0.5px] border-gray-300 bg-zinc-100 hover:bg-white overflow-hidden hover:-translate-y-1 transition-all duration-200 ease-out hover:shadow-lg z-0">
+  <div className="relative group rounded-md border-[0.5px] border-gray-300 bg-zinc-100 hover:bg-white overflow-hidden transition-all duration-200 ease-out z-0">
     <Link href={getTripUrl(trip.id)} className="absolute z-10 w-full h-full inset-0" />
     <div className="relative w-full">
       <TripCardImage id={trip.tripImages[0]?.image?.id} />
