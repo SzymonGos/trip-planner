@@ -18,6 +18,7 @@ import { getTripUrl } from '../../helpers/getTripUrl';
 import { useReadQuery, QueryRef } from '@apollo/client';
 import { revalidateTripPages } from '../../server/actions/revalidateTrip';
 import { Breadcrumb } from '@/features/breadcrumb/Breadcrumb';
+import { useAuthenticatedUser } from '@/features/user/hooks/useAuthenticatedUser';
 
 type TEditTripFormContainerProps = {
   queryRef: QueryRef<{ trip: TTrip }>;
@@ -29,6 +30,7 @@ export const EditTripFormContainer: FC<TEditTripFormContainerProps> = ({ queryRe
   const { directionsValue, setDirectionsValue, handleClearDirections, distanceInfo, getDistance } =
     useGoogleMapsDirections();
   const { isLoaded } = useGoogleMapLoader();
+  const { authUserId } = useAuthenticatedUser();
 
   const [updateTripMutation, { loading }] = useMutation(updateTripMutationQuery);
 
@@ -144,6 +146,11 @@ export const EditTripFormContainer: FC<TEditTripFormContainerProps> = ({ queryRe
     }
   }, [useFormReturn.watch('status')]);
 
+  useEffect(() => {
+    useFormReturn.setValue('origin', directionsValue.origin as string);
+    useFormReturn.setValue('destination', directionsValue.destination as string);
+  }, [directionsValue, useFormReturn]);
+
   if (!isLoaded) return <div>Form Loading...</div>;
 
   return (
@@ -170,6 +177,7 @@ export const EditTripFormContainer: FC<TEditTripFormContainerProps> = ({ queryRe
             setOriginAutocomplete={setOriginAutocomplete}
             setDestinationAutocomplete={setDestinationAutocomplete}
             isEditing={true}
+            authUserId={authUserId}
           />
         </div>
       </div>

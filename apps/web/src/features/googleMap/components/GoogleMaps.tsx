@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useCallback, useMemo } from 'react';
+import React, { FC, useCallback, useMemo } from 'react';
 import { GoogleMap, DirectionsRenderer, DirectionsService } from '@react-google-maps/api';
 import { TLocationCoordsProps, useUserGeolocation } from '@/hooks/useGeolocation';
 import { useGoogleMapsDirections } from '@/lib/contexts/DirectionsContext';
@@ -16,7 +16,11 @@ const defaultCenter: TLocationCoordsProps = {
   lng: 9,
 };
 
-export const GoogleMaps = () => {
+type TGoogleMapsProps = {
+  canEdit?: boolean;
+};
+
+export const GoogleMaps: FC<TGoogleMapsProps> = ({ canEdit = true }) => {
   const {
     directionsValue,
     setDirectionsValue,
@@ -30,7 +34,7 @@ export const GoogleMaps = () => {
 
   const onMapClick = useCallback(
     (e: google.maps.MapMouseEvent) => {
-      if (!e.latLng) return;
+      if (!canEdit || !e.latLng) return;
 
       const geocoder = new google.maps.Geocoder();
       geocoder.geocode({ location: e.latLng }, (results, status) => {
@@ -46,7 +50,7 @@ export const GoogleMaps = () => {
         }
       });
     },
-    [directionsValue, setDirectionsValue],
+    [directionsValue, setDirectionsValue, canEdit],
   );
 
   const directionsCallback = useCallback(
@@ -109,6 +113,7 @@ export const GoogleMaps = () => {
               strokeOpacity: 0.8,
               strokeWeight: 3,
             },
+            draggable: canEdit,
           }}
           onLoad={onDirectionsLoad}
         />
