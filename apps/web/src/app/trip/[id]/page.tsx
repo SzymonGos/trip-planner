@@ -4,7 +4,9 @@ import { getTripQuery } from '@/features/trip/server/db/getTripQuery';
 import { Suspense } from 'react';
 import { Trip as TTrip } from 'tp-graphql-types';
 
-const TripPage = async ({ params }: { params: { id: string } }) => (
+export const revalidate = 60;
+
+const TripPage = ({ params }: { params: { id: string } }) => (
   <PreloadQuery<{ trip: TTrip }, { id: string }>
     query={getTripQuery}
     variables={{

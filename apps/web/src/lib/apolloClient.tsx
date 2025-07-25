@@ -10,8 +10,8 @@ export const { getClient, query, PreloadQuery } = registerApolloClient(
           Query: {
             fields: {
               trips: {
-                merge(existing = [], incoming) {
-                  return [...existing, ...incoming];
+                merge(_, incoming) {
+                  return incoming;
                 },
               },
             },
