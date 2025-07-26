@@ -5,6 +5,7 @@ import { GoogleMap, DirectionsRenderer, DirectionsService } from '@react-google-
 import { TLocationCoordsProps, useUserGeolocation } from '@/hooks/useGeolocation';
 import { useGoogleMapsDirections } from '@/lib/contexts/DirectionsContext';
 import { useGoogleMapLoader } from '../hooks/useGoogleMapLoader';
+import { customMapStyle } from '../hooks/mapStyles';
 
 const mapContainerStyle = {
   height: '100%',
@@ -99,7 +100,22 @@ export const GoogleMaps: FC<TGoogleMapsProps> = ({ canEdit = true }) => {
   if (!isLoaded) return <div>Loading...</div>;
 
   return (
-    <GoogleMap zoom={10} mapContainerStyle={mapContainerStyle} center={center} onClick={onMapClick}>
+    <GoogleMap
+      zoom={10}
+      mapContainerStyle={mapContainerStyle}
+      center={center}
+      onClick={onMapClick}
+      options={{
+        styles: customMapStyle,
+        disableDefaultUI: false,
+        zoomControl: true,
+        mapTypeControl: false,
+        scaleControl: true,
+        streetViewControl: false,
+        rotateControl: false,
+        fullscreenControl: false,
+      }}
+    >
       {directionsValue.origin && directionsValue.destination && (
         <DirectionsService options={directionsServiceOptions} callback={directionsCallback} />
       )}
@@ -109,9 +125,9 @@ export const GoogleMaps: FC<TGoogleMapsProps> = ({ canEdit = true }) => {
           options={{
             suppressMarkers: false,
             polylineOptions: {
-              strokeColor: '#FF0000',
+              strokeColor: '#3B82F6',
               strokeOpacity: 0.8,
-              strokeWeight: 3,
+              strokeWeight: 4,
             },
             draggable: canEdit,
           }}
