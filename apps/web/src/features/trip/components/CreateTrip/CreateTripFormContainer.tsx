@@ -135,7 +135,7 @@ export const CreateTripFormContainer = () => {
       onSubmit={handleSubmitCallback}
       onReset={handleClearForm}
     >
-      <div>
+      <div className="pt-24">
         <h1 className="mb-5 text-3xl font-semibold">Plan your trip</h1>
         <CreateTripForm
           useForm={useFormReturn}

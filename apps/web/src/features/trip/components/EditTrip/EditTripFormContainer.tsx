@@ -163,9 +163,9 @@ export const EditTripFormContainer: FC<TEditTripFormContainerProps> = ({ queryRe
       isSubmitting={loading}
       hasChanges={isDirty}
     >
-      <div className="relative">
+      <div className="relative pt-24  border-r border-tp-gray-100">
         <Breadcrumb items={[{ label: trip.title, href: getTripUrl(trip.id) }, { label: 'Edit' }]} />
-        <div className="mt-10 h-full px-5 border-r border-gray-200">
+        <div className=" h-screen px-5">
           <h1 className="text-3xl font-semibold mb-5">Edit Trip</h1>
           <Toaster position="top-center" richColors duration={2000} />
           <CreateTripForm
