@@ -5,6 +5,9 @@ export const getUserIdByClerkIdQuery = gql`
     user(where: { clerkId: $clerkId }) {
       id
       username
+      profileImage {
+        id
+      }
     }
   }
 `;

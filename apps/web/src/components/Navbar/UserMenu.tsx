@@ -3,11 +3,15 @@
 import { SignOutButton, useAuth } from '@clerk/nextjs';
 import React, { FC } from 'react';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../ui/dropdown-menu';
-import { Button } from '../ui/button';
-import Link from 'next/link';
 import { useQuery } from '@apollo/client';
 import { getUserIdByClerkIdQuery } from '@/features/user/server/db/getUserIdByClerkIdQuery';
 import { SettingsIcon } from '../Icons/SettingsIcon';
+import { UserIcon } from '../Icons/UserIcon';
+import { UsernameTrigger } from './UsernameTrigger';
+import { SignOutIcon } from '../Icons/SignOutIcon';
+import Link from 'next/link';
+import { getUserProfileUrl } from '@/features/user/helpers/getUserProfileUrl';
+import { getUserSettingsUrl } from '@/features/user/helpers/getUserSettingsUrl';
 
 type TUserMenuProps = {
   userName: string;
@@ -26,24 +30,31 @@ export const UserMenu: FC<TUserMenuProps> = ({ userName, clerkId }) => {
   return (
     <div>
       <DropdownMenu>
-        <DropdownMenuTrigger asChild className="">
-          <Button variant="ghost">{userName}</Button>
+        <DropdownMenuTrigger>
+          <UsernameTrigger userName={userName} profileImageId={data?.user?.profileImage?.id} />
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-48">
           <DropdownMenuItem asChild>
-            <Link href={`/user/${data?.user?.username}`} className="cursor-pointer">
+            <Link
+              href={getUserProfileUrl(data?.user?.username)}
+              className="cursor-pointer flex items-center gap-2 text-sm"
+            >
+              <UserIcon className="!w-5 !h-5" />
               My Account
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
-            <Link href="/user/settings" className="cursor-pointer flex items-center gap-2">
-              <SettingsIcon />
+            <Link href={getUserSettingsUrl()} className="cursor-pointer flex items-center gap-2 text-sm">
+              <SettingsIcon className="!w-5 !h-5" />
               Settings
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem>
             <SignOutButton signOutOptions={{ sessionId }}>
-              <span className="w-full cursor-pointer">Sign out</span>
+              <div className="flex items-center gap-2">
+                <SignOutIcon className="size-5" />
+                Sign out
+              </div>
             </SignOutButton>
           </DropdownMenuItem>
         </DropdownMenuContent>

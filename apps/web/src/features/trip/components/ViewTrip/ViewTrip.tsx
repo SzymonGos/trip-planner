@@ -19,7 +19,7 @@ export type TViewTripProps = {
 };
 
 export const ViewTrip: FC<TViewTripProps> = ({ trip, isOwner, expanded, setExpanded }) => (
-  <div className="h-full flex flex-col md:flex-row gap-8 px-5 border-r border-gray-200">
+  <div className="pt-24 h-full flex flex-col md:flex-row gap-8 px-5 border-r border-tp-gray-100">
     <div className="flex-1 flex flex-col gap-4 max-w-xl">
       <h1 className="text-[22px] font-semibold mb-2 font-primary">{trip?.title}</h1>
       <div className="flex items-center gap-2 mb-3 justify-between">

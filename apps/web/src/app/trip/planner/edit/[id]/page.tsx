@@ -14,7 +14,9 @@ const EditTripPage = ({ params }: { params: { id: string } }) => (
   >
     {(queryRef) => (
       <Suspense fallback={<div>Loading trip...</div>}>
-        <EditTripFormContainer queryRef={queryRef} />
+        <div className="h-screen">
+          <EditTripFormContainer queryRef={queryRef} />
+        </div>
       </Suspense>
     )}
   </PreloadQuery>
