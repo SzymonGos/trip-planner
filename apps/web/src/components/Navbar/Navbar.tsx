@@ -46,7 +46,7 @@ export const Navbar = ({ userName, clerkId }: NavbarClientProps) => {
           <ul className="flex gap-3">
             {navbarLinks.map((link) => (
               <li key={link.id}>
-                <Link href={link.url} className="">
+                <Link href={link.url} className="hover:text-zinc-600">
                   {link.name}
                 </Link>
               </li>
