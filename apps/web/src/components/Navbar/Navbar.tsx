@@ -11,6 +11,7 @@ import cx from 'classnames';
 import { useScrollY } from '@/hooks/useScrollY';
 import { usePathname } from 'next/navigation';
 import { isFullWidthNavbar } from '@/lib/utils';
+import Image from 'next/image';
 
 interface NavbarClientProps {
   userName: string;
@@ -19,13 +20,15 @@ interface NavbarClientProps {
 
 export const Navbar = ({ userName, clerkId }: NavbarClientProps) => {
   const { isLoaded } = useUser();
-  const scrollY = useScrollY();
   const pathname = usePathname();
+  const isTripPages = pathname.startsWith('/trip/');
+  const scrollY = useScrollY();
 
   return (
     <div
-      className={cx('fixed top-0 z-50 w-full bg-transparent py-6 transition-colors duration-200 font-secondary', {
-        '!bg-tp-white-100': scrollY > 0,
+      className={cx('fixed top-0 z-50 w-full py-6 font-primary font-medium', {
+        'transition-colors duration-200 bg-tp-white-100 border-b-tp-gray-100 shadow-md': scrollY > 0,
+        'border-b-tp-gray-100 bg-tp-white-100 shadow-md': isTripPages && scrollY >= 0,
       })}
     >
       <Container
@@ -33,15 +36,19 @@ export const Navbar = ({ userName, clerkId }: NavbarClientProps) => {
           '!max-w-none': isFullWidthNavbar(pathname),
         })}
       >
-        <div className="">
-          <Link href="/">Navbar Logo</Link>
+        <div className="flex items-center">
+          <Link href="/">
+            <Image src="/logo/routetripper-logo-2.svg" alt="route tripper logo" width={200} height={100} />
+          </Link>
         </div>
 
         <div className="flex gap-3 items-center ml-auto">
           <ul className="flex gap-3">
             {navbarLinks.map((link) => (
               <li key={link.id}>
-                <Link href={link.url}>{link.name}</Link>
+                <Link href={link.url} className="">
+                  {link.name}
+                </Link>
               </li>
             ))}
           </ul>

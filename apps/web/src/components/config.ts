@@ -4,12 +4,12 @@ import { getTripsUrl } from '@/features/trip/helpers/getTripsUrl';
 export const navbarLinks = [
   {
     id: 'plan_trip',
-    name: 'plan trip',
+    name: 'Plan trip',
     url: getTripPlannerUrl(),
   },
   {
     id: 'trips',
-    name: 'trips',
+    name: 'Trips',
     url: getTripsUrl(),
   },
 ];
