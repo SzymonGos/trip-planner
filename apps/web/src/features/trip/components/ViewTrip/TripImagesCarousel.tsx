@@ -10,17 +10,28 @@ interface TripImagesCarouselProps {
   emblaRef: EmblaViewportRefType;
   scrollPrev: () => void;
   scrollNext: () => void;
+  handleImageClick: (index: number) => void;
 }
 
-export const TripImagesCarousel: FC<TripImagesCarouselProps> = ({ images, emblaRef, scrollPrev, scrollNext }) => (
+export const TripImagesCarousel: FC<TripImagesCarouselProps> = ({
+  images,
+  emblaRef,
+  scrollPrev,
+  scrollNext,
+  handleImageClick,
+}) => (
   <div className="w-full max-w-xl mx-auto">
     <div className="relative">
       <div className="overflow-hidden" ref={emblaRef}>
         <div className="flex h-[200px]">
-          {images.map((img) => {
+          {images.map((img, index) => {
             const src = getCloudinaryImageSrc(img?.image?.id);
             return (
-              <div className="flex-shrink-0 h-[200px] w-1/2 relative mr-2" key={img.id}>
+              <div
+                className="flex-shrink-0 h-[200px] w-1/2 relative mr-2 cursor-pointer hover:opacity-90 transition-opacity"
+                key={img.id}
+                onClick={() => handleImageClick(index)}
+              >
                 <CldImage
                   src={src}
                   alt="Trip image"

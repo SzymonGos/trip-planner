@@ -9,7 +9,7 @@ import { useMutation } from '@apollo/client';
 import { deleteTripImageMutationQuery } from '../../server/actions/deleteTripImageMutationQuery';
 import { getTripQuery } from '../../server/db/getTripQuery';
 import cx from 'classnames';
-import { TTripImageFormValueProps } from './CreateTripFormContainer';
+import { TTripImageFormValueProps } from '../../hooks/useTripFormSync';
 
 export type TTripImagesDisplayProps = {
   className?: string;
