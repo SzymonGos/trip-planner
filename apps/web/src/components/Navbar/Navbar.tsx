@@ -12,6 +12,7 @@ import { useScrollY } from '@/hooks/useScrollY';
 import { usePathname } from 'next/navigation';
 import { isFullWidthNavbar } from '@/lib/utils';
 import Image from 'next/image';
+import { Skeleton } from '../ui/skeleton';
 
 interface NavbarClientProps {
   userName: string;
@@ -38,7 +39,7 @@ export const Navbar = ({ userName, clerkId }: NavbarClientProps) => {
       >
         <div className="flex items-center">
           <Link href="/">
-            <Image src="/logo/routetripper-logo-2.svg" alt="route tripper logo" width={200} height={100} />
+            <Image src="/logo/routetripper-logo-2.svg" alt="route tripper logo" width={200} height={40} />
           </Link>
         </div>
 
@@ -53,16 +54,16 @@ export const Navbar = ({ userName, clerkId }: NavbarClientProps) => {
             ))}
           </ul>
           {isLoaded ? (
-            <>
+            <div className="w-[157px] h-[38px]">
               <SignedIn>
                 <UserMenu userName={userName} clerkId={clerkId} />
               </SignedIn>
               <SignedOut>
                 <NavbarSignInLink />
               </SignedOut>
-            </>
+            </div>
           ) : (
-            <div>Loading</div>
+            <Skeleton className="w-[157px] h-[38px]" />
           )}
         </div>
       </Container>
