@@ -59,7 +59,9 @@ export const Navbar = ({ userName, clerkId }: NavbarClientProps) => {
                 <UserMenu userName={userName} clerkId={clerkId} />
               </SignedIn>
               <SignedOut>
-                <NavbarSignInLink />
+                <div className="flex items-center justify-center w-[157px] h-[38px]">
+                  <NavbarSignInLink />
+                </div>
               </SignedOut>
             </div>
           ) : (
