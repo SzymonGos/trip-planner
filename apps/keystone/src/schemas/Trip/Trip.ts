@@ -1,6 +1,7 @@
 import { list } from '@keystone-6/core';
 import { relationship, text, timestamp, select } from '@keystone-6/core/fields';
 import { allowAll } from '@keystone-6/core/access';
+import { deleteTripImages } from './hooks/deleteTripImages';
 
 export const Trip = list({
   fields: {
@@ -69,6 +70,11 @@ export const Trip = list({
 
       if (origin && destination && origin === destination) {
         addValidationError('Origin and destination cannot be the same.');
+      }
+    },
+    beforeOperation: async ({ operation, item, context }) => {
+      if (operation === 'delete' && item?.id) {
+        await deleteTripImages(String(item.id), context);
       }
     },
   },

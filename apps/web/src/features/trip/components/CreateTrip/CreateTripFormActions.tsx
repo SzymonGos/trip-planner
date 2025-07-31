@@ -2,6 +2,7 @@ import { SignInButton } from '@/components/SignIn/SignInButton';
 import { Button } from '@/components/ui/button';
 import { ResetIcon } from '@/components/Icons/ResetIcon';
 import { FC } from 'react';
+import { DeleteTripButton } from '../DeleteTripButton';
 
 type TCreateTripFormActionsProps = {
   authUserId: string;
@@ -9,6 +10,8 @@ type TCreateTripFormActionsProps = {
   isEditing: boolean;
   hasChanges: boolean;
   handleReset: () => void;
+  tripId?: string;
+  tripTitle?: string;
 };
 export const CreateTripFormActions: FC<TCreateTripFormActionsProps> = ({
   authUserId,
@@ -16,6 +19,8 @@ export const CreateTripFormActions: FC<TCreateTripFormActionsProps> = ({
   isEditing,
   hasChanges,
   handleReset,
+  tripId,
+  tripTitle,
 }) => (
   <div className="mt-8 flex gap-4">
     {!authUserId && <SignInButton />}
@@ -31,5 +36,6 @@ export const CreateTripFormActions: FC<TCreateTripFormActionsProps> = ({
         )}
       </>
     )}
+    {isEditing && <DeleteTripButton tripId={tripId} tripTitle={tripTitle} />}
   </div>
 );
