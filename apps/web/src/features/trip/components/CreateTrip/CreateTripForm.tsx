@@ -25,6 +25,8 @@ type TCreateTripFormProps = {
   setDestinationAutocomplete: (value: TAutocompleteProps) => void;
   isEditing?: boolean;
   authUserId: string;
+  tripId?: string;
+  tripTitle?: string;
 };
 
 export const CreateTripForm: FC<TCreateTripFormProps> = ({
@@ -36,6 +38,8 @@ export const CreateTripForm: FC<TCreateTripFormProps> = ({
   destinationAutocomplete,
   isEditing = false,
   authUserId,
+  tripId,
+  tripTitle,
 }) => {
   const { canAddImages, handleSubmit, handleReset, isSubmitting, hasChanges } = useTripFormState();
   const { existingImages } = useTripImages();
@@ -111,6 +115,8 @@ export const CreateTripForm: FC<TCreateTripFormProps> = ({
           isEditing={isEditing}
           hasChanges={hasChanges}
           handleReset={handleReset}
+          tripId={tripId}
+          tripTitle={tripTitle}
         />
       </form>
     </Form>

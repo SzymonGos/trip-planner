@@ -166,7 +166,9 @@ export const EditTripFormContainer: FC<TEditTripFormContainerProps> = ({ queryRe
       <div className="relative pt-24  border-r border-tp-gray-100">
         <Breadcrumb items={[{ label: trip.title, href: getTripUrl(trip.id) }, { label: 'Edit' }]} />
         <div className=" h-screen px-5">
-          <h1 className="text-3xl font-semibold mb-5">Edit Trip</h1>
+          <div className="flex items-center justify-between mb-5">
+            <h1 className="text-3xl font-semibold">Edit Trip</h1>
+          </div>
           <Toaster position="top-center" richColors duration={2000} />
           <CreateTripForm
             useForm={useFormReturn}
@@ -178,6 +180,8 @@ export const EditTripFormContainer: FC<TEditTripFormContainerProps> = ({ queryRe
             setDestinationAutocomplete={setDestinationAutocomplete}
             isEditing={true}
             authUserId={authUserId}
+            tripId={trip?.id}
+            tripTitle={trip?.title}
           />
         </div>
       </div>
