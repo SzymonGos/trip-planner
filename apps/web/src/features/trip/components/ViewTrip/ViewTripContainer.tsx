@@ -29,9 +29,5 @@ export const ViewTripContainer: FC<TViewTripContainerProps> = ({ queryRef }) => 
     }
   }, [trip, setDirectionsValue]);
 
-  if (!trip) {
-    return <div>Loading trip...</div>;
-  }
-
   return <ViewTrip trip={trip} isOwner={isOwner} expanded={expanded} setExpanded={setExpanded} />;
 };
