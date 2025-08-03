@@ -3,7 +3,7 @@ import React from 'react';
 
 // export url
 export const NavbarSignInLink = () => (
-  <Link className="" href="/sign-in">
+  <Link className="hover:text-zinc-600" href="/sign-in">
     Sign In
   </Link>
 );
