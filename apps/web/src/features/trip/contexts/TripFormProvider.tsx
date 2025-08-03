@@ -3,7 +3,8 @@
 import React, { useState, useCallback, ReactNode, useMemo } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { TripFormContext, TripFormContextTypeProps } from './TripFormContext';
-import { TTripImageFormValueProps, TFormValuesProps } from '../components/CreateTrip/CreateTripFormContainer';
+import { TFormValuesProps } from '../components/CreateTrip/CreateTripFormContainer';
+import { TTripImageFormValueProps } from '../hooks/useTripFormSync';
 
 type TTripFormProviderProps = {
   children: ReactNode;

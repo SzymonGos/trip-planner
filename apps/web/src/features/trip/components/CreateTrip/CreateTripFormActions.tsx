@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { ResetIcon } from '@/components/Icons/ResetIcon';
 import { FC } from 'react';
 import { DeleteTripButton } from '../DeleteTripButton';
+import { Loader2 } from 'lucide-react';
 
 type TCreateTripFormActionsProps = {
   authUserId: string;
@@ -27,7 +28,16 @@ export const CreateTripFormActions: FC<TCreateTripFormActionsProps> = ({
     {authUserId && (
       <>
         <Button type="submit" className="min-w-[200px]" disabled={isSubmitting || (isEditing && !hasChanges)}>
-          {isEditing ? 'Update Trip' : 'Create Trip'}
+          {isSubmitting ? (
+            <>
+              <Loader2 className="h-4 w-4 animate-spin" />
+              {isEditing ? 'Updating...' : 'Creating...'}
+            </>
+          ) : isEditing ? (
+            'Update Trip'
+          ) : (
+            'Create Trip'
+          )}
         </Button>
         {!isEditing && (
           <Button type="button" variant="outline" onClick={handleReset}>

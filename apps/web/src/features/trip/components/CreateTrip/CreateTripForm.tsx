@@ -27,6 +27,7 @@ type TCreateTripFormProps = {
   authUserId: string;
   tripId?: string;
   tripTitle?: string;
+  loading?: boolean;
 };
 
 export const CreateTripForm: FC<TCreateTripFormProps> = ({
@@ -40,6 +41,7 @@ export const CreateTripForm: FC<TCreateTripFormProps> = ({
   authUserId,
   tripId,
   tripTitle,
+  loading,
 }) => {
   const { canAddImages, handleSubmit, handleReset, isSubmitting, hasChanges } = useTripFormState();
   const { existingImages } = useTripImages();
@@ -111,7 +113,7 @@ export const CreateTripForm: FC<TCreateTripFormProps> = ({
         </div>
         <CreateTripFormActions
           authUserId={authUserId}
-          isSubmitting={isSubmitting}
+          isSubmitting={isSubmitting || loading}
           isEditing={isEditing}
           hasChanges={hasChanges}
           handleReset={handleReset}

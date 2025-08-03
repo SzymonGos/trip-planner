@@ -1,7 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, ReactNode } from 'react';
-import { TTripImageFormValueProps } from '../components/CreateTrip/CreateTripFormContainer';
+import { TTripImageFormValueProps } from '../hooks/useTripFormSync';
 
 export type TripFormContextTypeProps = {
   isEditing: boolean;

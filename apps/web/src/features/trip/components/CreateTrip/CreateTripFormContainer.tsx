@@ -37,7 +37,7 @@ export const CreateTripFormContainer = () => {
   const { authUserId } = useAuthenticatedUser();
   const router = useRouter();
 
-  const [createTripMutation] = useMutation(createTripMutationQuery);
+  const [createTripMutation, { loading }] = useMutation(createTripMutationQuery);
 
   const defaultValues = {
     title: '',
@@ -146,6 +146,7 @@ export const CreateTripFormContainer = () => {
           setOriginAutocomplete={setOriginAutocomplete}
           setDestinationAutocomplete={setDestinationAutocomplete}
           authUserId={authUserId}
+          loading={loading}
         />
 
         {distanceInfo && (

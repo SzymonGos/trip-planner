@@ -13,11 +13,11 @@ export const UserProfileImage: FC<TUserProfileImageProfileProps> = ({ id }) => (
         src={getCloudinaryImageSrc(id)}
         width={150}
         height={150}
-        className="w-full h-full rounded-full object-cover"
+        className="w-[150px] h-[150px] rounded-full object-cover"
         alt="User profile"
       />
     ) : (
-      <div className="h-[100px] w-[100px] rounded-full bg-gray-300" />
+      <div className="h-[150px] w-[150px] rounded-full bg-gray-300" />
     )}
   </>
 );

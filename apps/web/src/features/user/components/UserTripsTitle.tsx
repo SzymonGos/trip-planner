@@ -5,5 +5,5 @@ interface UserTripsTitleProps {
 }
 
 export const UserTripsTitle: React.FC<UserTripsTitleProps> = ({ username }) => (
-  <h2 className="text-2xl font-semibold mb-8">{username ? `${username}'s Trips` : 'Trips'}</h2>
+  <h2 className="text-2xl font-semibold mb-8 capitalize">{username ? `${username}'s trips` : 'all trips'}</h2>
 );

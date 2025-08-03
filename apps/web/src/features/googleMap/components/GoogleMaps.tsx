@@ -6,6 +6,7 @@ import { TLocationCoordsProps, useUserGeolocation } from '@/hooks/useGeolocation
 import { useGoogleMapsDirections } from '@/lib/contexts/DirectionsContext';
 import { useGoogleMapLoader } from '../hooks/useGoogleMapLoader';
 import { customMapStyle } from '../hooks/mapStyles';
+import { Skeleton } from '@/components/ui/skeleton';
 
 const mapContainerStyle = {
   height: '100%',
@@ -97,7 +98,7 @@ export const GoogleMaps: FC<TGoogleMapsProps> = ({ canEdit = true }) => {
     [directionsValue.origin, directionsValue.destination],
   );
 
-  if (!isLoaded) return <div>Loading...</div>;
+  if (!isLoaded) return <Skeleton className="h-full w-full" />;
 
   return (
     <GoogleMap
