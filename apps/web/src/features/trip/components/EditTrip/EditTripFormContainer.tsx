@@ -8,7 +8,6 @@ import { TAutocompleteProps, TFormValuesProps } from '../CreateTrip/CreateTripFo
 import { TDirectionsValueProps } from '@/lib/contexts/constants';
 import { tripSchema } from '../../helpers/formValidation';
 import { useGoogleMapsDirections } from '@/lib/contexts/DirectionsContext';
-import { useGoogleMapLoader } from '@/features/googleMap/hooks/useGoogleMapLoader';
 import { useMutation } from '@apollo/client';
 import { updateTripMutationQuery } from '../../server/actions/updateTripMutationQuery';
 import { Trip as TTrip } from 'tp-graphql-types';
@@ -29,7 +28,6 @@ export const EditTripFormContainer: FC<TEditTripFormContainerProps> = ({ queryRe
   const [destinationAutocomplete, setDestinationAutocomplete] = useState<TAutocompleteProps>(null);
   const { directionsValue, setDirectionsValue, handleClearDirections, distanceInfo, getDistance } =
     useGoogleMapsDirections();
-  const { isLoaded } = useGoogleMapLoader();
   const { authUserId } = useAuthenticatedUser();
 
   const [updateTripMutation, { loading }] = useMutation(updateTripMutationQuery);
@@ -150,8 +148,6 @@ export const EditTripFormContainer: FC<TEditTripFormContainerProps> = ({ queryRe
     useFormReturn.setValue('origin', directionsValue.origin as string, { shouldDirty: true });
     useFormReturn.setValue('destination', directionsValue.destination as string, { shouldDirty: true });
   }, [directionsValue, useFormReturn]);
-
-  if (!isLoaded) return <div>Form Loading...</div>;
 
   return (
     <TripFormProvider

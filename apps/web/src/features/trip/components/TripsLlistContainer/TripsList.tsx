@@ -13,15 +13,5 @@ export const TripsList: FC<TTripsListProps> = ({ queryRef }) => {
   const { data } = useReadQuery(queryRef);
   const trips = data?.trips;
 
-  if (!trips) {
-    return <div>Loading trips...</div>;
-  }
-
-  return (
-    <>
-      {trips.map((trip: TTrip) => (
-        <TripCard key={trip?.id} trip={trip} />
-      ))}
-    </>
-  );
+  return <>{trips?.map((trip: TTrip) => <TripCard key={trip?.id} trip={trip} />)}</>;
 };

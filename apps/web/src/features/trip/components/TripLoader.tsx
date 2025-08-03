@@ -1,7 +1,12 @@
+import React, { FC } from 'react';
 import { Skeleton } from '@/components/ui/skeleton';
-import React from 'react';
+import cx from 'classnames';
 
-export const ViewTripLoading = () => (
+type TTripLoaderProps = {
+  type: 'view' | 'edit';
+};
+
+export const TripLoader: FC<TTripLoaderProps> = ({ type }) => (
   <div className="pt-24 h-full flex flex-col md:flex-row gap-8 px-5 border-r border-tp-gray-100">
     <div className="flex-1 flex flex-col gap-4 max-w-xl">
       <Skeleton className="h-8 w-3/4 mb-2" />
@@ -27,8 +32,9 @@ export const ViewTripLoading = () => (
         <Skeleton className="h-4 w-full" />
         <Skeleton className="h-4 w-3/4" />
       </div>
-      <div className="mt-4 -mx-5">
-        <Skeleton className="h-64 w-full rounded-none" />
+      <div className={cx('mt-4', { '-mx-5': type === 'view' })}>
+        {type === 'view' && <Skeleton className="h-64 w-full rounded-none" />}
+        {type === 'edit' && <Skeleton className="h-[78px] w-[78px] rounded-md" />}
       </div>
     </div>
   </div>

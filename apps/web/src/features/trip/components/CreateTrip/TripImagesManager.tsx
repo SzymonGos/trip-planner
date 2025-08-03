@@ -3,9 +3,9 @@
 import React, { FC } from 'react';
 import { TripImagesDisplay } from './TripImagesDisplay';
 import { useTripImages } from '../../hooks/useTripImages';
-import { TTripImageFormValueProps } from './CreateTripFormContainer';
 import { TripImagesUploadContainer } from './TripImagesUploadContainer';
 import { useTripFormContext } from '../../contexts/TripFormContext';
+import { TTripImageFormValueProps } from '../../hooks/useTripFormSync';
 
 export type TTripImagesManagerProps = {
   disabled?: boolean;

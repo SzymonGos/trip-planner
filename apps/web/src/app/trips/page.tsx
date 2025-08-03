@@ -3,6 +3,10 @@ import { TripsLlistContainer } from '@/features/trip/components/TripsLlistContai
 
 export const revalidate = 60;
 
-const TripsPage = () => <TripsLlistContainer />;
+const TripsPage = () => (
+  <div className="h-screen">
+    <TripsLlistContainer />
+  </div>
+);
 
 export default TripsPage;

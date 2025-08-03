@@ -3,7 +3,7 @@ import { ViewTripContainer } from '@/features/trip/components/ViewTrip/ViewTripC
 import { getTripQuery } from '@/features/trip/server/db/getTripQuery';
 import { Suspense } from 'react';
 import { Trip as TTrip } from 'tp-graphql-types';
-import { ViewTripLoading } from '@/features/trip/components/ViewTrip/ViewTripLoading';
+import { TripLoader } from '@/features/trip/components/TripLoader';
 
 export const revalidate = 60;
 
@@ -15,7 +15,7 @@ const TripPage = ({ params }: { params: { id: string } }) => (
     }}
   >
     {(queryRef) => (
-      <Suspense fallback={<ViewTripLoading />}>
+      <Suspense fallback={<TripLoader type="view" />}>
         <ViewTripContainer queryRef={queryRef} />
       </Suspense>
     )}
