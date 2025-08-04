@@ -24,7 +24,7 @@ export const TripCard: FC<TTripCardProps> = ({ trip }) => (
       </div>
       <TripCardMaskWave />
     </div>
-    <div className="pt-4 pb-4 px-6 flex flex-col h-48">
+    <div className="pt-4 pb-4 px-6 flex flex-col h-36 md:h-48">
       <TripCardDetails title={trip.title} description={trip.description} />
       <div className="mt-auto">
         <TripStats distance={trip.distance} estimatedDuration={trip.estimatedDuration} createdAt={trip.createdAt} />
