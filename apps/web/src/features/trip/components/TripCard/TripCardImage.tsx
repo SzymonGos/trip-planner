@@ -10,7 +10,7 @@ type TTripCardImageProps = {
 };
 
 export const TripCardImage: FC<TTripCardImageProps> = ({ id }) => (
-  <div className="relative w-full h-[200px] object-cover overflow-hidden">
+  <div className="relative w-full h-[120px] md:h-[200px] object-cover overflow-hidden">
     {id ? (
       <CldImage
         src={getCloudinaryImageSrc(id)}
