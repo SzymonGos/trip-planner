@@ -6,10 +6,12 @@ export const navbarLinks = [
     id: 'plan_trip',
     name: 'Plan trip',
     url: getTripPlannerUrl(),
+    mobile: true,
   },
   {
     id: 'trips',
     name: 'Trips',
     url: getTripsUrl(),
+    mobile: false,
   },
 ];

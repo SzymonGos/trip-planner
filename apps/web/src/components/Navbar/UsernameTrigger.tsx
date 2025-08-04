@@ -8,8 +8,8 @@ type TUsernameTriggerProps = {
 };
 
 export const UsernameTrigger: FC<TUsernameTriggerProps> = ({ userName, profileImageId }) => (
-  <div className="font-primary flex items-center gap-2 cursor-pointer px-2 py-1 rounded-md transition-all duration-200 hover:bg-white/90 capitalize">
-    {userName}
+  <div className="flex font-primary items-center justify-self-end gap-2 cursor-pointer px-2 py-1 rounded-md transition-all duration-200 hover:bg-white/90 capitalize">
+    <span className="hidden md:block">{userName}</span>
 
     {profileImageId ? (
       <CldImage
