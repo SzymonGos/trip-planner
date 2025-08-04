@@ -37,7 +37,7 @@ export const Navbar = ({ userName, clerkId }: NavbarClientProps) => {
           '!max-w-none': isFullWidthNavbar(pathname),
         })}
       >
-        <div className="flex items-center">
+        <div className="flex items-center w-[150px] md:w-[200px]">
           <Link href="/">
             <Image src="/logo/routetripper-logo-2.svg" alt="route tripper logo" width={200} height={40} />
           </Link>
@@ -46,7 +46,7 @@ export const Navbar = ({ userName, clerkId }: NavbarClientProps) => {
         <div className="flex gap-3 items-center ml-auto">
           <ul className="flex gap-3">
             {navbarLinks.map((link) => (
-              <li key={link.id}>
+              <li key={link.id} className={cx({ 'hidden md:block': !link.mobile })}>
                 <Link href={link.url} className="hover:text-zinc-600">
                   {link.name}
                 </Link>
@@ -54,18 +54,18 @@ export const Navbar = ({ userName, clerkId }: NavbarClientProps) => {
             ))}
           </ul>
           {isLoaded ? (
-            <div className="w-[157px] h-[38px]">
+            <div className="md:w-[157px] h-[38px]">
               <SignedIn>
                 <UserMenu userName={userName} clerkId={clerkId} />
               </SignedIn>
               <SignedOut>
-                <div className="flex items-center justify-center w-[157px] h-[38px]">
+                <div className="flex items-center justify-center md:w-[157px] h-[38px]">
                   <NavbarSignInLink />
                 </div>
               </SignedOut>
             </div>
           ) : (
-            <Skeleton className="w-[157px] h-[38px]" />
+            <Skeleton className="w-[56px] md:w-[157px] h-[38px]" />
           )}
         </div>
       </Container>
