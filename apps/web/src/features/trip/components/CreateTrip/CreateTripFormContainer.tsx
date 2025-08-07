@@ -6,7 +6,6 @@ import { CreateTripForm } from './CreateTripForm';
 import { useGoogleMapsDirections } from '@/lib/contexts/DirectionsContext';
 import { useMutation } from '@apollo/client';
 import { createTripMutationQuery } from '../../server/actions/createTripMutationQuery';
-import { useGoogleMapLoader } from '@/features/googleMap/hooks/useGoogleMapLoader';
 import { useAuthenticatedUser } from '@/features/user/hooks/useAuthenticatedUser';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -17,6 +16,8 @@ import { getUserTripsQuery } from '@/features/user/server/db/getUserTripsQuery';
 import { getTripsQuery } from '../../server/db/getTripsQuery';
 import { TripFormProvider } from '../../contexts/TripFormProvider';
 import { useTripFormSync, TTripImageFormValueProps } from '../../hooks/useTripFormSync';
+import { useGoogleMapLoader } from '@/features/googleMap/hooks/useGoogleMapLoader';
+import { TripLoader } from '../TripLoader';
 
 export type TFormValuesProps = {
   title: string;
@@ -33,9 +34,9 @@ export const CreateTripFormContainer = () => {
   const [originAutocomplete, setOriginAutocomplete] = useState<TAutocompleteProps>(null);
   const [destinationAutocomplete, setDestinationAutocomplete] = useState<TAutocompleteProps>(null);
   const { directionsValue, setDirectionsValue, handleClearDirections, distanceInfo } = useGoogleMapsDirections();
-  const { isLoaded } = useGoogleMapLoader();
   const { authUserId } = useAuthenticatedUser();
   const router = useRouter();
+  const { isLoaded: isMapLoaded } = useGoogleMapLoader();
 
   const [createTripMutation, { loading }] = useMutation(createTripMutationQuery);
 
@@ -126,7 +127,7 @@ export const CreateTripFormContainer = () => {
     }
   }, [useFormReturn.watch('status')]);
 
-  if (!isLoaded) return <div>Form Loading...</div>;
+  if (!isMapLoaded) return <TripLoader type="edit" />;
 
   return (
     <TripFormProvider
@@ -135,7 +136,7 @@ export const CreateTripFormContainer = () => {
       onSubmit={handleSubmitCallback}
       onReset={handleClearForm}
     >
-      <div className="pt-24">
+      <div className="pt-28 pb-10">
         <h1 className="mb-5 text-3xl font-semibold">Plan your trip</h1>
         <CreateTripForm
           useForm={useFormReturn}
@@ -148,7 +149,7 @@ export const CreateTripFormContainer = () => {
           authUserId={authUserId}
           loading={loading}
         />
-
+        {/* todo: redesign trip distance info */}
         {distanceInfo && (
           <div className="mt-4 p-4 border-[0.5px] rounded-md  border-tp-gray-100">
             <h4 className="mb-4 text-lg font-primary font-semibold">Trip Information: </h4>
