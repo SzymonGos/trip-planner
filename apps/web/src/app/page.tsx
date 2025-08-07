@@ -6,12 +6,12 @@ import { HowItWorks } from '@/features/homepage/HowItWorks';
 export const revalidate = 60;
 
 const Home = () => (
-  <div className="min-h-[calc(100vh-72px)]">
+  <main>
     <HeroSectionContainer />
     <HowItWorks />
     <FeaturedDestinationsContainer />
     <Footer />
-  </div>
+  </main>
 );
 
 export default Home;

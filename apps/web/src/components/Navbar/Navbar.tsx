@@ -28,7 +28,7 @@ export const Navbar = ({ userName, clerkId }: NavbarClientProps) => {
   return (
     <div
       className={cx('fixed top-0 z-50 w-full py-6 font-primary font-medium', {
-        'transition-colors duration-200 bg-tp-white-100 border-b-tp-gray-100 shadow-md': scrollY > 0,
+        'transition-colors duration-100 bg-tp-white-100 border-b-tp-gray-100 shadow-md': scrollY > 0,
         'border-b-tp-gray-100 bg-tp-white-100 shadow-md': isTripPages && scrollY >= 0,
       })}
     >

@@ -11,7 +11,7 @@ type TTripStatsProps = {
   estimatedDuration: string;
   createdAt: string;
   iconSize?: string;
-  textSize?: string;
+  className?: string;
 };
 
 export const TripStats: FC<TTripStatsProps> = ({
@@ -19,9 +19,9 @@ export const TripStats: FC<TTripStatsProps> = ({
   estimatedDuration,
   createdAt,
   iconSize = 'w-4 h-4',
-  textSize = 'text-xs',
+  className,
 }) => (
-  <div className={cx('flex items-center text-gray-700 gap-4 font-semibold', textSize)}>
+  <div className={cx('flex items-center text-gray-700 gap-4 font-semibold', className)}>
     <span className="flex items-center gap-1">
       <MapIcon className={iconSize} />
       {distance}

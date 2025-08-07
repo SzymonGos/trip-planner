@@ -19,18 +19,18 @@ export type TViewTripProps = {
 };
 
 export const ViewTrip: FC<TViewTripProps> = ({ trip, isOwner, expanded, setExpanded }) => (
-  <div className="pt-24 h-full flex flex-col md:flex-row gap-8 px-5 border-r border-tp-gray-100">
-    <div className="flex-1 flex flex-col gap-4 max-w-xl">
+  <div className="@container pt-28 pb-10 gap-8 px-5">
+    <div className="max-w-full">
       <h1 className="text-[22px] font-semibold mb-2 font-primary">{trip?.title}</h1>
-      <div className="flex items-center gap-2 mb-3 justify-between">
+      <div className="my-5 flex flex-col @md:flex-row @md:items-center gap-4 @md:gap-2 justify-between">
         <TripStats
           distance={trip?.distance}
           estimatedDuration={trip?.estimatedDuration}
           createdAt={trip?.createdAt}
           iconSize="w-5 h-5"
-          textSize="text-sm"
+          className="order-2 @md:order-1 text-xs @md:text-sm"
         />
-        <div className="flex items-center gap-2 w-fit">
+        <div className="flex items-center gap-2 w-fit order-1 @md:order-2">
           <TripStatus status={trip?.status} />
           {isOwner && <SettingsLink tripId={trip?.id} />}
         </div>

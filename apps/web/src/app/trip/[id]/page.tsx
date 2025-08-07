@@ -16,7 +16,9 @@ const TripPage = ({ params }: { params: { id: string } }) => (
   >
     {(queryRef) => (
       <Suspense fallback={<TripLoader type="view" />}>
-        <ViewTripContainer queryRef={queryRef} />
+        <div className="h-screen">
+          <ViewTripContainer queryRef={queryRef} />
+        </div>
       </Suspense>
     )}
   </PreloadQuery>

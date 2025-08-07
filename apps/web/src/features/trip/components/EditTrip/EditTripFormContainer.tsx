@@ -18,6 +18,8 @@ import { useReadQuery, QueryRef } from '@apollo/client';
 import { revalidateTripPages } from '../../server/actions/revalidateTrip';
 import { Breadcrumb } from '@/features/breadcrumb/Breadcrumb';
 import { useAuthenticatedUser } from '@/features/user/hooks/useAuthenticatedUser';
+import { useGoogleMapLoader } from '@/features/googleMap/hooks/useGoogleMapLoader';
+import { TripLoader } from '../TripLoader';
 
 type TEditTripFormContainerProps = {
   queryRef: QueryRef<{ trip: TTrip }>;
@@ -29,6 +31,7 @@ export const EditTripFormContainer: FC<TEditTripFormContainerProps> = ({ queryRe
   const { directionsValue, setDirectionsValue, handleClearDirections, distanceInfo, getDistance } =
     useGoogleMapsDirections();
   const { authUserId } = useAuthenticatedUser();
+  const { isLoaded } = useGoogleMapLoader();
 
   const [updateTripMutation, { loading }] = useMutation(updateTripMutationQuery);
 
@@ -149,6 +152,8 @@ export const EditTripFormContainer: FC<TEditTripFormContainerProps> = ({ queryRe
     useFormReturn.setValue('destination', directionsValue.destination as string, { shouldDirty: true });
   }, [directionsValue, useFormReturn]);
 
+  if (!isLoaded) return <TripLoader type="edit" />;
+
   return (
     <TripFormProvider
       useForm={useFormReturn}
@@ -159,9 +164,9 @@ export const EditTripFormContainer: FC<TEditTripFormContainerProps> = ({ queryRe
       isSubmitting={loading}
       hasChanges={isDirty}
     >
-      <div className="relative pt-24  border-r border-tp-gray-100">
+      <div className="relative pt-24 pb-10">
         <Breadcrumb items={[{ label: trip.title, href: getTripUrl(trip.id) }, { label: 'Edit' }]} />
-        <div className=" h-screen px-5">
+        <div className="px-5">
           <div className="flex items-center justify-between mb-5">
             <h1 className="text-3xl font-semibold">Edit Trip</h1>
           </div>
