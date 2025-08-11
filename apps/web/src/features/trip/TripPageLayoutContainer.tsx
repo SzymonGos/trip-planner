@@ -25,7 +25,7 @@ export const TripPageLayoutContainer: FC<TripPageLayoutContainerProps> = ({ chil
         </div>
 
         <div
-          className={cx('w-full h-dvh col-span-full lg:col-span-8', {
+          className={cx('relative w-full h-dvh col-span-full lg:col-span-8', {
             block: showMap,
             'hidden lg:block': !showMap,
           })}

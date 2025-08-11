@@ -15,7 +15,7 @@ import { getTripUrl } from '../../helpers/getTripUrl';
 import { getUserTripsQuery } from '@/features/user/server/db/getUserTripsQuery';
 import { getTripsQuery } from '../../server/db/getTripsQuery';
 import { TripFormProvider } from '../../contexts/TripFormProvider';
-import { useTripFormSync, TTripImageFormValueProps } from '../../hooks/useTripFormSync';
+import { TTripImageFormValueProps } from '../../hooks/useTripFormSync';
 import { useGoogleMapLoader } from '@/features/googleMap/hooks/useGoogleMapLoader';
 import { TripLoader } from '../TripLoader';
 
@@ -53,8 +53,6 @@ export const CreateTripFormContainer = () => {
     resolver: zodResolver(tripSchema),
     defaultValues,
   });
-
-  const { isDistanceLoading } = useTripFormSync({ useFormReturn });
 
   const handlePlaceSelect = (autocompleteInstance: TAutocompleteProps, fieldName: 'origin' | 'destination') => {
     const place = autocompleteInstance?.getPlace();
@@ -149,22 +147,6 @@ export const CreateTripFormContainer = () => {
           authUserId={authUserId}
           loading={loading}
         />
-        {/* todo: redesign trip distance info */}
-        {distanceInfo && (
-          <div className="mt-4 p-4 border-[0.5px] rounded-md  border-tp-gray-100">
-            <h4 className="mb-4 text-lg font-primary font-semibold">Trip Information: </h4>
-
-            <div className="w-full flex">
-              Distance:
-              <div className="ml-auto font-semibold">
-                {isDistanceLoading ? 'Calculating...' : distanceInfo.distance}
-              </div>
-            </div>
-            <div className="w-full flex">
-              Estimated Duration: <div className="ml-auto font-semibold">{distanceInfo.duration}</div>
-            </div>
-          </div>
-        )}
       </div>
     </TripFormProvider>
   );
