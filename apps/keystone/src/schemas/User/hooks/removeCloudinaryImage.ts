@@ -11,7 +11,7 @@ cloudinary.config({
 type BeforeOperationArgs = {
   operation: 'create' | 'update' | 'delete';
   resolvedData: Record<string, any>;
-  item: Record<string, any>;
+  item?: Record<string, any>;
 };
 
 const renameCloudinaryImage = async (publicId: string) => {
@@ -38,6 +38,8 @@ export const removeCloudinaryImage =
   (field: string) =>
   async ({ item, operation, resolvedData }: BeforeOperationArgs) => {
     try {
+      if (operation === 'create') return;
+
       if (!item?.[field]) return;
 
       const profileImage = item[field] as TCloudinaryImageProps;

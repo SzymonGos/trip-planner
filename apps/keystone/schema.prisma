@@ -12,12 +12,14 @@ generator client {
 }
 
 model User {
-  id                String @id @default(cuid())
-  clerkId           String @unique @default("")
-  username          String @unique @default("")
-  email             String @default("")
+  id                String    @id @default(cuid())
+  clerkId           String    @unique @default("")
+  username          String    @unique @default("")
+  email             String    @default("")
   profileImage      Json?
-  from_Trip_creator Trip[] @relation("Trip_creator")
+  deletedAt         DateTime?
+  isDeleted         Boolean   @default(false)
+  from_Trip_creator Trip[]    @relation("Trip_creator")
 }
 
 model Trip {
