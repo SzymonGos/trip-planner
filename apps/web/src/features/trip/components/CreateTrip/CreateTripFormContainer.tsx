@@ -113,6 +113,11 @@ export const CreateTripFormContainer = () => {
   const handleSubmitCallback = useFormReturn.handleSubmit(handleOnSubmit);
 
   useEffect(() => {
+    useFormReturn.setValue('origin', directionsValue.origin as string);
+    useFormReturn.setValue('destination', directionsValue.destination as string);
+  }, [directionsValue, useFormReturn]);
+
+  useEffect(() => {
     handleClearDirections();
   }, []);
 
