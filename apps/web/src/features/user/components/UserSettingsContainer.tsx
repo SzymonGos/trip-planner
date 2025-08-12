@@ -12,6 +12,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { userSettingsSchema } from '../helpers/formValidation';
 import { z } from 'zod';
+import { DeleteAccountContainer } from './DeleteAccountContainer';
 
 type TFormValuesProps = z.infer<typeof userSettingsSchema> & {
   profileImage?: CloudinaryImage_File | File;
@@ -79,13 +80,16 @@ export const UserSettingsContainer = () => {
   };
 
   return (
-    <UserSettings
-      user={data?.user}
-      useFormReturn={useFormReturn}
-      onSubmit={handleSubmitCallback}
-      isLoading={updateUserMutationLoading}
-      hasChanges={hasChanges}
-      onImageChange={handleImageChange}
-    />
+    <>
+      <UserSettings
+        user={data?.user}
+        useFormReturn={useFormReturn}
+        onSubmit={handleSubmitCallback}
+        isLoading={updateUserMutationLoading}
+        hasChanges={hasChanges}
+        onImageChange={handleImageChange}
+      />
+      <DeleteAccountContainer />
+    </>
   );
 };
