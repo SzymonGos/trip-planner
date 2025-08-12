@@ -20,6 +20,11 @@ export type Scalars = {
   Upload: { input: any; output: any; }
 };
 
+export type BooleanFilter = {
+  equals?: InputMaybe<Scalars['Boolean']['input']>;
+  not?: InputMaybe<BooleanFilter>;
+};
+
 /**
  * Mirrors the formatting options [Cloudinary provides](https://cloudinary.com/documentation/image_transformation_reference).
  * All options are strings as they ultimately end up in a URL.
@@ -647,23 +652,29 @@ export type TripWhereUniqueInput = {
 export type User = {
   __typename?: 'User';
   clerkId?: Maybe<Scalars['String']['output']>;
+  deletedAt?: Maybe<Scalars['DateTime']['output']>;
   email?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
+  isDeleted?: Maybe<Scalars['Boolean']['output']>;
   profileImage?: Maybe<CloudinaryImage_File>;
   username?: Maybe<Scalars['String']['output']>;
 };
 
 export type UserCreateInput = {
   clerkId?: InputMaybe<Scalars['String']['input']>;
+  deletedAt?: InputMaybe<Scalars['DateTime']['input']>;
   email?: InputMaybe<Scalars['String']['input']>;
+  isDeleted?: InputMaybe<Scalars['Boolean']['input']>;
   profileImage?: InputMaybe<Scalars['Upload']['input']>;
   username?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type UserOrderByInput = {
   clerkId?: InputMaybe<OrderDirection>;
+  deletedAt?: InputMaybe<OrderDirection>;
   email?: InputMaybe<OrderDirection>;
   id?: InputMaybe<OrderDirection>;
+  isDeleted?: InputMaybe<OrderDirection>;
   username?: InputMaybe<OrderDirection>;
 };
 
@@ -685,7 +696,9 @@ export type UserUpdateArgs = {
 
 export type UserUpdateInput = {
   clerkId?: InputMaybe<Scalars['String']['input']>;
+  deletedAt?: InputMaybe<Scalars['DateTime']['input']>;
   email?: InputMaybe<Scalars['String']['input']>;
+  isDeleted?: InputMaybe<Scalars['Boolean']['input']>;
   profileImage?: InputMaybe<Scalars['Upload']['input']>;
   username?: InputMaybe<Scalars['String']['input']>;
 };
@@ -695,8 +708,10 @@ export type UserWhereInput = {
   NOT?: InputMaybe<Array<UserWhereInput>>;
   OR?: InputMaybe<Array<UserWhereInput>>;
   clerkId?: InputMaybe<StringFilter>;
+  deletedAt?: InputMaybe<DateTimeNullableFilter>;
   email?: InputMaybe<StringFilter>;
   id?: InputMaybe<IdFilter>;
+  isDeleted?: InputMaybe<BooleanFilter>;
   username?: InputMaybe<StringFilter>;
 };
 

@@ -7,6 +7,8 @@ type User {
   username: String
   email: String
   profileImage: CloudinaryImage_File
+  deletedAt: DateTime
+  isDeleted: Boolean
 }
 
 type CloudinaryImage_File {
@@ -57,6 +59,8 @@ input CloudinaryImageFormat {
   transformation: String
 }
 
+scalar DateTime @specifiedBy(url: "https://datatracker.ietf.org/doc/html/rfc3339#section-5.6")
+
 input UserWhereUniqueInput {
   id: ID
   clerkId: String
@@ -71,6 +75,8 @@ input UserWhereInput {
   clerkId: StringFilter
   username: StringFilter
   email: StringFilter
+  deletedAt: DateTimeNullableFilter
+  isDeleted: BooleanFilter
 }
 
 input IDFilter {
@@ -118,11 +124,29 @@ input NestedStringFilter {
   not: NestedStringFilter
 }
 
+input DateTimeNullableFilter {
+  equals: DateTime
+  in: [DateTime!]
+  notIn: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  gt: DateTime
+  gte: DateTime
+  not: DateTimeNullableFilter
+}
+
+input BooleanFilter {
+  equals: Boolean
+  not: BooleanFilter
+}
+
 input UserOrderByInput {
   id: OrderDirection
   clerkId: OrderDirection
   username: OrderDirection
   email: OrderDirection
+  deletedAt: OrderDirection
+  isDeleted: OrderDirection
 }
 
 enum OrderDirection {
@@ -135,6 +159,8 @@ input UserUpdateInput {
   username: String
   email: String
   profileImage: Upload
+  deletedAt: DateTime
+  isDeleted: Boolean
 }
 
 """The `Upload` scalar type represents a file upload."""
@@ -150,6 +176,8 @@ input UserCreateInput {
   username: String
   email: String
   profileImage: Upload
+  deletedAt: DateTime
+  isDeleted: Boolean
 }
 
 type Trip {
@@ -171,8 +199,6 @@ enum TripStatusType {
   planning
   completed
 }
-
-scalar DateTime @specifiedBy(url: "https://datatracker.ietf.org/doc/html/rfc3339#section-5.6")
 
 input TripWhereUniqueInput {
   id: ID
@@ -206,17 +232,6 @@ input TripImageManyRelationFilter {
   every: TripImageWhereInput
   some: TripImageWhereInput
   none: TripImageWhereInput
-}
-
-input DateTimeNullableFilter {
-  equals: DateTime
-  in: [DateTime!]
-  notIn: [DateTime!]
-  lt: DateTime
-  lte: DateTime
-  gt: DateTime
-  gte: DateTime
-  not: DateTimeNullableFilter
 }
 
 input TripOrderByInput {
