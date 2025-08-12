@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { NavbarSignInLink } from './NavbarSignInLink';
-import { SignedIn, SignedOut, useUser } from '@clerk/nextjs';
+import { useUser } from '@clerk/nextjs';
 import { UserMenu } from './UserMenu';
 import Link from 'next/link';
 import { navbarLinks } from '../config';
@@ -15,12 +15,12 @@ import Image from 'next/image';
 import { Skeleton } from '../ui/skeleton';
 
 interface NavbarClientProps {
-  userName: string;
-  clerkId: string;
+  userName?: string | null;
+  clerkId?: string | null;
 }
 
 export const Navbar = ({ userName, clerkId }: NavbarClientProps) => {
-  const { isLoaded } = useUser();
+  const { isLoaded, isSignedIn } = useUser();
   const pathname = usePathname();
   const isTripPages = pathname.startsWith('/trip/');
   const scrollY = useScrollY();
@@ -55,14 +55,13 @@ export const Navbar = ({ userName, clerkId }: NavbarClientProps) => {
           </ul>
           {isLoaded ? (
             <div className="md:w-[157px] h-[38px]">
-              <SignedIn>
+              {isSignedIn && userName ? (
                 <UserMenu userName={userName} clerkId={clerkId} />
-              </SignedIn>
-              <SignedOut>
+              ) : (
                 <div className="flex items-center justify-center md:w-[157px] h-[38px]">
                   <NavbarSignInLink />
                 </div>
-              </SignedOut>
+              )}
             </div>
           ) : (
             <Skeleton className="w-[56px] md:w-[157px] h-[38px]" />

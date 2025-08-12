@@ -17,9 +17,10 @@ type TDeleteAccountProps = {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
   handleDeleteAccount: () => void;
+  isDeleting: boolean;
 };
 
-export const DeleteAccount: FC<TDeleteAccountProps> = ({ isOpen, setIsOpen, handleDeleteAccount }) => (
+export const DeleteAccount: FC<TDeleteAccountProps> = ({ isOpen, setIsOpen, handleDeleteAccount, isDeleting }) => (
   <div className="mt-16">
     <div className="rounded-lg border border-tp-red-100 p-6">
       <div className="ml-3 w-full">
@@ -52,11 +53,12 @@ export const DeleteAccount: FC<TDeleteAccountProps> = ({ isOpen, setIsOpen, hand
                   type="button"
                   variant="destructive"
                   onClick={handleDeleteAccount}
+                  disabled={isDeleting}
                   className="bg-red-600 hover:bg-red-700 focus:ring-red-500"
                 >
-                  Delete Account
+                  {isDeleting ? 'Deleting...' : 'Delete Account'}
                 </Button>
-                <Button type="button" variant="outline" onClick={() => setIsOpen(false)}>
+                <Button type="button" variant="outline" onClick={() => setIsOpen(false)} disabled={isDeleting}>
                   Cancel
                 </Button>
               </DialogFooter>
