@@ -1,6 +1,6 @@
 import { list } from '@keystone-6/core';
 import { allowAll } from '@keystone-6/core/access';
-import { text, timestamp, checkbox } from '@keystone-6/core/fields';
+import { text, timestamp, checkbox, integer } from '@keystone-6/core/fields';
 import { cloudinaryImage } from '@keystone-6/cloudinary';
 import { CLOUDINARY_CONFIGS } from '../../../config';
 import { removeCloudinaryImage } from './hooks/removeCloudinaryImage';
@@ -34,6 +34,20 @@ export const User = list({
     }),
     isDeleted: checkbox({
       defaultValue: false,
+      ui: {
+        itemView: { fieldMode: 'read' },
+        listView: { fieldMode: 'hidden' },
+      },
+    }),
+    aiChatUsageCount: integer({
+      defaultValue: 0,
+      ui: {
+        itemView: { fieldMode: 'read' },
+        listView: { fieldMode: 'hidden' },
+      },
+    }),
+    aiChatUsageResetDate: timestamp({
+      defaultValue: { kind: 'now' },
       ui: {
         itemView: { fieldMode: 'read' },
         listView: { fieldMode: 'hidden' },
