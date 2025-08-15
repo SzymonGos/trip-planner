@@ -9,6 +9,7 @@ import { AiChatSheetEmptyState } from './AiChatSheetEmptyState';
 import { AiChatSheetMessage } from './AiChatSheetMessage';
 import { AiChatLoading } from './AiChatLoading';
 import { AiChatSheetInput } from './AiChatSheetInput';
+import { AiChatUsageProgressBar } from './AiChatUsageProgressBar';
 
 type TMessageProps = {
   id: string;
@@ -25,6 +26,8 @@ type TAiChatSheetProps = {
   onSendMessage: () => void;
   onKeyPress: (e: React.KeyboardEvent) => void;
   authUserId: string;
+  currentUsage: number;
+  usagePercentage: number;
 };
 
 export const AiChatSheet: FC<TAiChatSheetProps> = ({
@@ -35,6 +38,8 @@ export const AiChatSheet: FC<TAiChatSheetProps> = ({
   onSendMessage,
   onKeyPress,
   authUserId,
+  currentUsage,
+  usagePercentage,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
@@ -56,7 +61,7 @@ export const AiChatSheet: FC<TAiChatSheetProps> = ({
 
         <SheetContent
           side="right"
-          className={cx('flex flex-col transition-all duration-200 !border-l-0 focus:!ring-0 bg-tp-white-100', {
+          className={cx('flex flex-col transition-all duration-200 !border-l-0 focus:!ring-0 bg-tp-white-100 w-full', {
             'w-screen !max-w-full': isExpanded,
           })}
         >
@@ -67,7 +72,7 @@ export const AiChatSheet: FC<TAiChatSheetProps> = ({
                   variant="ghost"
                   size="icon"
                   onClick={() => setIsExpanded(!isExpanded)}
-                  className="h-8 w-8"
+                  className="hidden sm:flex h-8 w-8"
                   title={isExpanded ? 'Minimize' : 'Expand'}
                 >
                   {isExpanded ? <Minimize2 className="h-4 w-4" /> : <Maximize2 className="h-4 w-4" />}
@@ -96,7 +101,7 @@ export const AiChatSheet: FC<TAiChatSheetProps> = ({
 
             <div
               className={cx('flex-shrink-0 transition-transform duration-200', {
-                'md:w-[780px] mx-auto': isExpanded,
+                'w-full md:w-[780px] mx-auto': isExpanded,
               })}
             >
               <AiChatSheetInput
@@ -108,6 +113,7 @@ export const AiChatSheet: FC<TAiChatSheetProps> = ({
                 onSendMessage={onSendMessage}
                 authUserId={authUserId}
               />
+              {authUserId && <AiChatUsageProgressBar currentUsage={currentUsage} usagePercentage={usagePercentage} />}
             </div>
           </div>
         </SheetContent>

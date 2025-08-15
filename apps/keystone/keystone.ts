@@ -23,15 +23,6 @@ export default config({
         },
         24 * 60 * 60 * 1000,
       );
-
-      setTimeout(async () => {
-        try {
-          console.log('Running initial cleanup on server start...');
-          await scheduledCleanup();
-        } catch (error) {
-          console.error('Initial cleanup failed:', error);
-        }
-      }, 5000);
     },
   },
   db: {

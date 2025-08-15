@@ -9,6 +9,8 @@ type User {
   profileImage: CloudinaryImage_File
   deletedAt: DateTime
   isDeleted: Boolean
+  aiChatUsageCount: Int
+  aiChatUsageResetDate: DateTime
 }
 
 type CloudinaryImage_File {
@@ -77,6 +79,8 @@ input UserWhereInput {
   email: StringFilter
   deletedAt: DateTimeNullableFilter
   isDeleted: BooleanFilter
+  aiChatUsageCount: IntNullableFilter
+  aiChatUsageResetDate: DateTimeNullableFilter
 }
 
 input IDFilter {
@@ -140,6 +144,17 @@ input BooleanFilter {
   not: BooleanFilter
 }
 
+input IntNullableFilter {
+  equals: Int
+  in: [Int!]
+  notIn: [Int!]
+  lt: Int
+  lte: Int
+  gt: Int
+  gte: Int
+  not: IntNullableFilter
+}
+
 input UserOrderByInput {
   id: OrderDirection
   clerkId: OrderDirection
@@ -147,6 +162,8 @@ input UserOrderByInput {
   email: OrderDirection
   deletedAt: OrderDirection
   isDeleted: OrderDirection
+  aiChatUsageCount: OrderDirection
+  aiChatUsageResetDate: OrderDirection
 }
 
 enum OrderDirection {
@@ -161,6 +178,8 @@ input UserUpdateInput {
   profileImage: Upload
   deletedAt: DateTime
   isDeleted: Boolean
+  aiChatUsageCount: Int
+  aiChatUsageResetDate: DateTime
 }
 
 """The `Upload` scalar type represents a file upload."""
@@ -178,6 +197,8 @@ input UserCreateInput {
   profileImage: Upload
   deletedAt: DateTime
   isDeleted: Boolean
+  aiChatUsageCount: Int
+  aiChatUsageResetDate: DateTime
 }
 
 type Trip {

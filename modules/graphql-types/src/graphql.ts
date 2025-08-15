@@ -100,6 +100,17 @@ export type IdFilter = {
   notIn?: InputMaybe<Array<Scalars['ID']['input']>>;
 };
 
+export type IntNullableFilter = {
+  equals?: InputMaybe<Scalars['Int']['input']>;
+  gt?: InputMaybe<Scalars['Int']['input']>;
+  gte?: InputMaybe<Scalars['Int']['input']>;
+  in?: InputMaybe<Array<Scalars['Int']['input']>>;
+  lt?: InputMaybe<Scalars['Int']['input']>;
+  lte?: InputMaybe<Scalars['Int']['input']>;
+  not?: InputMaybe<IntNullableFilter>;
+  notIn?: InputMaybe<Array<Scalars['Int']['input']>>;
+};
+
 export type KeystoneAdminMeta = {
   __typename?: 'KeystoneAdminMeta';
   list?: Maybe<KeystoneAdminUiListMeta>;
@@ -651,6 +662,8 @@ export type TripWhereUniqueInput = {
 
 export type User = {
   __typename?: 'User';
+  aiChatUsageCount?: Maybe<Scalars['Int']['output']>;
+  aiChatUsageResetDate?: Maybe<Scalars['DateTime']['output']>;
   clerkId?: Maybe<Scalars['String']['output']>;
   deletedAt?: Maybe<Scalars['DateTime']['output']>;
   email?: Maybe<Scalars['String']['output']>;
@@ -661,6 +674,8 @@ export type User = {
 };
 
 export type UserCreateInput = {
+  aiChatUsageCount?: InputMaybe<Scalars['Int']['input']>;
+  aiChatUsageResetDate?: InputMaybe<Scalars['DateTime']['input']>;
   clerkId?: InputMaybe<Scalars['String']['input']>;
   deletedAt?: InputMaybe<Scalars['DateTime']['input']>;
   email?: InputMaybe<Scalars['String']['input']>;
@@ -670,6 +685,8 @@ export type UserCreateInput = {
 };
 
 export type UserOrderByInput = {
+  aiChatUsageCount?: InputMaybe<OrderDirection>;
+  aiChatUsageResetDate?: InputMaybe<OrderDirection>;
   clerkId?: InputMaybe<OrderDirection>;
   deletedAt?: InputMaybe<OrderDirection>;
   email?: InputMaybe<OrderDirection>;
@@ -695,6 +712,8 @@ export type UserUpdateArgs = {
 };
 
 export type UserUpdateInput = {
+  aiChatUsageCount?: InputMaybe<Scalars['Int']['input']>;
+  aiChatUsageResetDate?: InputMaybe<Scalars['DateTime']['input']>;
   clerkId?: InputMaybe<Scalars['String']['input']>;
   deletedAt?: InputMaybe<Scalars['DateTime']['input']>;
   email?: InputMaybe<Scalars['String']['input']>;
@@ -707,6 +726,8 @@ export type UserWhereInput = {
   AND?: InputMaybe<Array<UserWhereInput>>;
   NOT?: InputMaybe<Array<UserWhereInput>>;
   OR?: InputMaybe<Array<UserWhereInput>>;
+  aiChatUsageCount?: InputMaybe<IntNullableFilter>;
+  aiChatUsageResetDate?: InputMaybe<DateTimeNullableFilter>;
   clerkId?: InputMaybe<StringFilter>;
   deletedAt?: InputMaybe<DateTimeNullableFilter>;
   email?: InputMaybe<StringFilter>;

@@ -41,11 +41,17 @@ export async function POST(req: Request) {
   const eventType = evt.type;
 
   if (eventType === 'user.created') {
+    const thirtyDaysFromNow = new Date();
+    thirtyDaysFromNow.setDate(thirtyDaysFromNow.getDate() + 30);
+
+    console.log('thirtyDaysFromNow', thirtyDaysFromNow);
+
     await prisma.user.create({
       data: {
         clerkId: evt.data.id,
         email: evt.data.email_addresses[0].email_address,
         username: evt.data.username,
+        aiChatUsageResetDate: thirtyDaysFromNow,
       },
     });
   }
