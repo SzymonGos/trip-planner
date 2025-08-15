@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import cx from 'classnames';
-import { USER_AI_CHAT_LIMIT } from './AiChatSheetContainer';
+import { USER_AI_CHAT_LIMIT } from '@/lib/constants';
 
 type TAiChatUsageProgressBarProps = {
   currentUsage: number;

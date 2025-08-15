@@ -8,8 +8,7 @@ import { useAuthenticatedUser } from '../user/hooks/useAuthenticatedUser';
 import { useMutation, useQuery } from '@apollo/client';
 import { updateUserChatUsageMutationQuery } from './server/actions/updateUserChatUsageMutationQuery';
 import { getUserUsageQuery } from './server/db/getUserUsageQuery';
-
-export const USER_AI_CHAT_LIMIT = 100;
+import { USER_AI_CHAT_LIMIT } from '@/lib/constants';
 
 export const AiChatSheetContainer = () => {
   const [state, dispatch] = useReducer(chatReducer, initialState);
