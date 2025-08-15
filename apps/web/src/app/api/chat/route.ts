@@ -11,20 +11,16 @@ export async function POST(request: NextRequest) {
   if (!userId) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
-
   try {
     const { message } = await request.json();
-
     if (!message || typeof message !== 'string') {
       return NextResponse.json({ error: 'Message is required and must be a string' }, { status: 400 });
     }
-
     if (!process.env.OPENAI_API_KEY) {
       return NextResponse.json({ error: 'OpenAI API key not configured' }, { status: 500 });
     }
-
     const completion = await openaiClient.chat.completions.create({
-      model: 'gpt-3.5-turbo',
+      model: 'gpt-4o-mini',
       messages: [
         {
           role: 'system',
@@ -60,19 +56,15 @@ Always be enthusiastic, helpful, and provide actionable suggestions. Don't just 
     });
 
     const response = completion.choices[0]?.message?.content;
-
     if (!response) {
       return NextResponse.json({ error: 'No response from OpenAI' }, { status: 500 });
     }
-
     return NextResponse.json({ response });
   } catch (error) {
     console.error('Chat API error:', error);
-
     if (error instanceof OpenAI.APIError) {
       return NextResponse.json({ error: 'OpenAI API error: ' + error.message }, { status: 500 });
     }
-
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
