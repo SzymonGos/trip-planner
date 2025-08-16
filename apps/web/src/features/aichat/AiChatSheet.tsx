@@ -10,8 +10,9 @@ import { AiChatSheetMessage } from './AiChatSheetMessage';
 import { AiChatLoading } from './AiChatLoading';
 import { AiChatSheetInput } from './AiChatSheetInput';
 import { AiChatUsageProgressBar } from './AiChatUsageProgressBar';
+import { useAutoScroll } from '@/features/aichat/hooks/useAutoScroll';
 
-type TMessageProps = {
+export type TMessageProps = {
   id: string;
   content: string;
   role: 'user' | 'assistant';
@@ -43,7 +44,7 @@ export const AiChatSheet: FC<TAiChatSheetProps> = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messagesEndRef = useAutoScroll(messages, isLoading);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
   return (
