@@ -20,7 +20,7 @@ export const AiChatSheetMessage: FC<TAiChatSheetMessageProps> = ({ id, content, 
         'px-4 bg-zinc-500 text-white': role === 'user',
       })}
     >
-      <p className="text-sm whitespace-pre-wrap">{content}</p>
+      <p className="text-sm whitespace-pre-wrap leading-6">{content}</p>
     </div>
   </div>
 );

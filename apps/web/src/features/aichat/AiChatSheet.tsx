@@ -9,8 +9,10 @@ import { AiChatSheetEmptyState } from './AiChatSheetEmptyState';
 import { AiChatSheetMessage } from './AiChatSheetMessage';
 import { AiChatLoading } from './AiChatLoading';
 import { AiChatSheetInput } from './AiChatSheetInput';
+import { AiChatUsageProgressBar } from './AiChatUsageProgressBar';
+import { useAutoScroll } from '@/features/aichat/hooks/useAutoScroll';
 
-type TMessageProps = {
+export type TMessageProps = {
   id: string;
   content: string;
   role: 'user' | 'assistant';
@@ -25,6 +27,9 @@ type TAiChatSheetProps = {
   onSendMessage: () => void;
   onKeyPress: (e: React.KeyboardEvent) => void;
   authUserId: string;
+  currentUsage: number;
+  usagePercentage: number;
+  resetDate?: string;
 };
 
 export const AiChatSheet: FC<TAiChatSheetProps> = ({
@@ -35,10 +40,13 @@ export const AiChatSheet: FC<TAiChatSheetProps> = ({
   onSendMessage,
   onKeyPress,
   authUserId,
+  currentUsage,
+  usagePercentage,
+  resetDate,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messagesEndRef = useAutoScroll(messages, isLoading);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
   return (
@@ -47,16 +55,15 @@ export const AiChatSheet: FC<TAiChatSheetProps> = ({
         <SheetTrigger asChild>
           <Button
             size="icon"
-            className="fixed bottom-28 right-6 h-14 w-14 rounded-full bg-zinc-400 hover:bg-zinc-500 text-white shadow-lg hover:shadow-xl transition-all duration-200 z-50"
+            className="fixed bottom-[200px] right-[10px] h-10 w-10 rounded-md bg-zinc-500 hover:bg-zinc-400 text-white shadow-lg hover:shadow-xl transition-all duration-200 z-50"
           >
-            <MessageCircle className="h-6 w-6" />
-            <span className="sr-only">Trip Planner</span>
+            <MessageCircle className="!size-6" />
           </Button>
         </SheetTrigger>
 
         <SheetContent
           side="right"
-          className={cx('flex flex-col transition-all duration-200 !border-l-0 focus:!ring-0 bg-tp-white-100', {
+          className={cx('flex flex-col transition-all duration-200 !border-l-0 focus:!ring-0 bg-tp-white-100 w-full', {
             'w-screen !max-w-full': isExpanded,
           })}
         >
@@ -67,7 +74,7 @@ export const AiChatSheet: FC<TAiChatSheetProps> = ({
                   variant="ghost"
                   size="icon"
                   onClick={() => setIsExpanded(!isExpanded)}
-                  className="h-8 w-8"
+                  className="hidden sm:flex h-8 w-8"
                   title={isExpanded ? 'Minimize' : 'Expand'}
                 >
                   {isExpanded ? <Minimize2 className="h-4 w-4" /> : <Maximize2 className="h-4 w-4" />}
@@ -96,7 +103,7 @@ export const AiChatSheet: FC<TAiChatSheetProps> = ({
 
             <div
               className={cx('flex-shrink-0 transition-transform duration-200', {
-                'md:w-[780px] mx-auto': isExpanded,
+                'w-full md:w-[780px] mx-auto': isExpanded,
               })}
             >
               <AiChatSheetInput
@@ -108,6 +115,13 @@ export const AiChatSheet: FC<TAiChatSheetProps> = ({
                 onSendMessage={onSendMessage}
                 authUserId={authUserId}
               />
+              {authUserId && (
+                <AiChatUsageProgressBar
+                  currentUsage={currentUsage}
+                  usagePercentage={usagePercentage}
+                  resetDate={resetDate}
+                />
+              )}
             </div>
           </div>
         </SheetContent>

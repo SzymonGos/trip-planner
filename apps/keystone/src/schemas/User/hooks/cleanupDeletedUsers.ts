@@ -7,8 +7,6 @@ export const scheduledCleanup = async () => {
     const thirtyDaysAgo = new Date();
     thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 
-    console.log('Starting cleanup of deleted users older than 30 days...');
-
     const usersToDelete = await prisma.user.findMany({
       where: {
         isDeleted: true,
@@ -48,21 +46,13 @@ export const scheduledCleanup = async () => {
             where: { id: user.id },
           });
         });
-
-        console.log(`Successfully deleted user ${user.id} and all related data`);
       } catch (userError) {
         console.error(`Failed to delete user ${user.id}:`, userError);
       }
     }
 
-    console.log('Cleanup job completed successfully');
+    console.log('Cleanup of deleted users completed successfully');
   } catch (error) {
     console.error('Cleanup job failed:', error);
   }
-};
-
-// This is for testing purposes only - create a route test-cleanup in the keystone server to trigger the cleanup
-export const manualCleanup = async () => {
-  console.log('Manual cleanup triggered');
-  await scheduledCleanup();
 };
