@@ -34,7 +34,11 @@ export const TripPageLayoutContainer: FC<TripPageLayoutContainerProps> = ({ chil
         </div>
       </div>
 
-      <div className="fixed bottom-12 right-6 lg:hidden z-50">
+      <div
+        className={cx('fixed bottom-12 right-6 lg:hidden z-50', {
+          '!right-16': showMap,
+        })}
+      >
         <Button
           onClick={() => setShowMap(!showMap)}
           variant="outline"

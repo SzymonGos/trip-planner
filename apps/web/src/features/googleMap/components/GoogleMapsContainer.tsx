@@ -5,6 +5,7 @@ import { GoogleMaps } from './GoogleMaps';
 import { useParams, usePathname } from 'next/navigation';
 import { TripDistanceInfo } from '@/features/trip/components/TripDistanceInfo/TripDistanceInfo';
 import { useGoogleMapsDirections } from '@/lib/contexts/DirectionsContext';
+import { AiChatSheetContainer } from '@/features/aichat/AiChatSheetContainer';
 
 export const GoogleMapsContainer = () => {
   const params = useParams();
@@ -23,6 +24,7 @@ export const GoogleMapsContainer = () => {
         <TripDistanceInfo distance={distanceInfo.distance} duration={distanceInfo.duration} />
       )}
       <GoogleMaps canEdit={canEdit} />
+      {canEdit && <AiChatSheetContainer />}
     </>
   );
 };

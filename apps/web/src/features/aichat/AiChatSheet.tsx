@@ -55,10 +55,9 @@ export const AiChatSheet: FC<TAiChatSheetProps> = ({
         <SheetTrigger asChild>
           <Button
             size="icon"
-            className="fixed bottom-28 right-6 h-14 w-14 rounded-full bg-zinc-400 hover:bg-zinc-500 text-white shadow-lg hover:shadow-xl transition-all duration-200 z-50"
+            className="fixed bottom-[200px] right-[10px] h-10 w-10 rounded-md bg-zinc-400 hover:bg-zinc-500 text-white shadow-lg hover:shadow-xl transition-all duration-200 z-50"
           >
-            <MessageCircle className="h-6 w-6" />
-            <span className="sr-only">Trip Planner</span>
+            <MessageCircle className="!size-6" />
           </Button>
         </SheetTrigger>
 
