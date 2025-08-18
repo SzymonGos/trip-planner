@@ -29,6 +29,7 @@ type TAiChatSheetProps = {
   authUserId: string;
   currentUsage: number;
   usagePercentage: number;
+  resetDate?: string;
 };
 
 export const AiChatSheet: FC<TAiChatSheetProps> = ({
@@ -41,6 +42,7 @@ export const AiChatSheet: FC<TAiChatSheetProps> = ({
   authUserId,
   currentUsage,
   usagePercentage,
+  resetDate,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
@@ -114,7 +116,13 @@ export const AiChatSheet: FC<TAiChatSheetProps> = ({
                 onSendMessage={onSendMessage}
                 authUserId={authUserId}
               />
-              {authUserId && <AiChatUsageProgressBar currentUsage={currentUsage} usagePercentage={usagePercentage} />}
+              {authUserId && (
+                <AiChatUsageProgressBar
+                  currentUsage={currentUsage}
+                  usagePercentage={usagePercentage}
+                  resetDate={resetDate}
+                />
+              )}
             </div>
           </div>
         </SheetContent>

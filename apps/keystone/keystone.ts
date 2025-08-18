@@ -3,6 +3,7 @@ import { CORS_ORIGIN, DATABASE_URL } from './config';
 import { exec } from 'child_process';
 import { lists } from './index';
 import { scheduledCleanup } from './src/schemas/User/hooks/cleanupDeletedUsers';
+import { resetAiChatUsage } from './src/schemas/User/hooks/resetAiChatUsage';
 
 export default config({
   server: {
@@ -17,6 +18,7 @@ export default config({
         async () => {
           try {
             await scheduledCleanup();
+            await resetAiChatUsage();
           } catch (error) {
             console.error('Scheduled cleanup failed:', error);
           }

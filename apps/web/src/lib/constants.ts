@@ -1,1 +1,1 @@
-export const USER_AI_CHAT_LIMIT = 100;
+export const USER_AI_CHAT_LIMIT = 50;

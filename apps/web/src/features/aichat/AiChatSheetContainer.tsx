@@ -9,6 +9,7 @@ import { useMutation, useQuery } from '@apollo/client';
 import { updateUserChatUsageMutationQuery } from './server/actions/updateUserChatUsageMutationQuery';
 import { getUserUsageQuery } from './server/db/getUserUsageQuery';
 import { USER_AI_CHAT_LIMIT } from '@/lib/constants';
+import { Toaster, toast } from 'sonner';
 
 export const AiChatSheetContainer = () => {
   const [state, dispatch] = useReducer(chatReducer, initialState);
@@ -41,6 +42,10 @@ export const AiChatSheetContainer = () => {
   const handleSendMessage = useCallback(async () => {
     if (!state.inputValue.trim() || state.isLoading) return;
     if (currentUsage >= USER_AI_CHAT_LIMIT) {
+      toast.error('AI chat limit reached. Please wait for reset.', {
+        position: 'top-center',
+        duration: 2000,
+      });
       dispatch({ type: 'SET_ERROR', payload: 'AI chat limit reached. Please wait for reset.' });
       return;
     }
@@ -85,16 +90,20 @@ export const AiChatSheetContainer = () => {
   );
 
   return (
-    <AiChatSheet
-      messages={state.messages}
-      inputValue={state.inputValue}
-      isLoading={state.isLoading}
-      onInputChange={handleInputChange}
-      onSendMessage={handleSendMessage}
-      onKeyPress={handleKeyPress}
-      authUserId={authUserId}
-      currentUsage={currentUsage}
-      usagePercentage={usagePercentage}
-    />
+    <>
+      <Toaster position="top-center" richColors duration={2000} />
+      <AiChatSheet
+        messages={state.messages}
+        inputValue={state.inputValue}
+        isLoading={state.isLoading}
+        onInputChange={handleInputChange}
+        onSendMessage={handleSendMessage}
+        onKeyPress={handleKeyPress}
+        authUserId={authUserId}
+        currentUsage={currentUsage}
+        usagePercentage={usagePercentage}
+        resetDate={userData?.user?.aiChatUsageResetDate}
+      />
+    </>
   );
 };

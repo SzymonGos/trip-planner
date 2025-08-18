@@ -5,6 +5,7 @@ export const getUserUsageQuery = gql`
     user(where: { id: $id }) {
       id
       aiChatUsageCount
+      aiChatUsageResetDate
     }
   }
 `;
