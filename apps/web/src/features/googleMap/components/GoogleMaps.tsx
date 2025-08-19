@@ -11,6 +11,7 @@ import { useRouteUsage } from '../hooks/useRouteUsage';
 import { useAuthenticatedUser } from '../../user/hooks/useAuthenticatedUser';
 import { toast } from 'sonner';
 import { USER_GOOGLE_MAPS_ROUTE_LIMIT } from '@/lib/constants';
+import { useRouter } from 'next/navigation';
 
 const mapContainerStyle = {
   height: '100%',
@@ -29,6 +30,7 @@ type TGoogleMapsProps = {
 export const GoogleMaps: FC<TGoogleMapsProps> = ({ canEdit = true }) => {
   const { authUserId } = useAuthenticatedUser();
   const { incrementRouteCount, canCreateRoute } = useRouteUsage(authUserId);
+  const router = useRouter();
 
   const {
     directionsValue,
@@ -45,13 +47,16 @@ export const GoogleMaps: FC<TGoogleMapsProps> = ({ canEdit = true }) => {
     (e: google.maps.MapMouseEvent) => {
       if (!canEdit || !e.latLng) return;
 
+      if (!authUserId) {
+        toast('Please login to create a route.', {
+          action: { label: 'Login', onClick: () => router.push('/sign-in') },
+        });
+        return;
+      }
+
       if (authUserId && !canCreateRoute) {
         toast.error(
           `Route limit reached! You've used ${USER_GOOGLE_MAPS_ROUTE_LIMIT} routes this month. Please wait until reset.`,
-          {
-            duration: 5000,
-            position: 'top-center',
-          },
         );
         return;
       }
@@ -70,7 +75,7 @@ export const GoogleMaps: FC<TGoogleMapsProps> = ({ canEdit = true }) => {
         }
       });
     },
-    [directionsValue, setDirectionsValue, canEdit, authUserId, canCreateRoute],
+    [directionsValue, setDirectionsValue, canEdit, authUserId, canCreateRoute, router],
   );
 
   const directionsCallback = useCallback(
