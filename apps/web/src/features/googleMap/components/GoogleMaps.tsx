@@ -7,6 +7,10 @@ import { useGoogleMapsDirections } from '@/lib/contexts/DirectionsContext';
 import { useGoogleMapLoader } from '../hooks/useGoogleMapLoader';
 import { customMapStyle } from '../hooks/mapStyles';
 import { Skeleton } from '@/components/ui/skeleton';
+import { useRouteUsage } from '../hooks/useRouteUsage';
+import { useAuthenticatedUser } from '../../user/hooks/useAuthenticatedUser';
+import { toast } from 'sonner';
+import { USER_GOOGLE_MAPS_ROUTE_LIMIT } from '@/lib/constants';
 
 const mapContainerStyle = {
   height: '100%',
@@ -23,6 +27,9 @@ type TGoogleMapsProps = {
 };
 
 export const GoogleMaps: FC<TGoogleMapsProps> = ({ canEdit = true }) => {
+  const { authUserId } = useAuthenticatedUser();
+  const { incrementRouteCount, canCreateRoute } = useRouteUsage(authUserId);
+
   const {
     directionsValue,
     setDirectionsValue,
@@ -38,6 +45,17 @@ export const GoogleMaps: FC<TGoogleMapsProps> = ({ canEdit = true }) => {
     (e: google.maps.MapMouseEvent) => {
       if (!canEdit || !e.latLng) return;
 
+      if (authUserId && !canCreateRoute) {
+        toast.error(
+          `Route limit reached! You've used ${USER_GOOGLE_MAPS_ROUTE_LIMIT} routes this month. Please wait until reset.`,
+          {
+            duration: 5000,
+            position: 'top-center',
+          },
+        );
+        return;
+      }
+
       const geocoder = new google.maps.Geocoder();
       geocoder.geocode({ location: e.latLng }, (results, status) => {
         if (status === 'OK' && results && results.length > 0) {
@@ -52,7 +70,7 @@ export const GoogleMaps: FC<TGoogleMapsProps> = ({ canEdit = true }) => {
         }
       });
     },
-    [directionsValue, setDirectionsValue, canEdit],
+    [directionsValue, setDirectionsValue, canEdit, authUserId, canCreateRoute],
   );
 
   const directionsCallback = useCallback(
@@ -72,12 +90,19 @@ export const GoogleMaps: FC<TGoogleMapsProps> = ({ canEdit = true }) => {
               : JSON.stringify(directionsValue.destination);
 
           getDistance(originStr, destinationStr);
+
+          incrementRouteCount(originStr, destinationStr);
+        } else {
+          console.log('Missing origin or destination:', {
+            origin: directionsValue.origin,
+            destination: directionsValue.destination,
+          });
         }
       } else {
         console.error('Directions request failed:', status);
       }
     },
-    [setDirectionsResult, directionsValue, getDistance],
+    [setDirectionsResult, directionsValue, getDistance, incrementRouteCount],
   );
 
   const onDirectionsLoad = useCallback(
@@ -130,7 +155,7 @@ export const GoogleMaps: FC<TGoogleMapsProps> = ({ canEdit = true }) => {
               strokeOpacity: 0.8,
               strokeWeight: 4,
             },
-            draggable: canEdit,
+            draggable: false,
           }}
           onLoad={onDirectionsLoad}
         />
