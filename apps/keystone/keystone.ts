@@ -4,6 +4,7 @@ import { exec } from 'child_process';
 import { lists } from './index';
 import { scheduledCleanup } from './src/schemas/User/hooks/cleanupDeletedUsers';
 import { resetAiChatUsage } from './src/schemas/User/hooks/resetAiChatUsage';
+import { resetGoogleMapsRouteUsage } from './src/schemas/User/hooks/resetGoogleMapsRouteUsage';
 
 export default config({
   server: {
@@ -19,6 +20,7 @@ export default config({
           try {
             await scheduledCleanup();
             await resetAiChatUsage();
+            await resetGoogleMapsRouteUsage();
           } catch (error) {
             console.error('Scheduled cleanup failed:', error);
           }
