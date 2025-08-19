@@ -12,16 +12,18 @@ generator client {
 }
 
 model User {
-  id                   String    @id @default(cuid())
-  clerkId              String    @unique @default("")
-  username             String    @unique @default("")
-  email                String    @default("")
-  profileImage         Json?
-  deletedAt            DateTime?
-  isDeleted            Boolean   @default(false)
-  aiChatUsageCount     Int?      @default(0)
-  aiChatUsageResetDate DateTime? @default(now())
-  from_Trip_creator    Trip[]    @relation("Trip_creator")
+  id                       String    @id @default(cuid())
+  clerkId                  String    @unique @default("")
+  username                 String    @unique @default("")
+  email                    String    @default("")
+  profileImage             Json?
+  deletedAt                DateTime?
+  isDeleted                Boolean   @default(false)
+  googleMapsRouteCount     Int?      @default(0)
+  googleMapsRouteResetDate DateTime? @default(now())
+  aiChatUsageCount         Int?      @default(0)
+  aiChatUsageResetDate     DateTime? @default(now())
+  from_Trip_creator        Trip[]    @relation("Trip_creator")
 }
 
 model Trip {

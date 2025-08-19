@@ -39,10 +39,24 @@ export const User = list({
         listView: { fieldMode: 'hidden' },
       },
     }),
+    googleMapsRouteCount: integer({
+      defaultValue: 0,
+      ui: {
+        itemView: { fieldMode: 'edit' },
+        listView: { fieldMode: 'hidden' },
+      },
+    }),
+    googleMapsRouteResetDate: timestamp({
+      defaultValue: { kind: 'now' },
+      ui: {
+        itemView: { fieldMode: 'read' },
+        listView: { fieldMode: 'hidden' },
+      },
+    }),
     aiChatUsageCount: integer({
       defaultValue: 0,
       ui: {
-        itemView: { fieldMode: 'read' },
+        itemView: { fieldMode: 'edit' },
         listView: { fieldMode: 'hidden' },
       },
     }),

@@ -667,6 +667,8 @@ export type User = {
   clerkId?: Maybe<Scalars['String']['output']>;
   deletedAt?: Maybe<Scalars['DateTime']['output']>;
   email?: Maybe<Scalars['String']['output']>;
+  googleMapsRouteCount?: Maybe<Scalars['Int']['output']>;
+  googleMapsRouteResetDate?: Maybe<Scalars['DateTime']['output']>;
   id: Scalars['ID']['output'];
   isDeleted?: Maybe<Scalars['Boolean']['output']>;
   profileImage?: Maybe<CloudinaryImage_File>;
@@ -679,6 +681,8 @@ export type UserCreateInput = {
   clerkId?: InputMaybe<Scalars['String']['input']>;
   deletedAt?: InputMaybe<Scalars['DateTime']['input']>;
   email?: InputMaybe<Scalars['String']['input']>;
+  googleMapsRouteCount?: InputMaybe<Scalars['Int']['input']>;
+  googleMapsRouteResetDate?: InputMaybe<Scalars['DateTime']['input']>;
   isDeleted?: InputMaybe<Scalars['Boolean']['input']>;
   profileImage?: InputMaybe<Scalars['Upload']['input']>;
   username?: InputMaybe<Scalars['String']['input']>;
@@ -690,6 +694,8 @@ export type UserOrderByInput = {
   clerkId?: InputMaybe<OrderDirection>;
   deletedAt?: InputMaybe<OrderDirection>;
   email?: InputMaybe<OrderDirection>;
+  googleMapsRouteCount?: InputMaybe<OrderDirection>;
+  googleMapsRouteResetDate?: InputMaybe<OrderDirection>;
   id?: InputMaybe<OrderDirection>;
   isDeleted?: InputMaybe<OrderDirection>;
   username?: InputMaybe<OrderDirection>;
@@ -717,6 +723,8 @@ export type UserUpdateInput = {
   clerkId?: InputMaybe<Scalars['String']['input']>;
   deletedAt?: InputMaybe<Scalars['DateTime']['input']>;
   email?: InputMaybe<Scalars['String']['input']>;
+  googleMapsRouteCount?: InputMaybe<Scalars['Int']['input']>;
+  googleMapsRouteResetDate?: InputMaybe<Scalars['DateTime']['input']>;
   isDeleted?: InputMaybe<Scalars['Boolean']['input']>;
   profileImage?: InputMaybe<Scalars['Upload']['input']>;
   username?: InputMaybe<Scalars['String']['input']>;
@@ -731,6 +739,8 @@ export type UserWhereInput = {
   clerkId?: InputMaybe<StringFilter>;
   deletedAt?: InputMaybe<DateTimeNullableFilter>;
   email?: InputMaybe<StringFilter>;
+  googleMapsRouteCount?: InputMaybe<IntNullableFilter>;
+  googleMapsRouteResetDate?: InputMaybe<DateTimeNullableFilter>;
   id?: InputMaybe<IdFilter>;
   isDeleted?: InputMaybe<BooleanFilter>;
   username?: InputMaybe<StringFilter>;

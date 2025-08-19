@@ -6,12 +6,16 @@ import { useParams, usePathname } from 'next/navigation';
 import { TripDistanceInfo } from '@/features/trip/components/TripDistanceInfo/TripDistanceInfo';
 import { useGoogleMapsDirections } from '@/lib/contexts/DirectionsContext';
 import { AiChatSheetContainer } from '@/features/aichat/AiChatSheetContainer';
+import { useRouteUsage } from '../hooks/useRouteUsage';
+import { useAuthenticatedUser } from '@/features/user/hooks/useAuthenticatedUser';
 
 export const GoogleMapsContainer = () => {
   const params = useParams();
   const pathname = usePathname();
   const tripId = params?.id as string;
   const { distanceInfo } = useGoogleMapsDirections();
+  const { authUserId } = useAuthenticatedUser();
+  const { currentRouteCount, usagePercentage, resetDate } = useRouteUsage(authUserId);
 
   const isTripViewPage = pathname.startsWith(`/trip/${tripId}`);
   const isEditTripPlanner = pathname.startsWith('/trip/planner');
@@ -20,8 +24,14 @@ export const GoogleMapsContainer = () => {
 
   return (
     <>
-      {distanceInfo && (isEditTripPlanner || isEditTripPlannerEdit) && (
-        <TripDistanceInfo distance={distanceInfo.distance} duration={distanceInfo.duration} />
+      {authUserId && (isEditTripPlanner || isEditTripPlannerEdit) && (
+        <TripDistanceInfo
+          distance={distanceInfo?.distance}
+          duration={distanceInfo?.duration}
+          currentRouteCount={currentRouteCount}
+          usagePercentage={usagePercentage}
+          resetDate={resetDate}
+        />
       )}
       <GoogleMaps canEdit={canEdit} />
       {canEdit && <AiChatSheetContainer />}

@@ -9,6 +9,8 @@ type User {
   profileImage: CloudinaryImage_File
   deletedAt: DateTime
   isDeleted: Boolean
+  googleMapsRouteCount: Int
+  googleMapsRouteResetDate: DateTime
   aiChatUsageCount: Int
   aiChatUsageResetDate: DateTime
 }
@@ -79,6 +81,8 @@ input UserWhereInput {
   email: StringFilter
   deletedAt: DateTimeNullableFilter
   isDeleted: BooleanFilter
+  googleMapsRouteCount: IntNullableFilter
+  googleMapsRouteResetDate: DateTimeNullableFilter
   aiChatUsageCount: IntNullableFilter
   aiChatUsageResetDate: DateTimeNullableFilter
 }
@@ -162,6 +166,8 @@ input UserOrderByInput {
   email: OrderDirection
   deletedAt: OrderDirection
   isDeleted: OrderDirection
+  googleMapsRouteCount: OrderDirection
+  googleMapsRouteResetDate: OrderDirection
   aiChatUsageCount: OrderDirection
   aiChatUsageResetDate: OrderDirection
 }
@@ -178,6 +184,8 @@ input UserUpdateInput {
   profileImage: Upload
   deletedAt: DateTime
   isDeleted: Boolean
+  googleMapsRouteCount: Int
+  googleMapsRouteResetDate: DateTime
   aiChatUsageCount: Int
   aiChatUsageResetDate: DateTime
 }
@@ -197,6 +205,8 @@ input UserCreateInput {
   profileImage: Upload
   deletedAt: DateTime
   isDeleted: Boolean
+  googleMapsRouteCount: Int
+  googleMapsRouteResetDate: DateTime
   aiChatUsageCount: Int
   aiChatUsageResetDate: DateTime
 }

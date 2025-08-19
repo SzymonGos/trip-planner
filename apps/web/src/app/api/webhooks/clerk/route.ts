@@ -52,6 +52,7 @@ export async function POST(req: Request) {
         email: evt.data.email_addresses[0].email_address,
         username: evt.data.username,
         aiChatUsageResetDate: thirtyDaysFromNow,
+        googleMapsRouteResetDate: thirtyDaysFromNow,
       },
     });
   }
