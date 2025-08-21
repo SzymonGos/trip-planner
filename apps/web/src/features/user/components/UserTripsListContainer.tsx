@@ -1,32 +1,33 @@
 import React from 'react';
 import { PreloadQuery } from '@/lib/apolloClient';
 import { getUserTripsQuery } from '../server/db/getUserTripsQuery';
-import { UserTripsList } from './UserTripsList';
-import { Suspense } from 'react';
+import { StatisticsCardsContainer } from './StatisticsCardsContainer';
+import { UserTripsListClient } from './UserTripsListClient';
 import { Trip as TTrip } from 'tp-graphql-types';
-import { UserTripsTitle } from './UserTripsTitle';
-import { Container } from '@/components/Container/Container';
-import { MultipleTripCardsLoader } from '@/features/trip/components/MultipleTripCardsLoader';
+import { Suspense } from 'react';
 
 type UserTripListContainerProps = {
   userId: string;
   username?: string;
 };
 
-export const UserTripsListContainer = ({ userId, username }: UserTripListContainerProps) => (
-  <Container className="mt-10 px-0">
-    <UserTripsTitle username={username} />
-    <PreloadQuery<{ trips: TTrip[] }, { id: string }>
-      query={getUserTripsQuery}
-      variables={{
-        id: userId,
-      }}
-    >
-      {(queryRef) => (
-        <Suspense fallback={<MultipleTripCardsLoader />}>
-          <UserTripsList queryRef={queryRef} />
-        </Suspense>
-      )}
-    </PreloadQuery>
-  </Container>
+export const UserTripsListContainer = ({ userId }: UserTripListContainerProps) => (
+  <div className="col-span-9">
+    <div className="lg:col-span-9">
+      <PreloadQuery<{ trips: TTrip[] }, { id: string }>
+        query={getUserTripsQuery}
+        variables={{
+          id: userId,
+        }}
+      >
+        {(queryRef) => (
+          <Suspense fallback={<div className="col-span-full gap-4 mb-8"></div>}>
+            <StatisticsCardsContainer queryRef={queryRef} />
+          </Suspense>
+        )}
+      </PreloadQuery>
+
+      <UserTripsListClient userId={userId} />
+    </div>
+  </div>
 );
