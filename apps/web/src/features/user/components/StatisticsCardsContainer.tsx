@@ -8,12 +8,12 @@ import { ClockIcon } from '@/components/Icons/ClockIcon';
 
 const statisticsCards = [
   {
-    title: 'Total Distance',
-    value: '0km',
+    title: 'Completed Distance',
+    value: '0 km',
     icon: <MapIcon className="w-7 h-7 text-tp-primary" />,
   },
   {
-    title: 'Total Trips',
+    title: 'Completed Trips',
     value: '0',
     icon: <ClockIcon className="w-7 h-7 text-tp-primary" />,
   },
@@ -25,7 +25,7 @@ export const StatisticsCardsContainer = ({ queryRef }) => {
 
   console.log(data);
   return (
-    <div className="grid grid-flow-col gap-4">
+    <div className="grid grid-flow-row lg:grid-flow-col gap-4">
       {statisticsCards.map((card) => (
         <StatisticsCard key={card.title} title={card.title} value={card.value} icon={card.icon} />
       ))}

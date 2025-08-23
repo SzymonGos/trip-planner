@@ -12,22 +12,20 @@ type UserTripListContainerProps = {
 };
 
 export const UserTripsListContainer = ({ userId }: UserTripListContainerProps) => (
-  <div className="col-span-9">
-    <div className="lg:col-span-9">
-      <PreloadQuery<{ trips: TTrip[] }, { id: string }>
-        query={getUserTripsQuery}
-        variables={{
-          id: userId,
-        }}
-      >
-        {(queryRef) => (
-          <Suspense fallback={<div className="col-span-full gap-4 mb-8"></div>}>
-            <StatisticsCardsContainer queryRef={queryRef} />
-          </Suspense>
-        )}
-      </PreloadQuery>
+  <div className="col-span-full lg:col-span-9">
+    <PreloadQuery<{ trips: TTrip[] }, { id: string }>
+      query={getUserTripsQuery}
+      variables={{
+        id: userId,
+      }}
+    >
+      {(queryRef) => (
+        <Suspense fallback={<div className="col-span-full gap-4 mb-8"></div>}>
+          <StatisticsCardsContainer queryRef={queryRef} />
+        </Suspense>
+      )}
+    </PreloadQuery>
 
-      <UserTripsListClient userId={userId} />
-    </div>
+    <UserTripsListClient userId={userId} />
   </div>
 );

@@ -19,12 +19,8 @@ export const ProfileCard = ({ queryRef }: ProfileCardProps) => {
   const isOwnProfile = authUserId === user?.id;
   const memberSince = 'Jan 2024';
 
-  if (!user) {
-    return <div className="bg-white rounded-lg p-6 shadow-sm border animate-pulse h-80" />;
-  }
-
   return (
-    <div className="bg-tp-white-100 rounded-lg p-6 border col-span-3 h-fit">
+    <div className="bg-tp-white-100 rounded-lg p-6 border h-fit">
       <div className="flex flex-col items-center">
         <UserProfileImage id={user?.profileImage?.id} />
 

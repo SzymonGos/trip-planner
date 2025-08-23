@@ -11,8 +11,8 @@ type UserTripsListClientProps = {
 };
 
 export const UserTripsListClient = ({ userId }: UserTripsListClientProps) => (
-  <div>
-    <h2 className="text-xl font-semibold mb-6 text-gray-900">Usernames, Trips</h2>
+  <div className="mt-10">
+    <h2 className="text-2xl font-semibold mb-6 text-gray-900">Trip History</h2>
 
     <PreloadQuery<{ trips: TTrip[] }, { id: string }>
       query={getUserTripsQuery}

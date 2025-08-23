@@ -20,7 +20,7 @@ const UserPage = async ({ params }: { params: { username: string } }) => {
   });
 
   return (
-    <div className="min-h-screen mt-5 p-8 ">
+    <div className="min-h-screen mt-5 py-8 ">
       <Container className="mt-10 px-0 grid grid-cols-4 lg:grid-cols-12 gap-8">
         <PreloadQuery<{ user: TUser }, { id: string }>
           query={getUserDataQuery}
@@ -30,7 +30,9 @@ const UserPage = async ({ params }: { params: { username: string } }) => {
         >
           {(queryRef) => (
             <Suspense fallback={<div className="bg-white rounded-lg p-6 shadow-sm border animate-pulse h-80" />}>
-              <ProfileCard queryRef={queryRef} />
+              <div className="col-span-full lg:col-span-3">
+                <ProfileCard queryRef={queryRef} />
+              </div>
             </Suspense>
           )}
         </PreloadQuery>
