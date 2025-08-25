@@ -54,7 +54,7 @@ export const Navbar = ({ userName, clerkId }: NavbarClientProps) => {
             ))}
           </ul>
           {isLoaded ? (
-            <div className="md:w-[157px] h-[38px]">
+            <div className="md:min-w-[157px] h-[38px]">
               {isSignedIn && userName ? (
                 <UserMenu userName={userName} clerkId={clerkId} />
               ) : (

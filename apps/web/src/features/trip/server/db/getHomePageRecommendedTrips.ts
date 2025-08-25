@@ -28,6 +28,7 @@ export const getHomePageRecommededTripsQuery = gql`
           publicUrlTransformed
         }
       }
+      status
     }
   }
 `;

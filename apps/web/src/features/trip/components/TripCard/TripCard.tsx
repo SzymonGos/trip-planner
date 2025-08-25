@@ -9,6 +9,7 @@ import { TripCardUserDetails } from './TripCardUserDetails';
 import { TripCardImage } from './TripCardImage';
 import { TripCardDetails } from './TripCardDetails';
 import { TripCardMaskWave } from './TripCardMaskWave';
+import { TripCardStatusLabel } from './TripCardStatusLabe';
 
 type TTripCardProps = {
   trip: TTrip;
@@ -19,6 +20,7 @@ export const TripCard: FC<TTripCardProps> = ({ trip }) => (
     <Link href={getTripUrl(trip.id)} className="absolute z-10 w-full h-full inset-0" />
     <div className="relative w-full">
       <TripCardImage id={trip.tripImages[0]?.image?.id} />
+      <TripCardStatusLabel status={trip.status} />
       <div className="z-20">
         <TripCardUserDetails username={trip.creator?.username} profileImageId={trip.creator?.profileImage?.id} />
       </div>

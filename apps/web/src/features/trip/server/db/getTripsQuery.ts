@@ -24,6 +24,7 @@ export const getTripsQuery = gql`
       distance
       estimatedDuration
       createdAt
+      status
     }
   }
 `;
