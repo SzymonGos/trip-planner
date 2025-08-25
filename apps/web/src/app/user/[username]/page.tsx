@@ -7,7 +7,7 @@ import { UserTripsListContainer } from '@/features/user/components/UserTripsList
 import { PreloadQuery } from '@/lib/apolloClient';
 import { User as TUser } from 'tp-graphql-types';
 import { getUserDataQuery } from '@/features/user/server/db/getUserDataQuery';
-import { ProfileCard } from '@/features/user/components/ProfileCard';
+import { ProfileCardContainer } from '@/features/user/components/ProfileCardContainer';
 
 const UserPage = async ({ params }: { params: { username: string } }) => {
   headers();
@@ -27,11 +27,18 @@ const UserPage = async ({ params }: { params: { username: string } }) => {
           variables={{
             id: userData?.user?.id,
           }}
+          context={{
+            fetchOptions: {
+              next: {
+                revalidate: 60,
+              },
+            },
+          }}
         >
           {(queryRef) => (
             <Suspense fallback={<div className="bg-white rounded-lg p-6 shadow-sm border animate-pulse h-80" />}>
               <div className="col-span-full lg:col-span-3">
-                <ProfileCard queryRef={queryRef} />
+                <ProfileCardContainer queryRef={queryRef} />
               </div>
             </Suspense>
           )}

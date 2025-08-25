@@ -23,6 +23,7 @@ export const getUserTripsQuery = gql`
       description
       distance
       estimatedDuration
+      status
       createdAt
     }
   }

@@ -5,25 +5,43 @@ import { useReadQuery } from '@apollo/client';
 import { StatisticsCard } from './StatisticsCard';
 import { MapIcon } from '@/components/Icons/MapIcon';
 import { ClockIcon } from '@/components/Icons/ClockIcon';
+import { formatDistance } from '../helpers/formatDistance';
 
-const statisticsCards = [
-  {
-    title: 'Completed Distance',
-    value: '0 km',
-    icon: <MapIcon className="w-7 h-7 text-tp-primary" />,
-  },
-  {
-    title: 'Completed Trips',
-    value: '0',
-    icon: <ClockIcon className="w-7 h-7 text-tp-primary" />,
-  },
-];
+type StatisticsCardsContainerProps = {
+  queryRef: unknown;
+};
 
-export const StatisticsCardsContainer = ({ queryRef }) => {
+export const StatisticsCardsContainer = ({ queryRef }: StatisticsCardsContainerProps) => {
   const { data } = useReadQuery(queryRef);
-  // TODO: get total distance and total trips from the data
 
-  console.log(data);
+  const allTrips = (data as { trips?: Array<{ distance?: string; status?: string }> })?.trips || [];
+  const completedTrips = allTrips.filter((trip) => trip.status === 'completed');
+  const totalCompletedTrips = completedTrips.length;
+
+  const totalDistance = completedTrips.reduce((total, trip) => {
+    if (trip.distance) {
+      const distanceMatch = trip.distance.match(/([\d,]+(?:\.\d+)?)/);
+      if (distanceMatch) {
+        const cleanDistance = distanceMatch[1].replace(/,/g, '');
+        return total + parseFloat(cleanDistance);
+      }
+    }
+    return total;
+  }, 0);
+
+  const statisticsCards = [
+    {
+      title: 'Completed Distance',
+      value: `${formatDistance(totalDistance)} km`,
+      icon: <MapIcon className="w-7 h-7 text-tp-primary" />,
+    },
+    {
+      title: 'Completed Trips',
+      value: totalCompletedTrips.toString(),
+      icon: <ClockIcon className="w-7 h-7 text-tp-primary" />,
+    },
+  ];
+
   return (
     <div className="grid grid-flow-row lg:grid-flow-col gap-4">
       {statisticsCards.map((card) => (

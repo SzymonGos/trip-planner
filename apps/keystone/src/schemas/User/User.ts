@@ -15,7 +15,16 @@ export const User = list({
         itemView: { fieldMode: 'read' },
       },
     }),
-    username: text({ validation: { isRequired: true }, isIndexed: 'unique' }),
+    username: text({
+      validation: {
+        isRequired: true,
+        length: {
+          min: 5,
+          max: 15,
+        },
+      },
+      isIndexed: 'unique',
+    }),
     email: text({ validation: { isRequired: true } }),
     profileImage: cloudinaryImage({
       cloudinary: CLOUDINARY_CONFIGS,

@@ -1,6 +1,6 @@
 import React from 'react';
 import { PreloadQuery } from '@/lib/apolloClient';
-import { getUserTripsQuery } from '../server/db/getUserTripsQuery';
+import { getUserCompletedTripsQuery } from '../server/db/getUserCompletedTripsQuery';
 import { StatisticsCardsContainer } from './StatisticsCardsContainer';
 import { UserTripsListClient } from './UserTripsListClient';
 import { Trip as TTrip } from 'tp-graphql-types';
@@ -14,7 +14,7 @@ type UserTripListContainerProps = {
 export const UserTripsListContainer = ({ userId }: UserTripListContainerProps) => (
   <div className="col-span-full lg:col-span-9">
     <PreloadQuery<{ trips: TTrip[] }, { id: string }>
-      query={getUserTripsQuery}
+      query={getUserCompletedTripsQuery}
       variables={{
         id: userId,
       }}

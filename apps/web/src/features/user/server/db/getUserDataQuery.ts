@@ -20,14 +20,7 @@ export const getUserDataByUsernameQuery = gql`
   query user($username: String!) {
     user(where: { username: $username }) {
       id
-      email
       username
-      profileImage {
-        id
-        filename
-        publicUrl
-        publicUrlTransformed
-      }
     }
   }
 `;
