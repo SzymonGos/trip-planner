@@ -15,6 +15,13 @@ export const User = list({
         itemView: { fieldMode: 'read' },
       },
     }),
+    createdAt: timestamp({
+      defaultValue: { kind: 'now' },
+      ui: {
+        itemView: { fieldMode: 'read' },
+        listView: { fieldMode: 'hidden' },
+      },
+    }),
     username: text({
       validation: {
         isRequired: true,

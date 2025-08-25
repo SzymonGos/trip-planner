@@ -665,6 +665,7 @@ export type User = {
   aiChatUsageCount?: Maybe<Scalars['Int']['output']>;
   aiChatUsageResetDate?: Maybe<Scalars['DateTime']['output']>;
   clerkId?: Maybe<Scalars['String']['output']>;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
   deletedAt?: Maybe<Scalars['DateTime']['output']>;
   email?: Maybe<Scalars['String']['output']>;
   googleMapsRouteCount?: Maybe<Scalars['Int']['output']>;
@@ -679,6 +680,7 @@ export type UserCreateInput = {
   aiChatUsageCount?: InputMaybe<Scalars['Int']['input']>;
   aiChatUsageResetDate?: InputMaybe<Scalars['DateTime']['input']>;
   clerkId?: InputMaybe<Scalars['String']['input']>;
+  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   deletedAt?: InputMaybe<Scalars['DateTime']['input']>;
   email?: InputMaybe<Scalars['String']['input']>;
   googleMapsRouteCount?: InputMaybe<Scalars['Int']['input']>;
@@ -692,6 +694,7 @@ export type UserOrderByInput = {
   aiChatUsageCount?: InputMaybe<OrderDirection>;
   aiChatUsageResetDate?: InputMaybe<OrderDirection>;
   clerkId?: InputMaybe<OrderDirection>;
+  createdAt?: InputMaybe<OrderDirection>;
   deletedAt?: InputMaybe<OrderDirection>;
   email?: InputMaybe<OrderDirection>;
   googleMapsRouteCount?: InputMaybe<OrderDirection>;
@@ -721,6 +724,7 @@ export type UserUpdateInput = {
   aiChatUsageCount?: InputMaybe<Scalars['Int']['input']>;
   aiChatUsageResetDate?: InputMaybe<Scalars['DateTime']['input']>;
   clerkId?: InputMaybe<Scalars['String']['input']>;
+  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   deletedAt?: InputMaybe<Scalars['DateTime']['input']>;
   email?: InputMaybe<Scalars['String']['input']>;
   googleMapsRouteCount?: InputMaybe<Scalars['Int']['input']>;
@@ -737,6 +741,7 @@ export type UserWhereInput = {
   aiChatUsageCount?: InputMaybe<IntNullableFilter>;
   aiChatUsageResetDate?: InputMaybe<DateTimeNullableFilter>;
   clerkId?: InputMaybe<StringFilter>;
+  createdAt?: InputMaybe<DateTimeNullableFilter>;
   deletedAt?: InputMaybe<DateTimeNullableFilter>;
   email?: InputMaybe<StringFilter>;
   googleMapsRouteCount?: InputMaybe<IntNullableFilter>;
