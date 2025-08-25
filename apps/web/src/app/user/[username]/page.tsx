@@ -8,6 +8,7 @@ import { PreloadQuery } from '@/lib/apolloClient';
 import { User as TUser } from 'tp-graphql-types';
 import { getUserDataQuery } from '@/features/user/server/db/getUserDataQuery';
 import { ProfileCardContainer } from '@/features/user/components/ProfileCardContainer';
+import { ProfileCardLoader } from '@/features/user/components/ProfileCardLoader';
 
 const UserPage = async ({ params }: { params: { username: string } }) => {
   headers();
@@ -36,7 +37,7 @@ const UserPage = async ({ params }: { params: { username: string } }) => {
           }}
         >
           {(queryRef) => (
-            <Suspense fallback={<div className="bg-white rounded-lg p-6 shadow-sm border animate-pulse h-80" />}>
+            <Suspense fallback={<ProfileCardLoader />}>
               <div className="col-span-full lg:col-span-3">
                 <ProfileCardContainer queryRef={queryRef} />
               </div>

@@ -5,6 +5,7 @@ import { StatisticsCardsContainer } from './StatisticsCardsContainer';
 import { UserTripsListClient } from './UserTripsListClient';
 import { Trip as TTrip } from 'tp-graphql-types';
 import { Suspense } from 'react';
+import { StatiticsCardLoader } from './StatiticsCardLoader';
 
 type UserTripListContainerProps = {
   userId: string;
@@ -20,7 +21,7 @@ export const UserTripsListContainer = ({ userId }: UserTripListContainerProps) =
       }}
     >
       {(queryRef) => (
-        <Suspense fallback={<div className="col-span-full gap-4 mb-8"></div>}>
+        <Suspense fallback={<StatiticsCardLoader />}>
           <StatisticsCardsContainer queryRef={queryRef} />
         </Suspense>
       )}
