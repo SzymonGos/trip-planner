@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const MapIcon = ({ className = '' }: { className?: string }) => (
+export const MapPinIcon = ({ className = '' }: { className?: string }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
