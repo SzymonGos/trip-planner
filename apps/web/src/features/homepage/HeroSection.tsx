@@ -1,46 +1,85 @@
+import React from 'react';
+import Image from 'next/image';
+import { Container } from '@/components/Container/Container';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import React, { FC } from 'react';
 import { getTripPlannerUrl } from '../trip/helpers/getTripPlannerUrl';
-import Image from 'next/image';
-import { motion, MotionValue } from 'framer-motion';
+import { PRODUCT_FEATURES } from './utils/homepageData';
 
-type THeroSectionProps = {
-  backgroundY: MotionValue<number>;
-  overlayY: MotionValue<number>;
-  textY: MotionValue<number>;
-};
+export const HeroSection = () => (
+  <Container className="mt-10 py-16">
+    <div className="px-4">
+      <div className="grid lg:grid-cols-2 gap-12 items-center">
+        {/* Left Column - Text Content and CTAs */}
+        <div className="space-y-8">
+          {/* Main Headline */}
+          <h1 className="text-5xl lg:text-5xl font-bold text-black leading-tight font-primary">
+            Plan your perfect trip with routetripper
+          </h1>
 
-export const HeroSection: FC<THeroSectionProps> = ({ backgroundY, overlayY, textY }) => (
-  <section className="relative h-[70vh] flex mb-20 items-center justify-center overflow-hidden">
-    <motion.div className="absolute inset-0 z-0" style={{ y: backgroundY }}>
-      <Image src="/images/road-landscape.webp" alt="Open road with mountains" fill className="object-cover" priority />
-    </motion.div>
+          {/* Descriptive Paragraph */}
+          <p className="text-xl text-gray-600 leading-relaxed">
+            Our all-in-one solution helps travelers discover destinations, plan itineraries, and create unforgettable
+            journeys with ease.
+          </p>
 
-    <motion.div
-      className="absolute inset-0 z-10 bg-gradient-to-b from-black/20 to-transparent"
-      style={{ y: overlayY }}
-    />
+          {/* CTA Buttons */}
+          <div className="flex flex-col sm:flex-row gap-4">
+            <Link href={getTripPlannerUrl()} passHref>
+              <Button
+                className="p-7 bg-black text-white font-semibold rounded-md hover:bg-gray-800 transition-colors flex items-center gap-2"
+                variant="default"
+              >
+                Start planning →
+              </Button>
+            </Link>
+          </div>
 
-    <motion.div
-      className="relative z-20 text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto flex flex-col items-center justify-center"
-      style={{ y: textY }}
-    >
-      <h1 className="text-4xl sm:text-5xl md:text-6xl font-semibold text-white mb-6 font-primary">
-        Plan Your Next Adventure
-      </h1>
-      <p className="text-lg sm:text-xl text-white mb-10 font-normal max-w-2xl mx-auto font-secondary">
-        Turn your dream trip into a shared journey — plan it, shape it, live it.
-      </p>
-      <div className="flex flex-col sm:flex-row gap-4 justify-center">
-        <Button asChild className="py-6 text-lg bg-tp-primary" size="lg">
-          <Link href={getTripPlannerUrl()}>Start Planning</Link>
-        </Button>
-        <Button asChild variant="outline" className="py-6 text-lg" size="lg">
-          <Link href="/trips">Browse Trips</Link>
-        </Button>
+          {/* Feature List */}
+          <div className="grid grid-cols-2 gap-4">
+            {PRODUCT_FEATURES.map((feature, index) => (
+              <div key={index} className="flex items-center gap-3">
+                <div className="w-5 h-5 bg-black rounded-full flex items-center justify-center">
+                  <div className="w-2 h-2 bg-white rounded-full"></div>
+                </div>
+                <span className="text-gray-700">{feature}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Right Column - Image and Statistics */}
+        <div className="relative">
+          {/* Main Image */}
+          <div className="relative rounded-lg overflow-hidden">
+            <Image
+              src="/images/road-landscape.webp"
+              alt="Scenic road landscape for travel inspiration"
+              width={600}
+              height={400}
+              className="w-full h-auto object-cover"
+            />
+
+            {/* Statistics Overlay */}
+            <div className="absolute bottom-4 left-4 right-4 bg-white/90 backdrop-blur-sm rounded-lg p-6">
+              <div className="grid grid-cols-3 gap-6 text-center">
+                <div>
+                  <div className="text-2xl font-bold text-black">156</div>
+                  <div className="text-sm text-gray-600">Destinations</div>
+                </div>
+                <div>
+                  <div className="text-2xl font-bold text-black">2.4k</div>
+                  <div className="text-sm text-gray-600">Travelers</div>
+                </div>
+                <div>
+                  <div className="text-2xl font-bold text-black">98%</div>
+                  <div className="text-sm text-gray-600">Satisfaction</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </motion.div>
-    <div className="absolute bottom-0 w-full h-[60px] bg-[#f9f9f9] backdrop-blur-sm mask-wave" />
-  </section>
+    </div>
+  </Container>
 );

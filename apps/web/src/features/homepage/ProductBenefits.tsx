@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container } from '@/components/Container/Container';
 import { BenefitCard } from './BenefitCard';
-import { PRODUCT_BENEFITS_DATA } from './utils/benefitsData';
+import { PRODUCT_BENEFITS_DATA } from './utils/homepageData';
 import Link from 'next/link';
 import { getTripPlannerUrl } from '../trip/helpers/getTripPlannerUrl';
 
