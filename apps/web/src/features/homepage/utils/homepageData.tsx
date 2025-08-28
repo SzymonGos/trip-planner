@@ -5,15 +5,15 @@ import { ShieldCheck } from '@/components/Icons/ShieldCheck';
 
 export const PRODUCT_BENEFITS_DATA = [
   {
-    icon: <MapPinIcon />,
-    title: 'Traveler First',
-    description: 'Created by passionate travelers who understand what makes a journey truly memorable.',
-  },
-  {
     icon: <BoltIcon />,
     title: 'AI-Powered Planning',
     description: 'Let our smart algorithms craft personalized itineraries that match your travel style perfectly.',
     isNew: true,
+  },
+  {
+    icon: <MapPinIcon />,
+    title: 'Traveler First',
+    description: 'Created by passionate travelers who understand what makes a journey truly memorable.',
   },
   {
     icon: <BoltIcon />,
@@ -35,4 +35,11 @@ export const PRODUCT_BENEFITS_DATA = [
     title: 'Cloud Native',
     description: 'Access your travel plans from anywhere in the world with our seamless cloud infrastructure.',
   },
+];
+
+export const PRODUCT_FEATURES = [
+  'No credit card required',
+  'AI travel advisor',
+  'Cancel anytime',
+  '24/7 customer support',
 ];
