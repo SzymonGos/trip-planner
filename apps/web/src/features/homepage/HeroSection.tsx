@@ -5,37 +5,32 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { getTripPlannerUrl } from '../trip/helpers/getTripPlannerUrl';
 import { PRODUCT_FEATURES } from './utils/homepageData';
+import { ArrowIcon } from '@/components/Icons/ArrowIcon';
 
 export const HeroSection = () => (
   <Container className="mt-10 py-16">
     <div className="px-4">
       <div className="grid lg:grid-cols-2 gap-12 items-center">
-        {/* Left Column - Text Content and CTAs */}
         <div className="space-y-8">
-          {/* Main Headline */}
           <h1 className="text-5xl lg:text-5xl font-bold text-black leading-tight font-primary">
             Plan your perfect trip with routetripper
           </h1>
-
-          {/* Descriptive Paragraph */}
           <p className="text-xl text-gray-600 leading-relaxed">
             Our all-in-one solution helps travelers discover destinations, plan itineraries, and create unforgettable
             journeys with ease.
           </p>
-
-          {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4">
             <Link href={getTripPlannerUrl()} passHref>
               <Button
                 className="p-7 bg-black text-white font-semibold rounded-md hover:bg-gray-800 transition-colors flex items-center gap-2"
                 variant="default"
               >
-                Start planning →
+                Start planning
+                <ArrowIcon className="ml-2 w-4 h-4" />
               </Button>
             </Link>
           </div>
 
-          {/* Feature List */}
           <div className="grid grid-cols-2 gap-4">
             {PRODUCT_FEATURES.map((feature, index) => (
               <div key={index} className="flex items-center gap-3">
@@ -48,9 +43,7 @@ export const HeroSection = () => (
           </div>
         </div>
 
-        {/* Right Column - Image and Statistics */}
         <div className="relative">
-          {/* Main Image */}
           <div className="relative rounded-lg overflow-hidden">
             <Image
               src="/images/road-landscape.webp"
@@ -60,7 +53,6 @@ export const HeroSection = () => (
               className="w-full h-auto object-cover"
             />
 
-            {/* Statistics Overlay */}
             <div className="absolute bottom-4 left-4 right-4 bg-white/90 backdrop-blur-sm rounded-lg p-6">
               <div className="grid grid-cols-3 gap-6 text-center">
                 <div>

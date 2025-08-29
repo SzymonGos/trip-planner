@@ -1,6 +1,7 @@
 import { BoltIcon } from '@/components/Icons/BoltIcon';
 import { CloudIcon } from '@/components/Icons/CloudIcon';
 import { MapPinIcon } from '@/components/Icons/MapPinIcon';
+import { SendIcon } from '@/components/Icons/SendIcon';
 import { ShieldCheck } from '@/components/Icons/ShieldCheck';
 
 export const PRODUCT_BENEFITS_DATA = [
@@ -42,4 +43,28 @@ export const PRODUCT_FEATURES = [
   'AI travel advisor',
   'Cancel anytime',
   '24/7 customer support',
+];
+
+export const HOW_IT_WORKS_DATA = [
+  {
+    icon: <MapPinIcon />,
+    title: 'Plan Your Trip',
+    description:
+      'Start by filling in your trip details: title, description, origin, and destination. Our intuitive form makes it easy to capture your travel vision in just a few clicks.',
+    stepNumber: '01',
+  },
+  {
+    icon: <SendIcon />,
+    title: 'AI Chat Assistant',
+    description:
+      'Engage with our intelligent AI chat. Simply tell us your vision and our AI will help you plan, shape, and refine your perfect trip itinerary with personalized recommendations.',
+    stepNumber: '02',
+  },
+  {
+    icon: <BoltIcon />,
+    title: 'Map & Manage',
+    description:
+      'Watch your route come to life on an interactive map. See your planned journey, track multiple trips, and manage everything from one dashboard.',
+    stepNumber: '03',
+  },
 ];
