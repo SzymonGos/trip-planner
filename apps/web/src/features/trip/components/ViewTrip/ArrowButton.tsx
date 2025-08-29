@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { ArrowIcon } from '@/components/Icons/ArrowIcon';
+import { ChevronIcon } from '@/components/Icons/ChevronIcon';
 
 interface ArrowButtonProps {
   direction: 'left' | 'right';
@@ -16,7 +16,7 @@ export const ArrowButton: FC<ArrowButtonProps> = ({ direction, onClick, ariaLabe
     className={`absolute top-1/2 ${direction === 'left' ? 'left-2 -translate-y-1/2' : 'right-2 -translate-y-1/2'} bg-white/80 rounded-full p-2 shadow hover:bg-white ${className || ''}`}
   >
     <div className={direction === 'left' ? 'rotate-180' : ''}>
-      <ArrowIcon />
+      <ChevronIcon />
     </div>
   </button>
 );
