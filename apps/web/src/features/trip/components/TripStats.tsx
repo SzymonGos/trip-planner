@@ -21,7 +21,7 @@ export const TripStats: FC<TTripStatsProps> = ({
   iconSize = 'w-4 h-4',
   className,
 }) => (
-  <div className={cx('flex items-center text-gray-700 gap-4 font-semibold', className)}>
+  <div className={cx('flex items-center text-xs text-gray-700 gap-4 font-semibold', className)}>
     <span className="flex items-center gap-1">
       <MapPinIcon className={iconSize} />
       {distance}

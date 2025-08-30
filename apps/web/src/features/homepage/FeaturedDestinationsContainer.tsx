@@ -8,9 +8,13 @@ import { Container } from '@/components/Container/Container';
 import { MultipleTripCardsLoader } from '../trip/components/MultipleTripCardsLoader';
 
 export const FeaturedDestinationsContainer = () => (
-  <Container className="my-40">
-    <div className="w-full my-10">
-      <h3 className="text-2xl font-semibold font-primary">Discover Travel Adventures</h3>
+  <Container className="mt-20">
+    <div className="w-full my-14">
+      <h3 className="text-3xl font-bold text-black mb-4 text-center">Explore Curated Destinations</h3>
+      <p className="text-lg text-gray-600 max-w-3xl mx-auto text-center leading-relaxed">
+        Discover amazing destinations handpicked just for you. From hidden gems to popular spots, find your next
+        adventure.
+      </p>
     </div>
     <PreloadQuery<{ trips: TTrip[] }, { id: string }>
       query={getHomePageRecommededTripsQuery}
