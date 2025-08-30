@@ -18,6 +18,7 @@ export const TripCardImage: FC<TTripCardImageProps> = ({ id }) => (
         fill
         className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
         priority={false}
+        loading="lazy"
       />
     ) : (
       <Image
