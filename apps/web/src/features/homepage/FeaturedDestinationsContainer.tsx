@@ -8,8 +8,8 @@ import { Container } from '@/components/Container/Container';
 import { MultipleTripCardsLoader } from '../trip/components/MultipleTripCardsLoader';
 
 export const FeaturedDestinationsContainer = () => (
-  <Container className="mt-20">
-    <div className="w-full my-14">
+  <Container className="mb-24">
+    <div className="w-full mb-14">
       <h3 className="text-3xl font-bold text-black mb-4 text-center">Explore Curated Destinations</h3>
       <p className="text-lg text-gray-600 max-w-3xl mx-auto text-center leading-relaxed">
         Discover amazing destinations handpicked just for you. From hidden gems to popular spots, find your next

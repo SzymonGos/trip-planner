@@ -4,7 +4,7 @@ import { BenefitCard } from './BenefitCard';
 import { PRODUCT_BENEFITS_DATA } from './utils/homepageData';
 
 export const ProductBenefits = () => (
-  <Container className="py-20">
+  <Container className="mb-24">
     <div className="text-center mb-10">
       <h2 className="text-4xl lg:text-5xl font-bold text-black mb-6 font-primary">Features that set us apart</h2>
       <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">

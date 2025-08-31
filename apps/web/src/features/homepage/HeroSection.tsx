@@ -9,7 +9,7 @@ import { ArrowIcon } from '@/components/Icons/ArrowIcon';
 import { HeroProductStats } from './HeroProductStats';
 
 export const HeroSection = () => (
-  <Container className="py-16">
+  <Container className="pt-16 mb-24">
     <div className="px-4">
       <div className="grid lg:grid-cols-2 gap-12 items-center">
         <div className="space-y-8 self-start">
