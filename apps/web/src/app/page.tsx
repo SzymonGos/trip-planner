@@ -12,8 +12,8 @@ const Home = () => (
       <HeroSectionContainer />
       <ProductBenefits />
     </div>
-    <HowItWorks />
     <FeaturedDestinationsContainer />
+    <HowItWorks />
     <Footer />
   </main>
 );
