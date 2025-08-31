@@ -2,6 +2,7 @@ import { Container } from '@/components/Container/Container';
 import React from 'react';
 import { UserSettingsContainer } from '@/features/user/components/UserSettingsContainer';
 import { forceSignIn } from '@/lib/auth/forceSignIn';
+import { Footer } from '@/components/Footer/Footer';
 
 const UserSettingsPage = async () => {
   await forceSignIn('/user/settings');
@@ -14,6 +15,7 @@ const UserSettingsPage = async () => {
           <UserSettingsContainer />
         </div>
       </Container>
+      <Footer />
     </section>
   );
 };

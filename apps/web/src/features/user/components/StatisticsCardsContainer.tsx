@@ -3,7 +3,7 @@
 import React from 'react';
 import { useReadQuery } from '@apollo/client';
 import { StatisticsCard } from './StatisticsCard';
-import { MapIcon } from '@/components/Icons/MapIcon';
+import { MapPinIcon } from '@/components/Icons/MapPinIcon';
 import { ClockIcon } from '@/components/Icons/ClockIcon';
 import { formatDistance } from '../helpers/formatDistance';
 
@@ -33,7 +33,7 @@ export const StatisticsCardsContainer = ({ queryRef }: StatisticsCardsContainerP
     {
       title: 'Completed Distance',
       value: `${formatDistance(totalDistance)} km`,
-      icon: <MapIcon className="w-7 h-7 text-tp-primary" />,
+      icon: <MapPinIcon className="w-7 h-7 text-tp-primary" />,
     },
     {
       title: 'Completed Trips',

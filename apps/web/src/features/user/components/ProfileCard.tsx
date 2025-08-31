@@ -27,7 +27,7 @@ export const ProfileCard: FC<ProfileCardProps> = ({ user, isOwnProfile, memberSi
 
       <div className="text-center mt-4">
         <div className="flex items-center gap-2">
-          <h3 className="text-[22px] leading-10 font-bold text-tp-gray-200">{user?.username}</h3>
+          <h3 className="text-[22px] leading-10 font-bold text-tp-gray-300π">{user?.username}</h3>
         </div>
 
         <div className="w-fit px-3 py-1 mt-2 inline-flex self-center rounded-md text-sm font-medium bg-gray-100 text-gray-800">

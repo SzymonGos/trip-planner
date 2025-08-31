@@ -9,6 +9,7 @@ import { User as TUser } from 'tp-graphql-types';
 import { getUserDataQuery } from '@/features/user/server/db/getUserDataQuery';
 import { ProfileCardContainer } from '@/features/user/components/ProfileCardContainer';
 import { ProfileCardLoader } from '@/features/user/components/ProfileCardLoader';
+import { Footer } from '@/components/Footer/Footer';
 
 const UserPage = async ({ params }: { params: { username: string } }) => {
   headers();
@@ -47,6 +48,7 @@ const UserPage = async ({ params }: { params: { username: string } }) => {
 
         <UserTripsListContainer userId={userData?.user?.id} username={userData?.user?.username} />
       </Container>
+      <Footer />
     </div>
   );
 };

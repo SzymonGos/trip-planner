@@ -1,11 +1,18 @@
 import React, { FC } from 'react';
 
-interface ArrowIconProps {
+type TArrowIconProps = {
   className?: string;
-}
+};
 
-export const ArrowIcon: FC<ArrowIconProps> = ({ className }) => (
-  <svg width="20" height="20" fill="none" viewBox="0 0 20 20" className={className}>
-    <path d="M7 5l5 5-5 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+export const ArrowIcon: FC<TArrowIconProps> = ({ className }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
+    strokeWidth={1.5}
+    stroke="currentColor"
+    className={className}
+  >
+    <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
   </svg>
 );

@@ -10,14 +10,15 @@ type TTripCardImageProps = {
 };
 
 export const TripCardImage: FC<TTripCardImageProps> = ({ id }) => (
-  <div className="relative w-full h-[120px] md:h-[200px] object-cover overflow-hidden">
+  <div className="relative w-full h-[200px] md:h-[250px] overflow-hidden rounded-t-md">
     {id ? (
       <CldImage
         src={getCloudinaryImageSrc(id)}
         alt="Trip main"
         fill
-        className="object-cover rounded-t-md transition-transform duration-500 ease-out group-hover:scale-105"
+        className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
         priority={false}
+        loading="lazy"
       />
     ) : (
       <Image
