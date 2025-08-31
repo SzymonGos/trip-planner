@@ -9,7 +9,7 @@ import { ChevronIcon } from '@/components/Icons/ChevronIcon';
 export const HowItWorks = () => (
   <Container className="mt-20 pb-20 bg-gray-50">
     <div className="text-center mb-16">
-      <h2 className="text-4xl font-bold text-black mb-4">How It Works</h2>
+      <h2 className="text-4xl font-primary font-bold text-black mb-4">How It Works</h2>
       <h3 className="text-xl text-gray-600 max-w-2xl mx-auto font-primary">
         Plan your perfect trip in just three simple steps with our <span className="whitespace-nowrap">AI-powered</span>
         travel assistant

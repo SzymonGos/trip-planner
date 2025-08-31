@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import Image from 'next/image';
 import { Container } from '@/components/Container/Container';
@@ -36,7 +38,7 @@ export const HeroSection = () => (
             {PRODUCT_FEATURES.map((feature, index) => (
               <div key={index} className="flex items-center gap-3">
                 <div className="w-5 h-5 bg-black rounded-full flex items-center justify-center">
-                  <div className="w-2 h-2 bg-zinc-1 00 rounded-full"></div>
+                  <div className="w-2 h-2 bg-zinc-100 rounded-full"></div>
                 </div>
                 <span className="text-gray-700">{feature}</span>
               </div>
