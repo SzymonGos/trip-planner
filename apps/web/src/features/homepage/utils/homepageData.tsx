@@ -79,7 +79,7 @@ export const PRODUCT_STATS_DATA = [
     value: '2.4k',
   },
   {
-    title: 'Satisfaction',
-    value: '98%',
+    title: 'Total Distance',
+    value: '15,4k km',
   },
 ];
