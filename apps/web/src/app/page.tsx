@@ -8,8 +8,10 @@ export const revalidate = 60;
 
 const Home = () => (
   <main>
-    <HeroSectionContainer />
-    <ProductBenefits />
+    <div className="pt-10 bg-gradient-to-b from-zinc-400 to-gray-50 to-80%">
+      <HeroSectionContainer />
+      <ProductBenefits />
+    </div>
     <HowItWorks />
     <FeaturedDestinationsContainer />
     <Footer />

@@ -68,3 +68,18 @@ export const HOW_IT_WORKS_DATA = [
     stepNumber: '03',
   },
 ];
+
+export const PRODUCT_STATS_DATA = [
+  {
+    title: 'Destinations',
+    value: '156',
+  },
+  {
+    title: 'Travelers',
+    value: '2.4k',
+  },
+  {
+    title: 'Satisfaction',
+    value: '98%',
+  },
+];

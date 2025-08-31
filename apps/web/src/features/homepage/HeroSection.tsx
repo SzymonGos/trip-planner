@@ -6,14 +6,15 @@ import Link from 'next/link';
 import { getTripPlannerUrl } from '../trip/helpers/getTripPlannerUrl';
 import { PRODUCT_FEATURES } from './utils/homepageData';
 import { ArrowIcon } from '@/components/Icons/ArrowIcon';
+import { HeroProductStats } from './HeroProductStats';
 
 export const HeroSection = () => (
-  <Container className="mt-10 py-16">
+  <Container className="py-16">
     <div className="px-4">
       <div className="grid lg:grid-cols-2 gap-12 items-center">
-        <div className="space-y-8">
+        <div className="space-y-8 self-start">
           <h1 className="text-5xl lg:text-5xl font-bold text-black leading-tight font-primary">
-            Plan your perfect trip with routetripper
+            Plan your perfect trip
           </h1>
           <p className="text-xl text-gray-600 leading-relaxed">
             Our all-in-one solution helps travelers discover destinations, plan itineraries, and create unforgettable
@@ -35,7 +36,7 @@ export const HeroSection = () => (
             {PRODUCT_FEATURES.map((feature, index) => (
               <div key={index} className="flex items-center gap-3">
                 <div className="w-5 h-5 bg-black rounded-full flex items-center justify-center">
-                  <div className="w-2 h-2 bg-white rounded-full"></div>
+                  <div className="w-2 h-2 bg-zinc-1 00 rounded-full"></div>
                 </div>
                 <span className="text-gray-700">{feature}</span>
               </div>
@@ -44,31 +45,16 @@ export const HeroSection = () => (
         </div>
 
         <div className="relative">
-          <div className="relative rounded-lg overflow-hidden">
+          <div className="relative rounded-md bg-tp-gray-100 p-1 overflow-hidden">
             <Image
               src="/images/road-landscape.webp"
               alt="Scenic road landscape for travel inspiration"
               width={600}
               height={400}
-              className="w-full h-auto object-cover"
+              className="w-full h-auto object-cover rounded-md"
             />
 
-            <div className="absolute bottom-4 left-4 right-4 bg-white/90 backdrop-blur-sm rounded-lg p-6">
-              <div className="grid grid-cols-3 gap-6 text-center">
-                <div>
-                  <div className="text-2xl font-bold text-black">156</div>
-                  <div className="text-sm text-gray-600">Destinations</div>
-                </div>
-                <div>
-                  <div className="text-2xl font-bold text-black">2.4k</div>
-                  <div className="text-sm text-gray-600">Travelers</div>
-                </div>
-                <div>
-                  <div className="text-2xl font-bold text-black">98%</div>
-                  <div className="text-sm text-gray-600">Satisfaction</div>
-                </div>
-              </div>
-            </div>
+            <HeroProductStats />
           </div>
         </div>
       </div>
