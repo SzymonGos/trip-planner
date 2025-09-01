@@ -25,9 +25,10 @@ const defaultCenter: TLocationCoordsProps = {
 
 type TGoogleMapsProps = {
   canEdit?: boolean;
+  shouldCountRoutes?: boolean;
 };
 
-export const GoogleMaps: FC<TGoogleMapsProps> = ({ canEdit = true }) => {
+export const GoogleMaps: FC<TGoogleMapsProps> = ({ canEdit = true, shouldCountRoutes = false }) => {
   const { authUserId } = useAuthenticatedUser();
   const { incrementRouteCount, canCreateRoute } = useRouteUsage(authUserId);
   const router = useRouter();
@@ -54,7 +55,7 @@ export const GoogleMaps: FC<TGoogleMapsProps> = ({ canEdit = true }) => {
         return;
       }
 
-      if (authUserId && !canCreateRoute) {
+      if (authUserId && shouldCountRoutes && !canCreateRoute) {
         toast.error(
           `Route limit reached! You've used ${USER_GOOGLE_MAPS_ROUTE_LIMIT} routes this month. Please wait until reset.`,
         );
@@ -75,7 +76,7 @@ export const GoogleMaps: FC<TGoogleMapsProps> = ({ canEdit = true }) => {
         }
       });
     },
-    [directionsValue, setDirectionsValue, canEdit, authUserId, canCreateRoute, router],
+    [directionsValue, setDirectionsValue, canEdit, authUserId, shouldCountRoutes, canCreateRoute, router],
   );
 
   const directionsCallback = useCallback(
@@ -96,7 +97,9 @@ export const GoogleMaps: FC<TGoogleMapsProps> = ({ canEdit = true }) => {
 
           getDistance(originStr, destinationStr);
 
-          incrementRouteCount(originStr, destinationStr);
+          if (shouldCountRoutes) {
+            incrementRouteCount(originStr, destinationStr);
+          }
         } else {
           console.log('Missing origin or destination:', {
             origin: directionsValue.origin,
