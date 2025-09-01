@@ -18,13 +18,14 @@ export const GoogleMapsContainer = () => {
   const { currentRouteCount, usagePercentage, resetDate } = useRouteUsage(authUserId);
 
   const isTripViewPage = pathname.startsWith(`/trip/${tripId}`);
-  const isEditTripPlanner = pathname.startsWith('/trip/planner');
-  const isEditTripPlannerEdit = pathname.startsWith('/trip/planner/edit/');
+  const isTripPlannerPage = pathname.startsWith('/trip/planner');
+  const isEditTripPlannerPage = pathname.startsWith('/trip/planner/edit/');
   const canEdit = !isTripViewPage;
+  const shouldCountRoutes = (isTripPlannerPage || isEditTripPlannerPage) && !isTripViewPage;
 
   return (
     <>
-      {authUserId && (isEditTripPlanner || isEditTripPlannerEdit) && (
+      {authUserId && (isTripPlannerPage || isEditTripPlannerPage) && (
         <TripDistanceInfo
           distance={distanceInfo?.distance}
           duration={distanceInfo?.duration}
@@ -33,7 +34,7 @@ export const GoogleMapsContainer = () => {
           resetDate={resetDate}
         />
       )}
-      <GoogleMaps canEdit={canEdit} />
+      <GoogleMaps canEdit={canEdit} shouldCountRoutes={shouldCountRoutes} />
       {canEdit && <AiChatSheetContainer />}
     </>
   );
