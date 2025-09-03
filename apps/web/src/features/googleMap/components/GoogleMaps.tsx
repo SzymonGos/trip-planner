@@ -1,7 +1,7 @@
 'use client';
 
-import React, { FC, useCallback, useMemo } from 'react';
-import { GoogleMap, DirectionsRenderer, DirectionsService } from '@react-google-maps/api';
+import React, { FC, useCallback, useMemo, useState, useEffect } from 'react';
+import { GoogleMap, DirectionsRenderer, DirectionsService, Marker } from '@react-google-maps/api';
 import { TLocationCoordsProps, useUserGeolocation } from '@/hooks/useGeolocation';
 import { useGoogleMapsDirections } from '@/lib/contexts/DirectionsContext';
 import { useGoogleMapLoader } from '../hooks/useGoogleMapLoader';
@@ -12,6 +12,7 @@ import { useAuthenticatedUser } from '../../user/hooks/useAuthenticatedUser';
 import { toast } from 'sonner';
 import { USER_GOOGLE_MAPS_ROUTE_LIMIT } from '@/lib/constants';
 import { useRouter } from 'next/navigation';
+import { customMarkerIcon } from '../utils/customMarkerIcon';
 
 const mapContainerStyle = {
   height: '100%',
@@ -32,6 +33,8 @@ export const GoogleMaps: FC<TGoogleMapsProps> = ({ canEdit = true, shouldCountRo
   const { authUserId } = useAuthenticatedUser();
   const { incrementRouteCount, canCreateRoute } = useRouteUsage(authUserId);
   const router = useRouter();
+  const [originCoords, setOriginCoords] = useState<TLocationCoordsProps | null>(null);
+  const [destinationCoords, setDestinationCoords] = useState<TLocationCoordsProps | null>(null);
 
   const {
     directionsValue,
@@ -43,6 +46,24 @@ export const GoogleMaps: FC<TGoogleMapsProps> = ({ canEdit = true, shouldCountRo
   } = useGoogleMapsDirections();
   const { isLoaded } = useGoogleMapLoader();
   const { location } = useUserGeolocation();
+
+  useEffect(() => {
+    if (directionsResult) {
+      const route = directionsResult.routes[0];
+      if (route) {
+        const leg = route.legs[0];
+        if (leg) {
+          const originLat = leg.start_location.lat();
+          const originLng = leg.start_location.lng();
+          setOriginCoords({ lat: originLat, lng: originLng });
+
+          const destLat = leg.end_location.lat();
+          const destLng = leg.end_location.lng();
+          setDestinationCoords({ lat: destLat, lng: destLng });
+        }
+      }
+    }
+  }, [directionsResult]);
 
   const onMapClick = useCallback(
     (e: google.maps.MapMouseEvent) => {
@@ -83,7 +104,6 @@ export const GoogleMaps: FC<TGoogleMapsProps> = ({ canEdit = true, shouldCountRo
     (result: google.maps.DirectionsResult | null, status: google.maps.DirectionsStatus) => {
       if (status === 'OK' && result !== null) {
         setDirectionsResult(result);
-
         if (directionsValue.origin && directionsValue.destination) {
           const originStr =
             typeof directionsValue.origin === 'string'
@@ -157,9 +177,9 @@ export const GoogleMaps: FC<TGoogleMapsProps> = ({ canEdit = true, shouldCountRo
         <DirectionsRenderer
           directions={directionsResult}
           options={{
-            suppressMarkers: false,
+            suppressMarkers: true,
             polylineOptions: {
-              strokeColor: '#3B82F6',
+              strokeColor: '#059669',
               strokeOpacity: 0.8,
               strokeWeight: 4,
             },
@@ -168,6 +188,8 @@ export const GoogleMaps: FC<TGoogleMapsProps> = ({ canEdit = true, shouldCountRo
           onLoad={onDirectionsLoad}
         />
       )}
+      {originCoords && <Marker position={originCoords} icon={customMarkerIcon('#059669')} />}
+      {destinationCoords && <Marker position={destinationCoords} icon={customMarkerIcon('#065F46')} />}
     </GoogleMap>
   );
 };

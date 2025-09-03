@@ -17,7 +17,7 @@ export const TripPageLayoutContainer: FC<TripPageLayoutContainerProps> = ({ chil
     <>
       <div className="grid grid-cols-4 lg:grid-cols-12">
         <div
-          className={cx('w-full col-span-full lg:col-span-4 border-r border-tp-gray-100', {
+          className={cx('w-full col-span-full lg:col-span-4 xl:col-span-3 border-r border-tp-gray-100', {
             'hidden lg:block': showMap,
           })}
         >
@@ -25,7 +25,7 @@ export const TripPageLayoutContainer: FC<TripPageLayoutContainerProps> = ({ chil
         </div>
 
         <div
-          className={cx('relative w-full h-dvh col-span-full lg:col-span-8', {
+          className={cx('relative w-full h-dvh col-span-full lg:col-span-8 xl:col-span-9', {
             block: showMap,
             'hidden lg:block': !showMap,
           })}

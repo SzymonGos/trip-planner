@@ -20,7 +20,7 @@ export const TripImagesCarousel: FC<TripImagesCarouselProps> = ({
   scrollNext,
   handleImageClick,
 }) => (
-  <div className="w-full lg:max-w-xl mx-auto">
+  <div className="w-full mt-16 lg:max-w-xl mx-auto">
     <div className="relative">
       <div className="overflow-hidden" ref={emblaRef}>
         <div className="flex h-[200px]">

@@ -57,7 +57,7 @@ export const AiChatSheet: FC<TAiChatSheetProps> = ({
             size="icon"
             className="fixed bottom-[200px] right-[10px] h-10 w-10 rounded-md bg-zinc-500 hover:bg-zinc-400 text-white shadow-lg hover:shadow-xl transition-all duration-200 z-50"
           >
-            <MessageCircle className="!size-6" />
+            <MessageCircle className="!size-6 animate-pulse" />
           </Button>
         </SheetTrigger>
 
