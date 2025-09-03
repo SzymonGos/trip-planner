@@ -4,13 +4,14 @@ import { TripImage as TTripImage } from 'tp-graphql-types';
 import { TripImagesCarousel } from './TripImagesCarousel';
 import { isEmpty } from 'lodash';
 import { FullScreenGalleryContainer } from '@/features/gallery/FullScreenGalleryContainer';
+import Autoplay from 'embla-carousel-autoplay';
 
 interface TripImagesCarouselContainerProps {
   images: TTripImage[];
 }
 
 export const TripImagesCarouselContainer: FC<TripImagesCarouselContainerProps> = ({ images }) => {
-  const [emblaRef, emblaApi] = useEmblaCarousel({ slidesToScroll: 2, loop: true });
+  const [emblaRef, emblaApi] = useEmblaCarousel({ slidesToScroll: 2, loop: true }, [Autoplay({ delay: 3000 })]);
 
   const scrollPrev = useCallback(() => emblaApi && emblaApi.scrollPrev(), [emblaApi]);
   const scrollNext = useCallback(() => emblaApi && emblaApi.scrollNext(), [emblaApi]);
