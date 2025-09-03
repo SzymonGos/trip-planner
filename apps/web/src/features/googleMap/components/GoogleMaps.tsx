@@ -46,7 +46,6 @@ export const GoogleMaps: FC<TGoogleMapsProps> = ({ canEdit = true, shouldCountRo
   } = useGoogleMapsDirections();
   const { isLoaded } = useGoogleMapLoader();
   const { location } = useUserGeolocation();
-  console.log('directionsResult', directionsResult);
 
   useEffect(() => {
     if (directionsResult) {

@@ -19,7 +19,7 @@ export type TViewTripProps = {
 };
 
 export const ViewTrip: FC<TViewTripProps> = ({ trip, isOwner, expanded, setExpanded }) => (
-  <div className="@container pt-28 pb-10 gap-8 px-5">
+  <div className="@container pt-28 pb-10 gap-8 px-5 bg-gradient-to-b from-zinc-200 to-gray-50 to-50%">
     <div className="max-w-full">
       <h1 className="text-[22px] font-semibold mb-2 font-primary">{trip?.title}</h1>
       <div className="my-5 flex flex-col @md:flex-row @md:items-center gap-4 @md:gap-2 justify-between">
@@ -53,7 +53,7 @@ export const ViewTrip: FC<TViewTripProps> = ({ trip, isOwner, expanded, setExpan
           >
             {trip.description}
           </p>
-          <ReadMoreButton expanded={expanded} setExpanded={setExpanded} />
+          {trip.description.length > 120 && <ReadMoreButton expanded={expanded} setExpanded={setExpanded} />}
         </div>
       )}
       <TripTimeline origin={trip?.origin} destination={trip?.destination} />

@@ -6,7 +6,7 @@ type TTripTimelineProps = {
 };
 
 export const TripTimeline: FC<TTripTimelineProps> = ({ origin, destination }) => (
-  <div className="my-8 relative">
+  <div className="mt-12 mb-8 relative">
     <div className="absolute left-[8px] top-4 bottom-4 w-0.5 border-l-4 border-dashed border-gray-500" />
     <div className="space-y-12">
       <div className="flex items-start gap-4">
