@@ -3,5 +3,5 @@ export const formatDistance = (num: number): string => {
     // Round to 1 decimal place and add 'k'
     return (Math.round(num / 100) / 10).toFixed(1).replace(/\.0$/, '') + 'k';
   }
-  return num.toString();
+  return num.toFixed(1).replace(/\.0$/, '');
 };

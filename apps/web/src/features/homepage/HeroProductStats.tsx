@@ -6,8 +6,8 @@ export const HeroProductStats = () => (
     <div className="grid grid-cols-3 gap-6 text-center">
       {PRODUCT_STATS_DATA.map((stat) => (
         <div key={stat.title}>
-          <div className="text-2xl font-bold text-gray-900">{stat.value}</div>
-          <div className="text-sm text-gray-600 mt-1">{stat.title}</div>
+          <div className="text-sm md:text-2xl font-bold text-gray-900">{stat.value}</div>
+          <div className="text-xs md:text-sm text-gray-600 mt-1">{stat.title}</div>
         </div>
       ))}
     </div>

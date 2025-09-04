@@ -12,6 +12,7 @@ export const getUserDataQuery = gql`
         publicUrl
         publicUrlTransformed
       }
+      createdAt
     }
   }
 `;

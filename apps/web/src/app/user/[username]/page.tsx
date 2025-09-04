@@ -23,7 +23,7 @@ const UserPage = async ({ params }: { params: { username: string } }) => {
 
   return (
     <div className="min-h-screen mt-5 py-8 ">
-      <Container className="mt-10 px-0 grid grid-cols-4 lg:grid-cols-12 gap-8">
+      <Container className="mt-10 px-0 grid grid-cols-4 lg:grid-cols-12 gap-8 relative">
         <PreloadQuery<{ user: TUser }, { id: string }>
           query={getUserDataQuery}
           variables={{
@@ -39,7 +39,7 @@ const UserPage = async ({ params }: { params: { username: string } }) => {
         >
           {(queryRef) => (
             <Suspense fallback={<ProfileCardLoader />}>
-              <div className="col-span-full lg:col-span-3">
+              <div className="col-span-full lg:col-span-3 relative">
                 <ProfileCardContainer queryRef={queryRef} />
               </div>
             </Suspense>
