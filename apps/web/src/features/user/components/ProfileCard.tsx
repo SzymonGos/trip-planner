@@ -13,7 +13,7 @@ type ProfileCardProps = {
 };
 
 export const ProfileCard: FC<ProfileCardProps> = ({ user, isOwnProfile, memberSince }) => (
-  <div className="bg-tp-white-100 rounded-lg p-6 border h-fit relative">
+  <div className="bg-tp-white-100 rounded-lg p-6 border h-fit sticky top-[88px]">
     {isOwnProfile && (
       <Link
         href="/user/settings"
