@@ -1,7 +1,7 @@
 import React, { useRef, ChangeEvent, FC } from 'react';
 import { TripImagesUpload } from './TripImagesUpload';
 import { useTripImages } from '../../hooks/useTripImages';
-import { TTripImageFormValueProps } from './CreateTripFormContainer';
+import { TTripImageFormValueProps } from '../../hooks/useTripFormSync';
 
 export type TTripImagesUploadContainerProps = {
   onFilesChange?: (images: (File | TTripImageFormValueProps)[]) => void;
