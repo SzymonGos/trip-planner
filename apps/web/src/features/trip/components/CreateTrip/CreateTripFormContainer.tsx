@@ -15,18 +15,10 @@ import { getTripUrl } from '../../helpers/getTripUrl';
 import { getUserTripsQuery } from '@/features/user/server/db/getUserTripsQuery';
 import { getTripsQuery } from '../../server/db/getTripsQuery';
 import { TripFormProvider } from '../../contexts/TripFormProvider';
-import { TTripImageFormValueProps } from '../../hooks/useTripFormSync';
 import { useGoogleMapLoader } from '@/features/googleMap/hooks/useGoogleMapLoader';
 import { TripLoader } from '../TripLoader';
 
-export type TFormValuesProps = {
-  title: string;
-  description?: string;
-  origin: string;
-  destination: string;
-  status: 'planning' | 'completed';
-  images?: (File | TTripImageFormValueProps)[];
-} & z.infer<typeof tripSchema>;
+export type TFormValuesProps = z.infer<typeof tripSchema>;
 
 export type TAutocompleteProps = google.maps.places.Autocomplete | null;
 
