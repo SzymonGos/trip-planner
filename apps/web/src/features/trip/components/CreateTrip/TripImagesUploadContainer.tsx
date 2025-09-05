@@ -4,7 +4,6 @@ import { useTripImages } from '../../hooks/useTripImages';
 import { TTripImageFormValueProps } from '../../hooks/useTripFormSync';
 
 export type TTripImagesUploadContainerProps = {
-  onFilesChange?: (images: (File | TTripImageFormValueProps)[]) => void;
   className?: string;
   disabled?: boolean;
   defaultImages?: TTripImageFormValueProps[];
@@ -12,14 +11,13 @@ export type TTripImagesUploadContainerProps = {
 };
 
 export const TripImagesUploadContainer: FC<TTripImagesUploadContainerProps> = ({
-  onFilesChange,
   className,
   disabled,
   defaultImages = [],
   canAddMore,
 }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const { newImages } = useTripImages();
+  const { newImages, handleNewImagesChange, handleNewImagesReplace, handleExistingImagesRemove } = useTripImages();
 
   const images = [...defaultImages, ...newImages];
 
@@ -30,13 +28,20 @@ export const TripImagesUploadContainer: FC<TTripImagesUploadContainerProps> = ({
   const handleFilesChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (disabled) return;
     const files = Array.from(e.target.files || []);
-    onFilesChange?.(files);
+    handleNewImagesChange(files);
     e.target.value = '';
   };
 
   const handleRemove = (index: number) => {
-    const updatedImages = images.filter((_, i) => i !== index);
-    onFilesChange?.(updatedImages.filter((img): img is File => img instanceof File));
+    const imageToRemove = images[index];
+
+    if (imageToRemove instanceof File) {
+      const newImageIndex = index - defaultImages.length;
+      const updatedNewImages = newImages.filter((_, i) => i !== newImageIndex);
+      handleNewImagesReplace(updatedNewImages);
+    } else {
+      handleExistingImagesRemove(imageToRemove.id);
+    }
   };
 
   return (

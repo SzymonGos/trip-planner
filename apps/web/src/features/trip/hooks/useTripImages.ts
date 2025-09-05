@@ -3,8 +3,15 @@
 import { useTripFormContext } from '../contexts/TripFormContext';
 
 export const useTripImages = () => {
-  const { existingImages, newImages, handleExistingImagesRemove, handleNewImagesChange, maxTotalImages, formStatus } =
-    useTripFormContext();
+  const {
+    existingImages,
+    newImages,
+    handleExistingImagesRemove,
+    handleNewImagesChange,
+    handleNewImagesReplace,
+    maxTotalImages,
+    formStatus,
+  } = useTripFormContext();
 
   const totalImages = existingImages.length + newImages.length;
   const canAddMore = totalImages < maxTotalImages;
@@ -15,6 +22,7 @@ export const useTripImages = () => {
     newImages,
     handleExistingImagesRemove,
     handleNewImagesChange,
+    handleNewImagesReplace,
     maxTotalImages,
     totalImages,
     canAddMore,

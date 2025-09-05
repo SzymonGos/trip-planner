@@ -55,6 +55,15 @@ export const TripFormProvider: React.FC<TTripFormProviderProps> = ({
     [existingImages, newImages, useForm],
   );
 
+  const handleNewImagesReplace = useCallback(
+    (files: File[]) => {
+      setNewImages(files);
+      const updatedImages = [...existingImages, ...files];
+      useForm.setValue('images', updatedImages, { shouldDirty: true });
+    },
+    [existingImages, useForm],
+  );
+
   const contextValue: TripFormContextTypeProps = useMemo(
     () => ({
       isEditing,
@@ -62,6 +71,7 @@ export const TripFormProvider: React.FC<TTripFormProviderProps> = ({
       newImages,
       handleExistingImagesRemove,
       handleNewImagesChange,
+      handleNewImagesReplace,
       maxTotalImages: 5,
       formStatus,
       isSubmitting,
@@ -76,6 +86,7 @@ export const TripFormProvider: React.FC<TTripFormProviderProps> = ({
       newImages,
       handleExistingImagesRemove,
       handleNewImagesChange,
+      handleNewImagesReplace,
       formStatus,
       isSubmitting,
       hasChanges,

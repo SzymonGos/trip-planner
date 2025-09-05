@@ -9,6 +9,7 @@ export type TripFormContextTypeProps = {
   newImages: File[];
   handleExistingImagesRemove: (imageId: string) => void;
   handleNewImagesChange: (files: File[]) => void;
+  handleNewImagesReplace: (files: File[]) => void;
   maxTotalImages: number;
   formStatus: 'planning' | 'completed';
   isSubmitting: boolean;
@@ -24,6 +25,7 @@ const defaultContextValue: TripFormContextTypeProps = {
   newImages: [],
   handleExistingImagesRemove: () => {},
   handleNewImagesChange: () => {},
+  handleNewImagesReplace: () => {},
   maxTotalImages: 5,
   formStatus: 'planning',
   isSubmitting: false,
