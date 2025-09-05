@@ -103,7 +103,7 @@ export const CreateTripForm: FC<TCreateTripFormProps> = ({
                   </div>
                 </TooltipTrigger>
                 <TooltipContent side="right" sideOffset={8}>
-                  Change status to <b>Completed</b> to add images
+                  Change trip status to <b>Completed</b> to add images
                 </TooltipContent>
               </Tooltip>
             ) : (
