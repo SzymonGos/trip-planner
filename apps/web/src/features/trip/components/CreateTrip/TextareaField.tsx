@@ -6,7 +6,7 @@ import { TFormValuesProps } from './CreateTripFormContainer';
 
 type TTextareaFieldProps = TInputFieldProps<TFormValuesProps>;
 
-export const TextareaFiel: FC<TTextareaFieldProps> = ({ control, label, name, placeholder }) => (
+export const TextareaField: FC<TTextareaFieldProps> = ({ control, label, name, placeholder }) => (
   <FormField
     control={control}
     name={name}
