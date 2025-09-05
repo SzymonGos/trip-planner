@@ -3,6 +3,13 @@
   "sourceRoot": "apps/web",
   "projectType": "application",
   "targets": {
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npm run build",
+        "cwd": "apps/web"
+      }
+    },
     "serve": {
       "executor": "nx:run-commands",
       "options": {
