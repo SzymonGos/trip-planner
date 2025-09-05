@@ -7,4 +7,4 @@ export const OPENAI_API_KEY = process.env.OPENAI_API_KEY || '';
 export const CHAT_API_URL = '/api/chat';
 
 export const CLERK_PUBLISHABLE_KEY =
-  process.env.CLERK_PUBLISHABLE_KEY || process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY || '';
+  process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY || process.env.CLERK_PUBLISHABLE_KEY || '';
