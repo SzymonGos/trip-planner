@@ -1,10 +1,9 @@
 import React, { useRef, ChangeEvent, FC } from 'react';
 import { TripImagesUpload } from './TripImagesUpload';
 import { useTripImages } from '../../hooks/useTripImages';
-import { TTripImageFormValueProps } from './CreateTripFormContainer';
+import { TTripImageFormValueProps } from '../../hooks/useTripFormSync';
 
 export type TTripImagesUploadContainerProps = {
-  onFilesChange?: (images: (File | TTripImageFormValueProps)[]) => void;
   className?: string;
   disabled?: boolean;
   defaultImages?: TTripImageFormValueProps[];
@@ -12,14 +11,13 @@ export type TTripImagesUploadContainerProps = {
 };
 
 export const TripImagesUploadContainer: FC<TTripImagesUploadContainerProps> = ({
-  onFilesChange,
   className,
   disabled,
   defaultImages = [],
   canAddMore,
 }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const { newImages } = useTripImages();
+  const { newImages, handleExistingImagesRemove, handleNewImagesChange, handleNewImagesAdd } = useTripImages();
 
   const images = [...defaultImages, ...newImages];
 
@@ -30,13 +28,25 @@ export const TripImagesUploadContainer: FC<TTripImagesUploadContainerProps> = ({
   const handleFilesChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (disabled) return;
     const files = Array.from(e.target.files || []);
-    onFilesChange?.(files);
+    handleNewImagesAdd(files);
     e.target.value = '';
   };
 
   const handleRemove = (index: number) => {
-    const updatedImages = images.filter((_, i) => i !== index);
-    onFilesChange?.(updatedImages.filter((img): img is File => img instanceof File));
+    const defaultImagesCount = defaultImages.length;
+
+    if (index < defaultImagesCount) {
+      // Removing an existing image (from defaultImages)
+      const existingImage = defaultImages[index];
+      if (existingImage?.image?.id) {
+        handleExistingImagesRemove(existingImage.image.id);
+      }
+    } else {
+      // Removing a new image (from newImages)
+      const newImageIndex = index - defaultImagesCount;
+      const updatedNewImages = newImages.filter((_, i) => i !== newImageIndex);
+      handleNewImagesChange(updatedNewImages);
+    }
   };
 
   return (
