@@ -13,14 +13,14 @@ export type TTripImagesManagerProps = {
 };
 
 export const TripImagesManager: FC<TTripImagesManagerProps> = ({ disabled, images = [] }) => {
-  const { canAddMore, handleNewImagesChange } = useTripImages();
+  const { canAddMore } = useTripImages();
   const { tripId } = useTripFormContext();
 
   return (
     <div className="flex gap-2 items-center flex-wrap">
       <TripImagesDisplay images={images} disabled={disabled} tripId={tripId} />
 
-      <TripImagesUploadContainer disabled={disabled} onFilesChange={handleNewImagesChange} canAddMore={canAddMore} />
+      <TripImagesUploadContainer disabled={disabled} canAddMore={canAddMore} />
     </div>
   );
 };

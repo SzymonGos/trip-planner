@@ -2,7 +2,7 @@ import React, { FC, RefObject, ChangeEvent } from 'react';
 import { AddImageButton } from './AddImageButton';
 import Image from 'next/image';
 import { Trash2 } from 'lucide-react';
-import { TTripImageFormValueProps } from './CreateTripFormContainer';
+import { TTripImageFormValueProps } from '../../hooks/useTripFormSync';
 import { getCloudinaryImageSrc } from '@/features/user/utils/getCloudinaryImageSrc';
 
 export type TTripImagesUploadProps = {

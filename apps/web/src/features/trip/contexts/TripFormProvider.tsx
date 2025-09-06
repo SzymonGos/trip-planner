@@ -47,6 +47,15 @@ export const TripFormProvider: React.FC<TTripFormProviderProps> = ({
 
   const handleNewImagesChange = useCallback(
     (files: File[]) => {
+      setNewImages(files);
+      const updatedImages = [...existingImages, ...files];
+      useForm.setValue('images', updatedImages, { shouldDirty: true });
+    },
+    [existingImages, useForm],
+  );
+
+  const handleNewImagesAdd = useCallback(
+    (files: File[]) => {
       const updatedNewImages = [...newImages, ...files];
       setNewImages(updatedNewImages);
       const updatedImages = [...existingImages, ...updatedNewImages];
@@ -62,6 +71,7 @@ export const TripFormProvider: React.FC<TTripFormProviderProps> = ({
       newImages,
       handleExistingImagesRemove,
       handleNewImagesChange,
+      handleNewImagesAdd,
       maxTotalImages: 5,
       formStatus,
       isSubmitting,
@@ -76,6 +86,7 @@ export const TripFormProvider: React.FC<TTripFormProviderProps> = ({
       newImages,
       handleExistingImagesRemove,
       handleNewImagesChange,
+      handleNewImagesAdd,
       formStatus,
       isSubmitting,
       hasChanges,
