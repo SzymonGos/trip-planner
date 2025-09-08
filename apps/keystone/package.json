@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "keystone dev && postinstall",
+    "build": "keystone build",
     "start": "keystone start",
     "postinstall": "prisma generate"
   },
