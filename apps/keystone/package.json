@@ -6,9 +6,12 @@
     "dev": "keystone dev && postinstall",
     "build": "keystone build",
     "start": "keystone start",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "seed": "keystone dev --seed-data",
+    "reset": "npx keystone prisma migrate reset && npx keystone dev --seed-data"
   },
   "dependencies": {
+    "@keystone-6/auth": "^8.1.0",
     "@keystone-6/cloudinary": "^8.0.0",
     "@keystone-6/core": "^6.3.1",
     "cloudinary": "^2.6.1",

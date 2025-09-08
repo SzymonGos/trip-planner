@@ -20,6 +20,46 @@ export type Scalars = {
   Upload: { input: any; output: any; }
 };
 
+export type Admin = {
+  __typename?: 'Admin';
+  id: Scalars['ID']['output'];
+  name?: Maybe<Scalars['String']['output']>;
+  password?: Maybe<PasswordState>;
+};
+
+export type AdminCreateInput = {
+  name?: InputMaybe<Scalars['String']['input']>;
+  password?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type AdminOrderByInput = {
+  id?: InputMaybe<OrderDirection>;
+  name?: InputMaybe<OrderDirection>;
+};
+
+export type AdminUpdateArgs = {
+  data: AdminUpdateInput;
+  where: AdminWhereUniqueInput;
+};
+
+export type AdminUpdateInput = {
+  name?: InputMaybe<Scalars['String']['input']>;
+  password?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type AdminWhereInput = {
+  AND?: InputMaybe<Array<AdminWhereInput>>;
+  NOT?: InputMaybe<Array<AdminWhereInput>>;
+  OR?: InputMaybe<Array<AdminWhereInput>>;
+  id?: InputMaybe<IdFilter>;
+  name?: InputMaybe<StringFilter>;
+};
+
+export type AdminWhereUniqueInput = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type BooleanFilter = {
   equals?: InputMaybe<Scalars['Boolean']['input']>;
   not?: InputMaybe<BooleanFilter>;
@@ -264,24 +304,40 @@ export type KeystoneMeta = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  createAdmin?: Maybe<Admin>;
+  createAdmins?: Maybe<Array<Maybe<Admin>>>;
   createTrip?: Maybe<Trip>;
   createTripImage?: Maybe<TripImage>;
   createTripImages?: Maybe<Array<Maybe<TripImage>>>;
   createTrips?: Maybe<Array<Maybe<Trip>>>;
   createUser?: Maybe<User>;
   createUsers?: Maybe<Array<Maybe<User>>>;
+  deleteAdmin?: Maybe<Admin>;
+  deleteAdmins?: Maybe<Array<Maybe<Admin>>>;
   deleteTrip?: Maybe<Trip>;
   deleteTripImage?: Maybe<TripImage>;
   deleteTripImages?: Maybe<Array<Maybe<TripImage>>>;
   deleteTrips?: Maybe<Array<Maybe<Trip>>>;
   deleteUser?: Maybe<User>;
   deleteUsers?: Maybe<Array<Maybe<User>>>;
+  updateAdmin?: Maybe<Admin>;
+  updateAdmins?: Maybe<Array<Maybe<Admin>>>;
   updateTrip?: Maybe<Trip>;
   updateTripImage?: Maybe<TripImage>;
   updateTripImages?: Maybe<Array<Maybe<TripImage>>>;
   updateTrips?: Maybe<Array<Maybe<Trip>>>;
   updateUser?: Maybe<User>;
   updateUsers?: Maybe<Array<Maybe<User>>>;
+};
+
+
+export type MutationCreateAdminArgs = {
+  data: AdminCreateInput;
+};
+
+
+export type MutationCreateAdminsArgs = {
+  data: Array<AdminCreateInput>;
 };
 
 
@@ -315,6 +371,16 @@ export type MutationCreateUsersArgs = {
 };
 
 
+export type MutationDeleteAdminArgs = {
+  where: AdminWhereUniqueInput;
+};
+
+
+export type MutationDeleteAdminsArgs = {
+  where: Array<AdminWhereUniqueInput>;
+};
+
+
 export type MutationDeleteTripArgs = {
   where: TripWhereUniqueInput;
 };
@@ -342,6 +408,17 @@ export type MutationDeleteUserArgs = {
 
 export type MutationDeleteUsersArgs = {
   where: Array<UserWhereUniqueInput>;
+};
+
+
+export type MutationUpdateAdminArgs = {
+  data: AdminUpdateInput;
+  where: AdminWhereUniqueInput;
+};
+
+
+export type MutationUpdateAdminsArgs = {
+  data: Array<AdminUpdateArgs>;
 };
 
 
@@ -396,8 +473,16 @@ export enum OrderDirection {
   Desc = 'desc'
 }
 
+export type PasswordState = {
+  __typename?: 'PasswordState';
+  isSet: Scalars['Boolean']['output'];
+};
+
 export type Query = {
   __typename?: 'Query';
+  admin?: Maybe<Admin>;
+  admins?: Maybe<Array<Admin>>;
+  adminsCount?: Maybe<Scalars['Int']['output']>;
   keystone: KeystoneMeta;
   trip?: Maybe<Trip>;
   tripImage?: Maybe<TripImage>;
@@ -408,6 +493,25 @@ export type Query = {
   user?: Maybe<User>;
   users?: Maybe<Array<User>>;
   usersCount?: Maybe<Scalars['Int']['output']>;
+};
+
+
+export type QueryAdminArgs = {
+  where: AdminWhereUniqueInput;
+};
+
+
+export type QueryAdminsArgs = {
+  cursor?: InputMaybe<AdminWhereUniqueInput>;
+  orderBy?: Array<AdminOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: AdminWhereInput;
+};
+
+
+export type QueryAdminsCountArgs = {
+  where?: AdminWhereInput;
 };
 
 
