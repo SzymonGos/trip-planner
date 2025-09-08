@@ -1,5 +1,5 @@
 import { config } from '@keystone-6/core';
-import { CORS_ORIGIN, DATABASE_URL } from './config';
+import { CORS_ORIGIN, DATABASE_URL, DATABASE_URL_SUFFIX } from './config';
 import { exec } from 'child_process';
 import { lists } from './index';
 import { scheduledCleanup } from './src/schemas/User/hooks/cleanupDeletedUsers';
@@ -31,7 +31,7 @@ export default config({
   },
   db: {
     provider: 'postgresql',
-    url: DATABASE_URL,
+    url: DATABASE_URL + DATABASE_URL_SUFFIX,
     onConnect: async () => {
       console.log('--- Generate graphql types');
 
