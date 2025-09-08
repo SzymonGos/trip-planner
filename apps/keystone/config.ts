@@ -17,6 +17,8 @@ export const CLOUDINARY_CONFIGS = {
   folder: process.env.CLOUDINARY_API_FOLDER || '',
 };
 
+export const SESSION_SECRET = process.env.SESSION_SECRET || '';
+
 export type TCloudinaryImageProps = {
   id?: string;
   _meta?: {

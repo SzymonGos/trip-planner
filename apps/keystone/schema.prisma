@@ -11,6 +11,12 @@ generator client {
   provider = "prisma-client-js"
 }
 
+model Admin {
+  id       String @id @default(cuid())
+  name     String @unique @default("")
+  password String
+}
+
 model User {
   id                       String    @id @default(cuid())
   clerkId                  String    @unique @default("")
