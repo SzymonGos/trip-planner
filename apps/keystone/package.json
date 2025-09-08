@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "keystone dev && postinstall",
     "build": "keystone build",
-    "start": "keystone prisma migrate deploy && keystone start",
+    "start": "keystone start",
+    "migrate": "keystone prisma migrate deploy",
     "postinstall": "prisma generate"
   },
   "dependencies": {
