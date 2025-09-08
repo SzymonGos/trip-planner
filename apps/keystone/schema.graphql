@@ -457,6 +457,19 @@ type Mutation {
   updateTripImages(data: [TripImageUpdateArgs!]!): [TripImage]
   deleteTripImage(where: TripImageWhereUniqueInput!): TripImage
   deleteTripImages(where: [TripImageWhereUniqueInput!]!): [TripImage]
+  endSession: Boolean!
+  authenticateAdminWithPassword(name: String!, password: String!): AdminAuthenticationWithPasswordResult
+}
+
+union AdminAuthenticationWithPasswordResult = AdminAuthenticationWithPasswordSuccess | AdminAuthenticationWithPasswordFailure
+
+type AdminAuthenticationWithPasswordSuccess {
+  sessionToken: String!
+  item: Admin!
+}
+
+type AdminAuthenticationWithPasswordFailure {
+  message: String!
 }
 
 type Query {
@@ -473,7 +486,10 @@ type Query {
   tripImages(where: TripImageWhereInput! = {}, orderBy: [TripImageOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TripImageWhereUniqueInput): [TripImage!]
   tripImagesCount(where: TripImageWhereInput! = {}): Int
   keystone: KeystoneMeta!
+  authenticatedItem: AuthenticatedItem
 }
+
+union AuthenticatedItem = Admin
 
 type KeystoneMeta {
   adminMeta: KeystoneAdminMeta!
