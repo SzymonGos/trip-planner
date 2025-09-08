@@ -6,7 +6,6 @@
     "dev": "keystone dev && postinstall",
     "build": "keystone build",
     "start": "keystone start",
-    "migrate": "keystone prisma migrate deploy",
     "postinstall": "prisma generate"
   },
   "dependencies": {
