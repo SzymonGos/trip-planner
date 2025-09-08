@@ -27,19 +27,6 @@ export type Admin = {
   password?: Maybe<PasswordState>;
 };
 
-export type AdminAuthenticationWithPasswordFailure = {
-  __typename?: 'AdminAuthenticationWithPasswordFailure';
-  message: Scalars['String']['output'];
-};
-
-export type AdminAuthenticationWithPasswordResult = AdminAuthenticationWithPasswordFailure | AdminAuthenticationWithPasswordSuccess;
-
-export type AdminAuthenticationWithPasswordSuccess = {
-  __typename?: 'AdminAuthenticationWithPasswordSuccess';
-  item: Admin;
-  sessionToken: Scalars['String']['output'];
-};
-
 export type AdminCreateInput = {
   name?: InputMaybe<Scalars['String']['input']>;
   password?: InputMaybe<Scalars['String']['input']>;
@@ -72,8 +59,6 @@ export type AdminWhereUniqueInput = {
   id?: InputMaybe<Scalars['ID']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
 };
-
-export type AuthenticatedItem = Admin;
 
 export type BooleanFilter = {
   equals?: InputMaybe<Scalars['Boolean']['input']>;
@@ -319,7 +304,6 @@ export type KeystoneMeta = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  authenticateAdminWithPassword?: Maybe<AdminAuthenticationWithPasswordResult>;
   createAdmin?: Maybe<Admin>;
   createAdmins?: Maybe<Array<Maybe<Admin>>>;
   createTrip?: Maybe<Trip>;
@@ -336,7 +320,6 @@ export type Mutation = {
   deleteTrips?: Maybe<Array<Maybe<Trip>>>;
   deleteUser?: Maybe<User>;
   deleteUsers?: Maybe<Array<Maybe<User>>>;
-  endSession: Scalars['Boolean']['output'];
   updateAdmin?: Maybe<Admin>;
   updateAdmins?: Maybe<Array<Maybe<Admin>>>;
   updateTrip?: Maybe<Trip>;
@@ -345,12 +328,6 @@ export type Mutation = {
   updateTrips?: Maybe<Array<Maybe<Trip>>>;
   updateUser?: Maybe<User>;
   updateUsers?: Maybe<Array<Maybe<User>>>;
-};
-
-
-export type MutationAuthenticateAdminWithPasswordArgs = {
-  name: Scalars['String']['input'];
-  password: Scalars['String']['input'];
 };
 
 
@@ -506,7 +483,6 @@ export type Query = {
   admin?: Maybe<Admin>;
   admins?: Maybe<Array<Admin>>;
   adminsCount?: Maybe<Scalars['Int']['output']>;
-  authenticatedItem?: Maybe<AuthenticatedItem>;
   keystone: KeystoneMeta;
   trip?: Maybe<Trip>;
   tripImage?: Maybe<TripImage>;
