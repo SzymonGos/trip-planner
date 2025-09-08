@@ -1,7 +1,13 @@
 import 'dotenv/config';
 
-export const CORS_ORIGIN = ['http://localhost:4000'];
+export const CORS_ORIGIN = process.env.CORS_ORIGIN
+  ? process.env.CORS_ORIGIN.split(',')
+  : process.env.RAILWAY_PUBLIC_DOMAIN
+    ? [`https://${process.env.RAILWAY_PUBLIC_DOMAIN}`]
+    : ['http://localhost:4000'];
 export const DATABASE_URL = process.env.DATABASE_URL || '';
+export const DATABASE_URL_SUFFIX = process.env.DATABASE_URL_SUFFIX || '';
+
 export const SHADOW_DATABASE_URL = process.env.SHADOW_DATABASE_URL || '';
 
 export const CLOUDINARY_CONFIGS = {
