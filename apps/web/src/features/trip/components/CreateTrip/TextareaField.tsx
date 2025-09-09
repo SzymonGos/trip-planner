@@ -17,6 +17,7 @@ export const TextareaField = ({ control, label, name, placeholder }: TTextareaFi
           <Textarea
             placeholder={placeholder}
             {...field}
+            value={field.value as string}
             maxLength={350}
             rows={3}
             className="md:text-base !border-[0.5px] focus-visible:ring-0 border-tp-gray-100 focus:border focus:border-tp-gray-200 shadow-none"
