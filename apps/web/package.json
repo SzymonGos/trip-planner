@@ -59,9 +59,7 @@
     "typescript": "^5"
   },
   "overrides": {
-    "next": "14.2.23",
     "styled-jsx": "5.1.1",
-    "@swc/helpers": "0.5.3",
-    "@next/env": "14.2.23"
+    "@swc/helpers": "0.5.3"
   }
 }
