@@ -1,7 +1,6 @@
 import React, { Suspense } from 'react';
 import { getUserDataByUsernameQuery } from '@/features/user/server/db/getUserDataQuery';
 import { query } from '@/lib/apolloClient';
-import { headers } from 'next/headers';
 import { Container } from '@/components/Container/Container';
 import { UserTripsListContainer } from '@/features/user/components/UserTripsListContainer';
 import { PreloadQuery } from '@/lib/apolloClient';
@@ -12,8 +11,6 @@ import { ProfileCardLoader } from '@/features/user/components/ProfileCardLoader'
 import { Footer } from '@/components/Footer/Footer';
 
 const UserPage = async ({ params }: { params: { username: string } }) => {
-  headers();
-
   const { data: userData } = await query({
     query: getUserDataByUsernameQuery,
     variables: {
