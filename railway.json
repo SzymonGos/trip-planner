@@ -1,11 +1,11 @@
 {
   "$schema": "https://railway.app/railway.schema.json",
   "build": {
-    "buildCommand": "cd ../.. && npm install && cd apps/web && npm run build",
+    "buildCommand": "npm install && npm run build --workspace=apps/web",
     "watchPatterns": ["apps/web/**/*", "modules/**/*", "package.json"]
   },
   "deploy": {
-    "startCommand": "npm start",
+    "startCommand": "npm run start --workspace=apps/web",
     "healthcheckPath": "/",
     "healthcheckTimeout": 100,
     "restartPolicyType": "ON_FAILURE",

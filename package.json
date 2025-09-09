@@ -9,6 +9,8 @@
   ],
   "scripts": {
     "dev": "nx run-many --target=serve --projects=web,keystone --parallel",
+    "build": "nx run web:build",
+    "start": "nx run web:start",
     "lint:eslint": "eslint",
     "lint:eslint:fix": "npm run lint:eslint -- --fix",
     "lint:prettier": "prettier . --check",
