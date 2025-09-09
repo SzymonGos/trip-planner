@@ -2,6 +2,8 @@ import React from 'react';
 import { auth, currentUser } from '@clerk/nextjs/server';
 import { Navbar } from './Navbar';
 
+export const dynamic = 'force-dynamic';
+
 export const NavbarContainer = async () => {
   let user = null;
   let clerkId = null;
