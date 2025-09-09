@@ -14,6 +14,9 @@ const nextConfig = {
   images: {
     domains: [process.env.CLOUDINARY_API_DOMAIN || ''],
   },
+  experimental: {
+    serverComponentsExternalPackages: ['@clerk/nextjs'],
+  },
 };
 
 module.exports = nextConfig;
