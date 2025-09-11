@@ -41,35 +41,18 @@ export async function POST(req: Request) {
   const eventType = evt.type;
 
   if (eventType === 'user.created') {
-    try {
-      const thirtyDaysFromNow = new Date();
-      thirtyDaysFromNow.setDate(thirtyDaysFromNow.getDate() + 30);
+    const thirtyDaysFromNow = new Date();
+    thirtyDaysFromNow.setDate(thirtyDaysFromNow.getDate() + 30);
 
-      // log the user data
-      console.log('Creating user with data:', {
+    await prisma.user.create({
+      data: {
         clerkId: evt.data.id,
-        email: evt.data.email_addresses?.[0]?.email_address,
+        email: evt.data.email_addresses[0].email_address,
         username: evt.data.username,
-      });
-
-      await prisma.user.create({
-        data: {
-          clerkId: evt.data.id,
-          email: evt.data.email_addresses[0].email_address,
-          username: evt.data.username,
-          aiChatUsageResetDate: thirtyDaysFromNow,
-          googleMapsRouteResetDate: thirtyDaysFromNow,
-        },
-      });
-
-      // log the user data
-      console.log('User created successfully:', evt.data.id);
-    } catch (error) {
-      // log the user data
-      console.error('Error creating user:', error);
-      console.error('User data:', evt.data);
-      throw error; // Re-throw to make webhook fail and retry
-    }
+        aiChatUsageResetDate: thirtyDaysFromNow,
+        googleMapsRouteResetDate: thirtyDaysFromNow,
+      },
+    });
   }
 
   return new Response('', { status: 200 });
