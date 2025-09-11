@@ -1,10 +1,12 @@
 import 'dotenv/config';
 
-export const CORS_ORIGIN = process.env.CORS_ORIGIN
-  ? process.env.CORS_ORIGIN.split(',')
-  : process.env.RAILWAY_PUBLIC_DOMAIN
-    ? [`https://${process.env.RAILWAY_PUBLIC_DOMAIN}`]
-    : ['http://localhost:4000'];
+export const CORS_ORIGIN = [
+  'http://localhost:4000',
+  /^https:\/\/(app|keystone)-trip-planner[a-z0-9-_]+\.up\.railway\.app$/,
+  /^https:\/\/trip-planner-(app|keystone|)\.up\.railway\.app$/,
+  'https://routetripper.com',
+  'https://trip-planner-keystone.up.railway.app',
+];
 export const DATABASE_URL = process.env.DATABASE_URL || '';
 export const DATABASE_URL_SUFFIX = process.env.DATABASE_URL_SUFFIX || '';
 
