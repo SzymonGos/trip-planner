@@ -35,10 +35,7 @@ export const UserMenu: FC<TUserMenuProps> = ({ userName, clerkId }) => {
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-48">
           <DropdownMenuItem asChild>
-            <Link
-              href={getUserProfileUrl(data?.user?.username)}
-              className="cursor-pointer flex items-center gap-2 text-sm"
-            >
+            <Link href={getUserProfileUrl(userName)} className="cursor-pointer flex items-center gap-2 text-sm">
               <UserIcon className="!w-5 !h-5" />
               My Account
             </Link>
