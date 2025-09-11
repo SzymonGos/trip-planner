@@ -18,6 +18,7 @@ export const ProfileCardContainer = ({ queryRef }: ProfileCardContainerProps) =>
   const isOwnProfile = authUserId === user?.id;
   const memberSince = formatDate(data?.user?.createdAt);
 
+  // todo: remove console.log
   console.log('user', user);
   console.log('isOwnProfile', isOwnProfile);
   console.log('memberSince', memberSince);
