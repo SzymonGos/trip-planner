@@ -43,7 +43,7 @@ export const DeleteAccount: FC<TDeleteAccountProps> = ({ isOpen, setIsOpen, hand
               <div className="py-4">
                 <div className="flex items-center gap-2">
                   <InfoIcon className="size-5" />
-                  <p className="text-sm text-tp-gray-200">
+                  <p className="text-sm text-gray-600">
                     Your data will be retained for 30 days, then permanently deleted.
                   </p>
                 </div>
