@@ -1,18 +1,26 @@
 'use client';
 
 import React from 'react';
-import { useReadQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import { StatisticsCard } from './StatisticsCard';
 import { MapPinIcon } from '@/components/Icons/MapPinIcon';
 import { ClockIcon } from '@/components/Icons/ClockIcon';
 import { formatDistance } from '../helpers/formatDistance';
+import { getUserCompletedTripsQuery } from '../server/db/getUserCompletedTripsQuery';
+import { StatiticsCardLoader } from './StatiticsCardLoader';
 
 type StatisticsCardsContainerProps = {
-  queryRef: unknown;
+  userId: string;
 };
 
-export const StatisticsCardsContainer = ({ queryRef }: StatisticsCardsContainerProps) => {
-  const { data } = useReadQuery(queryRef);
+export const StatisticsCardsContainer = ({ userId }: StatisticsCardsContainerProps) => {
+  const { data, loading } = useQuery(getUserCompletedTripsQuery, {
+    variables: {
+      id: userId,
+    },
+  });
+
+  if (loading) return <StatiticsCardLoader />;
 
   const allTrips = (data as { trips?: Array<{ distance?: string; status?: string }> })?.trips || [];
   const completedTrips = allTrips.filter((trip) => trip.status === 'completed');
