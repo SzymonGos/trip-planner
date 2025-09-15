@@ -1,7 +1,4 @@
-'use client';
-
 import React, { FC } from 'react';
-import { useReadQuery, QueryRef } from '@apollo/client';
 import { Trip as TTrip } from 'tp-graphql-types';
 import { TripCard } from '@/features/trip/components/TripCard/TripCard';
 import { EmptyTripsState } from '../../trip/EmptyTripsState';
@@ -9,15 +6,14 @@ import { isEmpty } from 'lodash';
 import { useAuthenticatedUser } from '../hooks/useAuthenticatedUser';
 
 type TUserTripsListProps = {
-  queryRef: QueryRef<{ trips: TTrip[] }>;
+  trips: TTrip[];
+  isLoading: boolean;
 };
 
-export const UserTripsList: FC<TUserTripsListProps> = ({ queryRef }) => {
-  const { data } = useReadQuery(queryRef);
-  const trips = data?.trips;
+export const UserTripsList: FC<TUserTripsListProps> = ({ trips, isLoading }) => {
   const { authUserId } = useAuthenticatedUser();
 
-  if (isEmpty(trips)) {
+  if (isEmpty(trips) && !isLoading) {
     return <EmptyTripsState authUserId={authUserId} />;
   }
 

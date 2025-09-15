@@ -1,32 +1,28 @@
+'use client';
+
 import React from 'react';
-import { PreloadQuery } from '@/lib/apolloClient';
-import { getUserCompletedTripsQuery } from '../server/db/getUserCompletedTripsQuery';
-import { StatisticsCardsContainer } from './StatisticsCardsContainer';
-import { UserTripsListClient } from './UserTripsListClient';
-import { Trip as TTrip } from 'tp-graphql-types';
-import { Suspense } from 'react';
-import { StatiticsCardLoader } from './StatiticsCardLoader';
+import { useQuery } from '@apollo/client';
+import { getUserTripsQuery } from '../server/db/getUserTripsQuery';
+import { UserTripsList } from './UserTripsList';
+import { MultipleTripCardsLoader } from '@/features/trip/components/MultipleTripCardsLoader';
 
 type UserTripListContainerProps = {
   userId: string;
   username?: string;
 };
 
-export const UserTripsListContainer = ({ userId }: UserTripListContainerProps) => (
-  <div className="col-span-full lg:col-span-9">
-    <PreloadQuery<{ trips: TTrip[] }, { id: string }>
-      query={getUserCompletedTripsQuery}
-      variables={{
-        id: userId,
-      }}
-    >
-      {(queryRef) => (
-        <Suspense fallback={<StatiticsCardLoader />}>
-          <StatisticsCardsContainer queryRef={queryRef} />
-        </Suspense>
-      )}
-    </PreloadQuery>
+export const UserTripsListContainer = ({ userId }: UserTripListContainerProps) => {
+  const { data, loading } = useQuery(getUserTripsQuery, {
+    variables: {
+      id: userId,
+    },
+  });
 
-    <UserTripsListClient userId={userId} />
-  </div>
-);
+  if (loading) return <MultipleTripCardsLoader count={3} />;
+
+  return (
+    <div className="mt-5 col-span-full lg:col-span-9">
+      <UserTripsList trips={data?.trips} isLoading={loading} />
+    </div>
+  );
+};
