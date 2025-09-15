@@ -6,7 +6,7 @@ import Image from 'next/image';
 
 const SignInPage = () => (
   <div className="w-full mt-20 max-w-5xl mx-aut rounded-md border-[0.5px] overflow-hidden min-h-[600px] grid lg:grid-cols-2">
-    <div className="flex flex-col justify-center px-8 lg:px-12 py-12">
+    <div className="flex flex-col justify-center lg:px-12 py-12">
       <div className="w-full max-w-sm mx-auto">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-primary font-bold text-gray-900 mb-2">Sign in</h1>
