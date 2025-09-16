@@ -16,7 +16,7 @@ const { withAuth } = createAuth({
 });
 
 const session = statelessSessions({
-  secret: process.env.SESSION_SECRET || 'your-super-secret-key-change-in-production',
+  secret: process.env.SESSION_SECRET,
 });
 
 export default withAuth(

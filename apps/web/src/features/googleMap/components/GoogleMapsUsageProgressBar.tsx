@@ -1,9 +1,9 @@
 import React, { FC } from 'react';
 import cx from 'classnames';
-import { USER_GOOGLE_MAPS_ROUTE_LIMIT } from '@/lib/constants';
 import { formatDate } from '../../trip/helpers/formatDate';
 import { InfoIcon } from 'lucide-react';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
+import { USER_GOOGLE_MAPS_ROUTE_LIMIT } from '@/lib/config';
 
 type TGoogleMapsUsageProgressBarProps = {
   currentUsage: number;

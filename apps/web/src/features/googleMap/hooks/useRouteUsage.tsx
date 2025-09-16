@@ -2,7 +2,7 @@ import { useCallback, useRef } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
 import { updateUserRouteCountMutationQuery } from '../server/actions/updateUserRouteCountMutationQuery';
 import { getUserRouteCountQuery } from '../server/db/getUserRouteCountQuery';
-import { USER_GOOGLE_MAPS_ROUTE_LIMIT } from '@/lib/constants';
+import { USER_GOOGLE_MAPS_ROUTE_LIMIT } from '@/lib/config';
 
 export const useRouteUsage = (authUserId: string) => {
   const { data: userData, refetch } = useQuery(getUserRouteCountQuery, {

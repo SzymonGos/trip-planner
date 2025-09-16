@@ -10,9 +10,9 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { useRouteUsage } from '../hooks/useRouteUsage';
 import { useAuthenticatedUser } from '../../user/hooks/useAuthenticatedUser';
 import { toast } from 'sonner';
-import { USER_GOOGLE_MAPS_ROUTE_LIMIT } from '@/lib/constants';
 import { useRouter } from 'next/navigation';
 import { customMarkerIcon } from '../utils/customMarkerIcon';
+import { USER_GOOGLE_MAPS_ROUTE_LIMIT } from '@/lib/config';
 
 const mapContainerStyle = {
   height: '100%',
