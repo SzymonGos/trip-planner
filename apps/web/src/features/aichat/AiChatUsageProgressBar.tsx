@@ -1,7 +1,8 @@
 import React, { FC } from 'react';
 import cx from 'classnames';
-import { USER_AI_CHAT_LIMIT } from '@/lib/constants';
+
 import { formatDate } from '../trip/helpers/formatDate';
+import { USER_AI_CHAT_LIMIT } from '@/lib/config';
 
 type TAiChatUsageProgressBarProps = {
   currentUsage: number;
