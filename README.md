@@ -7,6 +7,19 @@ Production-ready full-stack application with AI integration, real-time mapping, 
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.7.3-blue)
 ![Architecture](https://img.shields.io/badge/Architecture-Monorepo-orange)
 
+## 📋 Table of Contents
+
+- [🚀 Live Demo](#-live-demo)
+- [✨ Key Features](#-key-features)
+- [🏗️ Technical Architecture](#️-technical-architecture)
+- [🚀 Quick Start](#-quick-start)
+- [📁 Project Structure](#-project-structure)
+- [🔧 Technical Highlights](#-technical-highlights)
+- [🛠️ Development](#️-development)
+- [🚀 Deployment](#-deployment)
+- [📊 API Overview](#-api-overview)
+- [📸 Screenshots](#-screenshots)
+
 ## 🚀 Live Demo
 
 **[Routetripper.com](https://routetripper.com)** - Custom domain via Cloudflare
@@ -177,6 +190,13 @@ npm run lint:eslint:fix      # Fix ESLint issues
 
 <!-- # - **Portfolio**: [Your Portfolio](https://yourportfolio.com) -->
 
+⭐ **Star this repository if you found the architecture helpful!**
+
 ---
 
-⭐ **Star this repository if you found the architecture helpful!**
+## 📸 Screenshots
+
+![Homepage](https://private-user-images.githubusercontent.com/37188746/490519014-381d8fa0-1ea5-4730-bd2f-ade1df80aa1a.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NTgxMDkwNzMsIm5iZiI6MTc1ODEwODc3MywicGF0aCI6Ii8zNzE4ODc0Ni80OTA1MTkwMTQtMzgxZDhmYTAtMWVhNS00NzMwLWJkMmYtYWRlMWRmODBhYTFhLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNTA5MTclMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjUwOTE3VDExMzI1M1omWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTg0ZTNkNDllNzRkMmZiMTM4ZGNiYmVhMmUxZDY5ODYzODA0ZjNiMjJiNmVkZTgyZWZhOTIwOGMyODhmNTVjMDQmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.iJG8PbnJF0ylNtr1OsqEjPuonlqV8z3Ph5KPXr8yjVc)
+![Trip Planner](https://private-user-images.githubusercontent.com/37188746/490515796-5c0a1e73-4ff6-426c-b001-ff6c8a09a257.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NTgxMDkwNzMsIm5iZiI6MTc1ODEwODc3MywicGF0aCI6Ii8zNzE4ODc0Ni80OTA1MTU3OTYtNWMwYTFlNzMtNGZmNi00MjZjLWIwMDEtZmY2YzhhMDlhMjU3LnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNTA5MTclMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjUwOTE3VDExMzI1M1omWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTAxODQwM2NiYmNhZThmYzNlYWVjOWQ0ZjgzM2IzZjhmYmExMzhhYWYzYjNiMWVjNjg3OWIzZWQxMTUxNTEyYjkmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.Lz6bdR3hVk5WaPnMkSmRyWKTpQ2V2laeUEqv62J2oDI)
+![AI Chat](https://private-user-images.githubusercontent.com/37188746/490516903-c3adbb92-5c8e-44cf-af6d-4a8161c31a0e.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NTgxMDkwNzMsIm5iZiI6MTc1ODEwODc3MywicGF0aCI6Ii8zNzE4ODc0Ni80OTA1MTY5MDMtYzNhZGJiOTItNWM4ZS00NGNmLWFmNmQtNGE4MTYxYzMxYTBlLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNTA5MTclMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjUwOTE3VDExMzI1M1omWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTc0N2QyYzYwN2FmOWFhY2Y0MmRkMGQyZmUxYThkYmFjM2Y1NGQ5NDBjZTFjNThlOWZmNDhjOGY1ODQ5ZTcxNzEmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.7_AMuSa0cx-syHEMxwwnMRhA4kmXTXoCUF7Wm8Hrj6A)
+![Admin CMS](https://private-user-images.githubusercontent.com/37188746/490517539-96daf0a7-a842-406f-a1e2-674561e70116.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NTgxMDkwNzMsIm5iZiI6MTc1ODEwODc3MywicGF0aCI6Ii8zNzE4ODc0Ni80OTA1MTc1MzktOTZkYWYwYTctYTg0Mi00MDZmLWExZTItNjc0NTYxZTcwMTE2LnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNTA5MTclMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjUwOTE3VDExMzI1M1omWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTBjZWIzZDA5ZDYzYWUyODhjYzdmNGFlZDBlNzljZDg0MzhjM2NjZjQwMzEzM2UyMWY5YTljODY0MDg3MGMzYzcmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.-6-OJV2z7DPPi5OjrVFx0fCsd0exyuAqJkfKE_zH51s)
