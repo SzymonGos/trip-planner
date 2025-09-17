@@ -1,4 +1,4 @@
-# 🗺️ Trip Planner - AI-Powered Travel Platform
+# 🗺️ Routetripper - AI-Powered Travel Platform
 
 Production-ready full-stack application with AI integration, real-time mapping, and enterprise-grade architecture. Built with Next.js 14, TypeScript, Keystone CMS, and modern development practices.
 
@@ -9,13 +9,14 @@ Production-ready full-stack application with AI integration, real-time mapping, 
 
 ## 🚀 Live Demo
 
-**[View Live Application](https://routetripper.com)** - Custom domain via Cloudflare
+**[Routetripper.com](https://routetripper.com)** - Custom domain via Cloudflare
 
 ## ✨ Key Features
 
 - **AI Chat Assistant**: OpenAI GPT-4 integration with rate limiting and usage tracking
 - **Interactive Maps**: Google Maps API with custom styling and route optimization
 - **User Management**: Clerk authentication with webhook synchronization
+- **Data Management**: Keystone CMS for content and database management
 - **Real-time Analytics**: Usage tracking with progress indicators and limits
 - **Modern UI**: Responsive design with Tailwind CSS and Radix UI components
 
@@ -37,6 +38,7 @@ Production-ready full-stack application with AI integration, real-time mapping, 
 - Google Maps API key
 - Clerk authentication keys
 - Cloudinary account
+- Railway account
 
 ### Installation
 
@@ -45,7 +47,9 @@ Production-ready full-stack application with AI integration, real-time mapping, 
    ```bash
    git clone https://github.com/yourusername/trip-planner.git
    cd trip-planner
+   nvm use
    npm install
+   npm run dev  # Starts both frontend (4000) and backend (3000)
    ```
 
 2. **Environment setup**
@@ -86,11 +90,6 @@ cd apps/keystone
 npx keystone prisma migrate dev --name init
 npx keystone dev --seed-data
 ```
-
-5. **Start development**
-   ```bash
-   npm run dev  # Starts both frontend (4000) and backend (3000)
-   ```
 
 ## 📁 Project Structure
 
