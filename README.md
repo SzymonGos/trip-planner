@@ -50,4 +50,4 @@ Environment variables needed:
 
 ![Trip Planner](./apps/docs/screenshots/landing_page.png)
 
-[See more screenshots →](./apps/docs/screenshots.md)
+[See more screenshots →](./apps/docs/screenshots/)
