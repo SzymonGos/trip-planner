@@ -48,6 +48,6 @@ Environment variables needed:
 
 ## 📸 Screenshots
 
-![Trip Planner](./docs/screenshots/landing_page.png)
+![Trip Planner](./apps/docs/screenshots/landing_page.png)
 
-[See more screenshots →](./docs/screenshots.md)
+[See more screenshots →](./apps/docs/screenshots.md)
