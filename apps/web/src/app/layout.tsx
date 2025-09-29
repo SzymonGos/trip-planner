@@ -7,6 +7,9 @@ export const metadata: Metadata = {
   title: 'Routetripper',
   description:
     'Routetripper is a trip planning platform that allows you to plan your trips and share them with your friends and family.',
+  icons: {
+    icon: '/routetripper.png',
+  },
 };
 
 const RootLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => (
