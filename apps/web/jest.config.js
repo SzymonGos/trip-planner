@@ -11,6 +11,7 @@ const customJestConfig = {
     '^@/(.*)$': '<rootDir>/src/$1',
   },
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
+  transformIgnorePatterns: ['node_modules/(?!(lucide-react)/)'],
 };
 
 module.exports = createJestConfig(customJestConfig);

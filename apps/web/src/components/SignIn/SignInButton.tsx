@@ -16,7 +16,11 @@ export const SignInButton: FC<TSignInButtonProps> = ({ className }) => {
 
   return (
     <Link href={getSanitizedRedirectUrl(pathname)}>
-      <Button size="sm" className={cx('mt-2 bg-zinc-400 hover:bg-zinc-500 text-white w-[200px]', className)}>
+      <Button
+        size="sm"
+        className={cx('mt-2 bg-zinc-400 hover:bg-zinc-500 text-white w-[200px]', className)}
+        data-testid="sign-in-button"
+      >
         Sign In
       </Button>
     </Link>
