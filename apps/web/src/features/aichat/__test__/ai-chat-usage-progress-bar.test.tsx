@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { AiChatUsageProgressBar } from '../../AiChatUsageProgressBar';
+import { AiChatUsageProgressBar } from '../AiChatUsageProgressBar';
 
 jest.mock('../../../trip/helpers/formatDate', () => ({
   formatDate: (date: string) => `formatted-${date}`,

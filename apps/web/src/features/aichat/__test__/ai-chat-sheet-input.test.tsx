@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { AiChatSheetInput } from '../../AiChatSheetInput';
+import { AiChatSheetInput } from '../AiChatSheetInput';
 
 jest.mock('lucide-react', () => ({
   Loader2: () => (
