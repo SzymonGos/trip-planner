@@ -2,7 +2,6 @@ import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { AiChatSheetInput } from '../../AiChatSheetInput';
 
-// Mock lucide-react to avoid ES module issues
 jest.mock('lucide-react', () => ({
   Loader2: () => (
     <div data-testid="ai-chat-input-loader" className="h-4 w-4 animate-spin">

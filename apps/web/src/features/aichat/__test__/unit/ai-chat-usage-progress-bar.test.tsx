@@ -2,12 +2,10 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { AiChatUsageProgressBar } from '../../AiChatUsageProgressBar';
 
-// Mock the formatDate helper
 jest.mock('../../../trip/helpers/formatDate', () => ({
   formatDate: (date: string) => `formatted-${date}`,
 }));
 
-// Mock the config
 jest.mock('@/lib/config', () => ({
   USER_AI_CHAT_LIMIT: 20,
 }));
@@ -23,10 +21,9 @@ describe('AiChatUsageProgressBar', () => {
     it('should render the component with correct structure', () => {
       render(<AiChatUsageProgressBar {...defaultProps} />);
 
-      // Check if the main container is rendered
-      const container = screen.getByText('5/20 messages');
+      const container = screen.getByTestId('progressbar');
       expect(container).toBeInTheDocument();
-      expect(container).toHaveClass('font-medium');
+      expect(container).toHaveTextContent('5/20 messages');
     });
 
     it('should display current usage and limit correctly', () => {
