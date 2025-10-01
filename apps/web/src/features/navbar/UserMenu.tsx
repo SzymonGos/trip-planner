@@ -2,13 +2,18 @@
 
 import { SignOutButton, useAuth } from '@clerk/nextjs';
 import React, { FC } from 'react';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../ui/dropdown-menu';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import { useQuery } from '@apollo/client';
 import { getUserIdByClerkIdQuery } from '@/features/user/server/db/getUserIdByClerkIdQuery';
-import { SettingsIcon } from '../Icons/SettingsIcon';
-import { UserIcon } from '../Icons/UserIcon';
+import { SettingsIcon } from '@/components/Icons/SettingsIcon';
+import { UserIcon } from '@/components/Icons/UserIcon';
 import { UsernameTrigger } from './UsernameTrigger';
-import { SignOutIcon } from '../Icons/SignOutIcon';
+import { SignOutIcon } from '@/components/Icons/SignOutIcon';
 import Link from 'next/link';
 import { getUserProfileUrl } from '@/features/user/helpers/getUserProfileUrl';
 import { getUserSettingsUrl } from '@/features/user/helpers/getUserSettingsUrl';

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { Providers } from '@/lib/providers/providers';
-import { NavbarContainer } from '@/components/Navbar/NavbarContainer';
+import { NavbarContainer } from '@/features/navbar/NavbarContainer';
 
 export const metadata: Metadata = {
   title: 'Routetripper',

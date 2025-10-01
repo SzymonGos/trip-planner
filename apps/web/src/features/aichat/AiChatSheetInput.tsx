@@ -43,6 +43,7 @@ export const AiChatSheetInput: FC<TAiChatSheetInputProps> = ({
         placeholder="What do you need help with?"
         className="min-h-[80px] max-h-[200px] px-4 py-3 pr-12 pb-12 !border-[0.5px] focus-visible:ring-0 border-tp-gray-100 focus:border focus:border-tp-gray-200 shadow-none text-base [&_[data-radix-sheet-handle]]:hidden resize-none"
         disabled={isLoading}
+        data-testid="ai-chat-input"
       />
 
       <Button
@@ -50,8 +51,9 @@ export const AiChatSheetInput: FC<TAiChatSheetInputProps> = ({
         disabled={!inputValue.trim() || isLoading}
         size="icon"
         className="absolute bottom-3 right-3 h-10 w-10 bg-zinc-400 hover:bg-zinc-500 text-white rounded-md transition-all duration-200 disabled:opacity-50"
+        data-testid="send-button"
       >
-        {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <SendIcon />}
+        {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <SendIcon data-testid="send-icon" />}
       </Button>
     </div>
   );
